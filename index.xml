@@ -6,10 +6,19 @@
     <description>Recent content on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>UTF-8</language>
-    <lastBuildDate>Tue, 24 Jul 2018 16:53:31 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 31 Aug 2018 15:42:21 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>한국 주식 자료 소개</title>
+      <link>https://choosunsick.github.io/post/korea_stock_introduction/</link>
+      <pubDate>Fri, 31 Aug 2018 15:42:21 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/korea_stock_introduction/</guid>
+      <description>깃허브 설명 안녕하세요. LOPES팀의 추선식입니다. 저희 팀에서 주식과 관련된 프로젝트를 하면서 차트 분석을 비롯한 여러 가지 분석을 위한 주식 데이터가 필요하</description>
+    </item>
     
     <item>
       <title>2018년 KBO 가을야구 진출팀은 어떤팀일 것인가 ?</title>
