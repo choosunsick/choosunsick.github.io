@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="UTF-8">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>R에서 서로 다른 크기의 행렬 연산 - Sunsick&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Sunsick" />
+  <meta name="description" content="안녕하세요. Lopes팀의 추선식 입니다. 이번에 저희팀에서 밑바닥부터 시작하는 딥러닝(Deep Learning from Scratch)이란 책을 R로 구현해보면서 알게 된" />
+
+  <meta name="keywords" content="blog" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.45.1" />
+
+
+<link rel="canonical" href="https://choosunsick.github.io/post/sweep_fun_introduction/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.1.1" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="R에서 서로 다른 크기의 행렬 연산" />
+<meta property="og:description" content="안녕하세요. Lopes팀의 추선식 입니다. 이번에 저희팀에서 밑바닥부터 시작하는 딥러닝(Deep Learning from Scratch)이란 책을 R로 구현해보면서 알게 된" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://choosunsick.github.io/post/sweep_fun_introduction/" />
+
+
+
+<meta property="article:published_time" content="2018-10-09T15:52:32&#43;09:00"/>
+
+<meta property="article:modified_time" content="2018-10-09T15:52:32&#43;09:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="R에서 서로 다른 크기의 행렬 연산">
+<meta itemprop="description" content="안녕하세요. Lopes팀의 추선식 입니다. 이번에 저희팀에서 밑바닥부터 시작하는 딥러닝(Deep Learning from Scratch)이란 책을 R로 구현해보면서 알게 된">
+
+
+<meta itemprop="datePublished" content="2018-10-09T15:52:32&#43;09:00" />
+<meta itemprop="dateModified" content="2018-10-09T15:52:32&#43;09:00" />
+<meta itemprop="wordCount" content="1450">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="R에서 서로 다른 크기의 행렬 연산"/>
+<meta name="twitter:description" content="안녕하세요. Lopes팀의 추선식 입니다. 이번에 저희팀에서 밑바닥부터 시작하는 딥러닝(Deep Learning from Scratch)이란 책을 R로 구현해보면서 알게 된"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">R에서 서로 다른 크기의 행렬 연산</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-10-09 </span>
+        
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title"></h2>
+  
+  <div class="post-toc-content always-active">
+    
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p>안녕하세요. Lopes팀의 추선식 입니다. 이번에 저희팀에서 밑바닥부터 시작하는 딥러닝(Deep Learning from Scratch)이란 책을 R로 구현해보면서 알게 된 R의 행렬 연산 함수를 소개해볼까 합니다. R에서는 보통 행렬의 연산은 수학에 기반해 있습니다. 이에 따라 기본적인 행렬 연산은 수학적 정의에 따라 가능하며, 서로 다른 크기의 행렬 연산은 불가능합니다. 만약에 이러한 연산을 시도할 경우 우리가 보게 될 것은 &ldquo;배열의 크기가 맞지 않습니다.&ldquo;라는 에러 메세지입니다. 그러나 파이썬의 경우 numpy를 통해 서로 다른 크기의 행렬의 연산이 가능합니다.</p>
+
+<p>예를 들면 두 행렬 <code>np.array([[1,2,3],[4,5,6]])와 np.array([7,8,9])</code> 간 덧셈이나 뺄셈 나눗셈이 가능합니다. 이 두 행렬 간 덧셈의 결과는 <code>np.array([[8,10,12],[11,13,15]])</code>가 됩니다. 즉 두 행렬의 열 숫자가 같은 것을 기반으로 연산이 된 것입니다. 뺄셈이나 나눗셈, 곱셈 역시 마찬가지로 두 행렬의 열을 기반으로 연산이 이루어집니다. 추가적으로 파이썬에서의 행렬 곱셈은 <code>np.dot()</code>함수를 가지고도 가능합니다. 이 경우 행렬의 곱셈은 열 기반이 아닌 수학에서의 행렬 곱셈을 하게 됩니다.</p>
+
+<p>그렇다면 파이썬에서 한 연산과 그 결과가 R에서 필요할 때는 어떤 방식을 사용할 수 있을까요. 이때 R에서 사용할 수 있는 방법으로는 apply 계열의 함수나 for문을 사용하여 하나씩 계산을 하는 방법이 있습니다.</p>
+
+<pre><code>temp &lt;- matrix(c(1,2,3,4,5,6),2,3,byrow = T)
+temp2 &lt;- matrix(c(7,8,9),1,3,byrow = T)
+
+</code></pre>
+
+<p>예를 들어 이 두 행렬을 가지고 위의 결과 행렬을 얻으려면 <code>do.call(rbind,lapply(1:2,function(x){temp[x,]+temp2}))</code> 와 같이 <code>lapply()</code>를 써서 얻을 수 있습니다. 물론 이외에도 다양한 방법이 있습니다. 하지만 이러한 방법들은 코드의 완전성과 작동 시간의 측면에서 문제가 발생할 수 있습니다. 따라서 가장 안전한 방법은 R에서 기본적으로 정의된 함수를 사용하는 것입니다.</p>
+
+<p>이 경우 사용할 수 있는 것이 <code>sweep()</code> 이란 함수입니다. 이 함수는 data, 연산을 적용할 대상(행(1)이나 열(2)), 기존의 데이터와 연산할 다른 데이터, &ldquo;연산자&rdquo;를 인자로 사용합니다. 이제 앞의 예를 그대로 적용해보면 <code>sweep(temp,2,temp2,&quot;+&quot;)</code> 와 같은 방식으로 사용할 수 있습니다. 이 코드의 결과로는 <code>matrix(c(8,10,12,11,13,15),2,3,byrow= T)</code>와같은 행렬을 얻을 수 있습니다. sweep 함수는 이렇게 간단하게 사용할 수 있지만, 주의할 점이 있습니다. 그것은 연산할 데이터의 크기와 연산을 적용할 행렬의 행 또는 열의 크기가 서로 맞아야 한다는 것입니다.</p>
+
+<p>위의 경우에서는 기존 행렬(2*3)에서의 열의 개수와 연산할 데이터의 개수가 3개로 서로 맞아서 각 열에 덧셈해줄 수 있게 됩니다. 즉 <code>length(temp2)==dim(temp)[2]</code>가 TRUE 라는 것입니다. 새로운 데이터의 개수가 기존 행렬의 행 또는 열 (연산을 적용할 대상에 따라 달라짐)과 다르게 될 경우 계산이 되지만, 에러 메세지와함께 원하는 결과를 얻지 못하게 됩니다.</p>
+
+<p>이 주의점만 지킨다면 sweep 함수를 사용할 경우 그것의 완전성을 보장할 수 있습니다. 반면 스스로 코딩을 하게 될 경우 계산 결과가 원하는 것과 다르게 나올 가능성을 배제할 수 없습니다. 결과의 완전성 보장 이외에도 R에서 기본적으로 정의된 함수를 사용할 경우 속도 또한 빠르다는 장점이 있습니다. 보통은 스스로 코딩을 한 함수보다 기본 함수의 속도가 더 빠르기 때문입니다. 실제로도 <code>sweep()</code>을 사용한 경우와 <code>lapply()</code>를 사용하여 계산하는 것 간의 작동 시간을 비교하면 기초 함수인 sweep의 경우가 더 빠른 것을 확인할 수 있습니다.</p>
+
+<pre><code>system.time(do.call(rbind,lapply(1:2,function(x){temp[x,]+temp2})))
+system.time(sweep(temp,2,temp2,&quot;+&quot;))
+</code></pre>
+
+<p>lapply를 사용하면 2초가 걸리는 반면 sweep을 사용하면 0초가 나옵니다. 이러한 시간 차이는 행렬의 크기가 커질수록 더욱 두드러지게 됩니다. 위에서는 덧셈을 가지고 예시를 들었지만 크기가 다른 행렬 간의 뺄셈, 나눗셈, 곱셈 등에서는 시간 차이가 더 명확하게 드러납니다.</p>
+
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title"></span>
+    <span class="item-content">Sunsick</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title"></span>
+    <span class="item-content">2018-10-09</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/korea_stock_introduction/">
+            <span class="next-text nav-default">한국 주식 자료 소개</span>
+            <span class="next-text nav-mobile"></span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.google.com/" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/choosunsick" class="iconfont icon-github" title="github"></a>
+  <a href="https://choosunsick.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    %!(EXTRA string=<a class="hexo-link" href="https://gohugo.io">Hugo</a>)
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+     -
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy;
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Sunsick</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+<script></script>
+<script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.min.js?v=3.1.1"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
