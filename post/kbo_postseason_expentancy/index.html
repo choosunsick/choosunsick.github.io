@@ -1,3 +1,12 @@
+
+
+There are two possible situations that led to this error:
+  1. You haven&#39;t copied the config.toml yet. See https://github.com/olOwOlo/hugo-theme-even#installation 
+  2. You have an incompatible update. See https://github.com/olOwOlo/hugo-theme-even/blob/master/CHANGELOG.md#300 
+
+有两种可能的情况会导致这个错误发生:
+  1. 你还没有复制 config.toml 参考 https://github.com/olOwOlo/hugo-theme-even/blob/master/README-zh.md#installation 
+  2. 你进行了一次不兼容的更新 参考 https://github.com/olOwOlo/hugo-theme-even/blob/master/CHANGELOG.md#300 
 <!DOCTYPE html>
 <html lang="UTF-8">
 <head>
@@ -44,7 +53,7 @@
 
 
 <link href="/dist/even.min.css?v=3.1.1" rel="stylesheet">
-<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
 
@@ -76,7 +85,7 @@
 
 <meta itemprop="datePublished" content="2018-07-24T16:53:31&#43;09:00" />
 <meta itemprop="dateModified" content="2018-07-24T16:53:31&#43;09:00" />
-<meta itemprop="wordCount" content="8121">
+<meta itemprop="wordCount" content="8190">
 
 
 
@@ -218,44 +227,77 @@
 <h3 id="2017년-kbo-자료에서-포스트시즌-참가팀-추리기">2017년 KBO 자료에서 포스트시즌 참가팀 추리기</h3>
 
 <p>우선 2017년 KBO 자료를 R로 읽어오겠습니다. 혹시 더 오래된 KBO 자료가 필요하시면 <a href="https://github.com/choosunsick/KBO_data">https://github.com/choosunsick/KBO_data</a>로 가시면 됩니다.</p>
-
-<pre><code>KBO.2017.URL&lt;-&quot;https://lopes.hufs.ac.kr/KBO/KBO_2017_season.csv&quot;
-KBO.2017&lt;-read.table(file = KBO.2017.URL, header= TRUE, sep=&quot;,&quot;,stringsAsFactors = FALSE)
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">KBO.2017.URL&lt;-&#34;https://lopes.hufs.ac.kr/KBO/KBO_2017_season.csv&#34;
+KBO.2017&lt;-read.table(file = KBO.2017.URL, header= TRUE, sep=&#34;,&#34;,stringsAsFactors = FALSE)</pre></td></tr></table>
+</div>
+</div>
 <p>읽어온 자료에서 정규시즌과 시범경기 올스타전을 제외한 경기만 뽑아줍니다. 이어서 그 자료에서 경기를 한 팀들을 모으고 고유한 팀만 남겨줍니다. 그러면 2017년 포스트시즌에 경기를 했던 팀만 남게됩니다. 아래의 결과를 보시면 &ldquo;NC&rdquo;, &ldquo;롯데&rdquo;, &ldquo;두산&rdquo;,&ldquo;기아&rdquo;, &ldquo;SK&rdquo; 5개 팀을 확인할 수 있습니다.</p>
-
-<pre><code>KBO.2017.postseason&lt;-KBO.2017[KBO.2017$비고!=&quot;시범경기&quot;&amp;KBO.2017$비고!=&quot;정규시즌&quot;&amp;KBO.2017$비고!=&quot;올스타전&quot;,]
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">KBO.2017.postseason&lt;-KBO.2017[KBO.2017$비고!=&#34;시범경기&#34;&amp;KBO.2017$비고!=&#34;정규시즌&#34;&amp;KBO.2017$비고!=&#34;올스타전&#34;,]
 postseasonteam.2017&lt;-unique(c(KBO.2017.postseason$홈팀,KBO.2017.postseason$원정팀))
-postseasonteam.2017
-</code></pre>
-
-<pre><code>## [1] &quot;NC&quot;   &quot;롯데&quot; &quot;두산&quot; &quot;기아&quot; &quot;SK&quot;
-</code></pre>
-
+postseasonteam.2017</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">## [1] &#34;NC&#34;   &#34;롯데&#34; &#34;두산&#34; &#34;기아&#34; &#34;SK&#34;</pre></td></tr></table>
+</div>
+</div>
 <h3 id="2017년-포스트시즌-진출팀의-승률-평균-값-구하기">2017년 포스트시즌 진출팀의 승률 평균 값 구하기</h3>
 
 <p>이제 위에서 확인한 5개 팀의 승률을 함수를 통해 구할 수 있습니다. 5개 팀의 승률 평균 값을 구하는 이유는 이후 기대 승률 값과 비교를 하기위해서 입니다. 승률을 구하는 과정에서 필요한 함수는 두 가지로 데이터를 전처리하는 함수와 승률을 계산하는 함수입니다. 데이터를 전처리 함수는 데이터, 연도, 팀이름의 3가지 인자를 받는 함수로 연도와 팀이름을 이용해 데이터에서 경기결과를 새롭게 만들어 주는 역할을 합니다.</p>
 
 <p>이 함수의 작동원리는 다음과 같습니다. 먼저 데이터에서 인자로 입력된 팀이 홈팀일 때의 정규시즌 데이터를 뽑아냅니다. 이후 경기연도를 열로 만들어 입력된 년도의 데이터만 뽑아냅니다. 경기결과 열은 홈팀점수와 원정팀점수 간의 비교를 통해 홈팀점수가 더 높으면 승, 낮으면 패, 같으면 무로 나누어 구성해줍니다. 이런 과정을 인자로 받은 팀이 원정팀인 경우에도 똑같이 진행하여 경기결과 열을 만듭니다. 이렇게 만들어진 두 데이터를 다시 합쳐서 반환합니다.</p>
-
-<pre><code>data.cleaning &lt;- function(x,y,z){#x=데이터,y=년도,z=팀이름
-  teamdata.home&lt;-x[x$홈팀==z &amp; x$비고 ==&quot;정규시즌&quot;,] #
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">data.cleaning &lt;- function(x,y,z){#x=데이터,y=년도,z=팀이름
+  teamdata.home&lt;-x[x$홈팀==z &amp; x$비고 ==&#34;정규시즌&#34;,] #
   teamdata.home$경기연도&lt;-substr(teamdata.home$Date,1,4)
   teamdata.home&lt;-teamdata.home[teamdata.home$경기연도==y,]
-  teamdata.home$경기결과 &lt;- ifelse(teamdata.home$홈팀점수&gt;teamdata.home$원정팀점수,&quot;승&quot;,
-                               ifelse(teamdata.home$홈팀점수&lt;teamdata.home$원정팀점수,&quot;패&quot;,&quot;무&quot;))
-  teamdata.away&lt;-x[x$원정팀==z &amp; x$비고 ==&quot;정규시즌&quot;,]
+  teamdata.home$경기결과 &lt;- ifelse(teamdata.home$홈팀점수&gt;teamdata.home$원정팀점수,&#34;승&#34;,
+                               ifelse(teamdata.home$홈팀점수&lt;teamdata.home$원정팀점수,&#34;패&#34;,&#34;무&#34;))
+  teamdata.away&lt;-x[x$원정팀==z &amp; x$비고 ==&#34;정규시즌&#34;,]
   teamdata.away$경기연도&lt;-substr(teamdata.away$Date,1,4)
   teamdata.away&lt;-teamdata.away[teamdata.away$경기연도==y,]
-  teamdata.away$경기결과 &lt;- ifelse(teamdata.away$홈팀점수&gt;teamdata.away$원정팀점수,&quot;패&quot;,
-                               ifelse(teamdata.away$홈팀점수&lt;teamdata.away$원정팀점수,&quot;승&quot;,&quot;무&quot;))
+  teamdata.away$경기결과 &lt;- ifelse(teamdata.away$홈팀점수&gt;teamdata.away$원정팀점수,&#34;패&#34;,
+                               ifelse(teamdata.away$홈팀점수&lt;teamdata.away$원정팀점수,&#34;승&#34;,&#34;무&#34;))
   teamdata&lt;-rbind(teamdata.home,teamdata.away)
   teamdata&lt;-teamdata[order(teamdata$Date,decreasing = FALSE),]
   return(teamdata)
-}
-</code></pre>
-
+}</pre></td></tr></table>
+</div>
+</div>
 <p><code>head(data.cleaning(KBO.2017,&quot;2017&quot;,&quot;두산&quot;))</code> 로 전처리 함수의 결과를 확인할 수 있습니다.</p>
 
 <h3 id="전처리-함수를-적용한-데이터를-가지고-승률-함수에-적용하기">전처리 함수를 적용한 데이터를 가지고 승률 함수에 적용하기</h3>
@@ -267,85 +309,175 @@ postseasonteam.2017
 <p>이 함수의 인자는 하나로 데이터만 필요로 합니다. 참고로 이 함수에서 데이터가 2010년의 데이터인지 아닌지를 검사하는데, 이는 2010년에는 승률을 구하는 공식이 다르기 때문입니다.</p>
 
 <p>이제 데이터가 2010년이 아닌 경우면 위의 공식으로 계산을 하게됩니다. 그후에 해당 팀의 기록에 무승부가 있는지 없는지를 검사합니다. 이것은 승률 계산시 무승부를 제외하기에 필요한 검사입니다. 이 검사 이후에 무승부가 있는 경우와 없는 경우를 나누어 해당 팀의 승률을 계산해줍니다. 이렇게 계산된 승률은 해당 팀의 승리와 패배, 무승부 기록과 함께 데이터 프레임(data.frame)으로 반환됩니다.</p>
-
-<pre><code>Yearly.Win.Per &lt;- function(x){#x=data
-  if(all(x$경기연도==&quot;2010&quot;)==TRUE){
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Yearly.Win.Per &lt;- function(x){#x=data
+  if(all(x$경기연도==&#34;2010&#34;)==TRUE){
     if(NROW(table(x$경기결과))&gt;2){
       win.percentage &lt;- table(x$경기결과)[2]/sum(table(x$경기결과))
-      result&lt;-data.frame(&quot;승&quot;=table(x$경기결과)[2],&quot;패&quot;=table(x$경기결과)[3],&quot;무&quot;=table(x$경기결과)[1],&quot;승률&quot;=win.percentage,row.names = NULL)
+      result&lt;-data.frame(&#34;승&#34;=table(x$경기결과)[2],&#34;패&#34;=table(x$경기결과)[3],&#34;무&#34;=table(x$경기결과)[1],&#34;승률&#34;=win.percentage,row.names = NULL)
     }
     else{
       win.percentage &lt;- table(x$경기결과)[1]/sum(table(x$경기결과))
-      result&lt;-data.frame(&quot;승&quot;=table(x$경기결과)[1],&quot;패&quot;=table(x$경기결과)[2],&quot;무&quot;=&quot;무승부 없음&quot;,&quot;승률&quot;=win.percentage,row.names = NULL,stringsAsFactors = FALSE)
+      result&lt;-data.frame(&#34;승&#34;=table(x$경기결과)[1],&#34;패&#34;=table(x$경기결과)[2],&#34;무&#34;=&#34;무승부 없음&#34;,&#34;승률&#34;=win.percentage,row.names = NULL,stringsAsFactors = FALSE)
     }
   }
   else{
     if(NROW(table(x$경기결과))&gt;2){
       win.percentage &lt;- table(x$경기결과)[2]/(sum(table(x$경기결과))-table(x$경기결과)[1])
-      result&lt;-data.frame(&quot;승&quot;=table(x$경기결과)[2],&quot;패&quot;=table(x$경기결과)[3],&quot;무&quot;=table(x$경기결과)[1],&quot;승률&quot;=win.percentage,row.names = NULL)
+      result&lt;-data.frame(&#34;승&#34;=table(x$경기결과)[2],&#34;패&#34;=table(x$경기결과)[3],&#34;무&#34;=table(x$경기결과)[1],&#34;승률&#34;=win.percentage,row.names = NULL)
     }
     else{
       win.percentage &lt;- table(x$경기결과)[1]/sum(table(x$경기결과))
-      result&lt;-data.frame(&quot;승&quot;=table(x$경기결과)[1],&quot;패&quot;=table(x$경기결과)[2],&quot;무&quot;=&quot;무승부 없음&quot;,&quot;승률&quot;=win.percentage,row.names = NULL,stringsAsFactors = FALSE)
+      result&lt;-data.frame(&#34;승&#34;=table(x$경기결과)[1],&#34;패&#34;=table(x$경기결과)[2],&#34;무&#34;=&#34;무승부 없음&#34;,&#34;승률&#34;=win.percentage,row.names = NULL,stringsAsFactors = FALSE)
     }
   }
   return(result)
-}
-</code></pre>
-
+}</pre></td></tr></table>
+</div>
+</div>
 <p>위의 함수를 2017년 두산팀 데이터에 적용해보겠습니다.</p>
-
-<pre><code>Doosan.win.percentage&lt;-Yearly.Win.Per(data.cleaning(KBO.2017,&quot;2017&quot;,&quot;두산&quot;))
-Doosan.win.percentage
-</code></pre>
-
-<pre><code>##   승 패 무      승률
-## 1 84 57  3 0.5957447
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Doosan.win.percentage&lt;-Yearly.Win.Per(data.cleaning(KBO.2017,&#34;2017&#34;,&#34;두산&#34;))
+Doosan.win.percentage</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">##   승 패 무      승률
+## 1 84 57  3 0.5957447</pre></td></tr></table>
+</div>
+</div>
 <p>이제 같은 방식으로 앞서 구한 전년도 포스트시즌 진출한 (&ldquo;NC&rdquo;,&ldquo;롯데&rdquo;,&ldquo;두산&rdquo;,&ldquo;기아&rdquo;,&ldquo;SK&rdquo;) 5개 팀 모두의 승률을 구해줍니다. 5개 팀의 승률을 구하면 그것의 평균을 구해줍니다. 평균 승률을 구하는 이유는 기대 승률과 비교와 시즌 종료시 포스트시즌 진출에 필요한 득점의 수를 추정하는데 필요하기 때문입니다.</p>
-
-<pre><code>fiveteam.win.percentage&lt;-do.call(rbind,lapply(1:5,FUN = function(i){Yearly.Win.Per(data.cleaning(KBO.2017,&quot;2017&quot;,postseasonteam.2017[i]))}))
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">fiveteam.win.percentage&lt;-do.call(rbind,lapply(1:5,FUN = function(i){Yearly.Win.Per(data.cleaning(KBO.2017,&#34;2017&#34;,postseasonteam.2017[i]))}))
 win.percentage.mean&lt;-mean(fiveteam.win.percentage$승률)
-win.percentage.mean
-</code></pre>
-
-<pre><code>## [1] 0.5704552
-</code></pre>
-
+win.percentage.mean</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">## [1] 0.5704552</pre></td></tr></table>
+</div>
+</div>
 <h3 id="2018년-전반기-상위팀의-승률과-기대-승률-구하기">2018년 전반기 상위팀의 승률과 기대 승률 구하기</h3>
 
 <p>이제 작년 포스트시즌 진출팀의 평균 승률을 구했으니 비교할 대상인 현재 시즌에 상위팀 (&ldquo;두산&rdquo;,&ldquo;한화&rdquo;,&ldquo;SK&rdquo;,&ldquo;LG&rdquo;,&ldquo;넥센&rdquo;)의 전반기 승률과 기대 승률을 구해볼 차례입니다. 먼저 2018년 전반기 데이터를 R로 가져옵니다. 2018년 두산팀의 데이터를 예시로 먼저 승률을 구해보았습니다.</p>
-
-<pre><code>KBO.2018.half.URL &lt;- &quot;https://lopes.hufs.ac.kr/KBO/KBO_2018_season_half.csv&quot;
-KBO.2018.half&lt;-read.table(file = KBO.2018.half.URL, header= TRUE, sep=&quot;,&quot;,stringsAsFactors = FALSE)
-Doosan.2018&lt;-data.cleaning(KBO.2018.half,&quot;2018&quot;,&quot;두산&quot;)
-Yearly.Win.Per(Doosan.2018)
-</code></pre>
-
-<pre><code>##   승 패          무      승률
-## 1 58 29 무승부 없음 0.6666667
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">KBO.2018.half.URL &lt;- &#34;https://lopes.hufs.ac.kr/KBO/KBO_2018_season_half.csv&#34;
+KBO.2018.half&lt;-read.table(file = KBO.2018.half.URL, header= TRUE, sep=&#34;,&#34;,stringsAsFactors = FALSE)
+Doosan.2018&lt;-data.cleaning(KBO.2018.half,&#34;2018&#34;,&#34;두산&#34;)
+Yearly.Win.Per(Doosan.2018)</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">##   승 패          무      승률
+## 1 58 29 무승부 없음 0.6666667</pre></td></tr></table>
+</div>
+</div>
 <p>(&ldquo;두산&rdquo;,&ldquo;한화&rdquo;,&ldquo;SK&rdquo;,&ldquo;LG&rdquo;,&ldquo;넥센&rdquo;) 5개 팀의 승률을 구하면 다음과 같습니다.</p>
-
-<pre><code>Topfive.team.2018&lt;-c(&quot;두산&quot;,&quot;한화&quot;,&quot;SK&quot;,&quot;LG&quot;,&quot;넥센&quot;)
-Topfive.team.2018.win.percentage&lt;-do.call(rbind,lapply(1:5,FUN = function(i){Yearly.Win.Per(data.cleaning(KBO.2018.half,&quot;2018&quot;,Topfive.team.2018[i]))}))
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Topfive.team.2018&lt;-c(&#34;두산&#34;,&#34;한화&#34;,&#34;SK&#34;,&#34;LG&#34;,&#34;넥센&#34;)
+Topfive.team.2018.win.percentage&lt;-do.call(rbind,lapply(1:5,FUN = function(i){Yearly.Win.Per(data.cleaning(KBO.2018.half,&#34;2018&#34;,Topfive.team.2018[i]))}))
 row.names(Topfive.team.2018.win.percentage) &lt;- Topfive.team.2018
-Topfive.team.2018.win.percentage
-</code></pre>
-
-<pre><code>##      승 패          무      승률
+Topfive.team.2018.win.percentage</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">##      승 패          무      승률
 ## 두산 58 29 무승부 없음 0.6666667
 ## 한화 52 37 무승부 없음 0.5842697
 ## SK   48 37           1 0.5647059
 ## LG   48 41           1 0.5393258
-## 넥센 46 46 무승부 없음 0.5000000
-</code></pre>
-
+## 넥센 46 46 무승부 없음 0.5000000</pre></td></tr></table>
+</div>
+</div>
 <p>이제 다른 비교 지표인 기대 승률을 구해보겠습니다. 기대 승률은 함수를 통해 구할 수 있습니다. 이 함수는 데이터와 팀이름을 인자로 받아, 팀이름을 홈팀과 원정팀일 때로 구분하고 각각 득점과 실점의 합을 구하고 그것을 기대 승률 공식에 대입하여 기대 승률, 총득점, 총실점을 반환합니다.</p>
-
-<pre><code>pythagorean.expectation&lt;-function(x,y){#x=data,y=teamname
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">pythagorean.expectation&lt;-function(x,y){#x=data,y=teamname
   team.data.home&lt;-x[x$홈팀==y,]
   team.data.away&lt;-x[x$원정팀==y,]
   Runs.score.home &lt;- team.data.home$홈팀점수
@@ -357,68 +489,124 @@ Topfive.team.2018.win.percentage
   expectancy.percentage &lt;- Total.Runs.score^2/(Total.Runs^2+Total.Runs.score^2)
   expectancy.table&lt;-data.frame(총득점=Total.Runs.score,총실점=Total.Runs,기대승률=expectancy.percentage)
   return(expectancy.table)
-}
-</code></pre>
-
+}</pre></td></tr></table>
+</div>
+</div>
 <h3 id="현재-상위-5개-팀의-2017년도-총득점-총실점-구해보기">현재 상위 5개 팀의 2017년도 총득점, 총실점 구해보기</h3>
 
 <p>이를 구하는 방법은 작년의 데이터를 기대 승률 함수에 적용합니다. 책에서와 같이 여기서 구한 총실점을 이번년도 총실점에도 그러할 것이라 가정합니다.</p>
-
-<pre><code>fiveteam.expectation.2017&lt;-do.call(rbind,lapply(1:5,FUN = function(i){pythagorean.expectation(data.cleaning(KBO.2017,&quot;2017&quot;,Topfive.team.2018[i]),Topfive.team.2018[i])}))
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">fiveteam.expectation.2017&lt;-do.call(rbind,lapply(1:5,FUN = function(i){pythagorean.expectation(data.cleaning(KBO.2017,&#34;2017&#34;,Topfive.team.2018[i]),Topfive.team.2018[i])}))
 row.names(fiveteam.expectation.2017) &lt;-Topfive.team.2018
-fiveteam.expectation.2017
-</code></pre>
-
-<pre><code>##      총득점 총실점  기대승률
+fiveteam.expectation.2017</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">##      총득점 총실점  기대승률
 ## 두산    849    678 0.6105973
 ## 한화    737    820 0.4468434
 ## SK      761    767 0.4960734
 ## LG      699    677 0.5159843
-## 넥센    789    764 0.5160937
-</code></pre>
-
+## 넥센    789    764 0.5160937</pre></td></tr></table>
+</div>
+</div>
 <p>이제 위에서 적용한 함수를 2018년도 데이터에도 적용해 상위 5개팀의 기대 승률을 구합니다.</p>
-
-<pre><code>Topfive.team.2018.expectation&lt;-do.call(rbind,lapply(1:5,FUN = function(i){pythagorean.expectation(data.cleaning(KBO.2018.half,&quot;2018&quot;,Topfive.team.2018[i]),Topfive.team.2018[i])}))
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Topfive.team.2018.expectation&lt;-do.call(rbind,lapply(1:5,FUN = function(i){pythagorean.expectation(data.cleaning(KBO.2018.half,&#34;2018&#34;,Topfive.team.2018[i]),Topfive.team.2018[i])}))
 row.names(Topfive.team.2018.expectation)&lt;-Topfive.team.2018
-Topfive.team.2018.expectation
-</code></pre>
-
-<pre><code>##      총득점 총실점  기대승률
+Topfive.team.2018.expectation</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">##      총득점 총실점  기대승률
 ## 두산    555    435 0.6194570
 ## 한화    438    441 0.4965871
 ## SK      480    405 0.5841415
 ## LG      503    458 0.5467238
-## 넥센    497    472 0.5257826
-</code></pre>
-
+## 넥센    497    472 0.5257826</pre></td></tr></table>
+</div>
+</div>
 <p>총실점을 전년도 것으로 놓고 전년도 포스트시즌 진출팀의 평균 승률인 57%를 맞추려면 시즌 종료까지 총 몇 득점을 더 해야 하는지 추정해보겠습니다. 추정 방법은 다음과 같이 기대 승률을 구하는 공식을 역추하는 함수를 통해서 득점을 추정하는 것입니다. 즉 전년도 총 실점과 전년도 포스트시즌 진출팀의 평균 승률을 인자로 받으면서 미지수인 총득점의 제곱 값을 <code>sqrt()</code> 함수로 풀어주는 것을 통해 목표득점을 추정해 볼 수 있습니다. 최종적으로는 위에서 구한 현재까지의 총득점과 목표득점 간의 차이를 통해 시즌 끝까지 가을 야구 진출하기위한 평균 승률을 달성하기 위한 요구 득점을 알아낼 수 있습니다.</p>
-
-<pre><code>Runs.score.estimate&lt;-function(x,y){#x=전년도총실점,y=전년도 포스트시즌진출팀 평균승률
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Runs.score.estimate&lt;-function(x,y){#x=전년도총실점,y=전년도 포스트시즌진출팀 평균승률
 a&lt;-sqrt(y/(1-y)*x^2)
 a&lt;-round(a)
 return(a)
 }
 Runs.score.estimate.2018&lt;-Runs.score.estimate(fiveteam.expectation.2017$총실점,win.percentage.mean)
 Runs.score.estimate.result&lt;-data.frame(현재득점=Topfive.team.2018.expectation$총득점,목표득점=Runs.score.estimate.2018,요구득점=Runs.score.estimate.2018-Topfive.team.2018.expectation$총득점,row.names = Topfive.team.2018)
-Runs.score.estimate.result
-</code></pre>
-
-<pre><code>##      현재득점 목표득점 요구득점
+Runs.score.estimate.result</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">##      현재득점 목표득점 요구득점
 ## 두산      555      781      226
 ## 한화      438      945      507
 ## SK        480      884      404
 ## LG        503      780      277
-## 넥센      497      880      383
-</code></pre>
-
+## 넥센      497      880      383</pre></td></tr></table>
+</div>
+</div>
 <p>이렇게 추정한 정보와 더불어 현재 기대 승률과 실제 승률 그리고 전년도 포스트시즌 진출팀의 평균 승률 간의 비교를 통해 상위 5개 팀의 가을 야구 가능성을 점쳐 볼 수 있습니다. 기대 승률과 평균 승률 간 비교하는 열은 전반기까지의 성적만으로도 포스트시즌에 가기에 충분한지 즉 기대 승률이 평균 승률과 같거나 높으면 전반기와 같은 득점과 실점 추세를 유지한다면 충분히 올라갈 수 있다는 의미합니다. 이어서 기대 승률과 실제 승률 간 비교 열은 전반기에 해당팀이 얼마나 전략적으로 잘해왔는지 혹은 운이 좋았는지를 말해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">table.result&lt;-cbind(Topfive.team.2018.win.percentage,Topfive.team.2018.expectation,Runs.score.estimate.result[,2:3],평균승률=win.percentage.mean,기대vs평균=Topfive.team.2018.expectation$기대승률&gt;win.percentage.mean,기대vs실제=Topfive.team.2018.expectation$기대승률&gt;Topfive.team.2018.win.percentage$승률)
 
-<pre><code>table.result&lt;-cbind(Topfive.team.2018.win.percentage,Topfive.team.2018.expectation,Runs.score.estimate.result[,2:3],평균승률=win.percentage.mean,기대vs평균=Topfive.team.2018.expectation$기대승률&gt;win.percentage.mean,기대vs실제=Topfive.team.2018.expectation$기대승률&gt;Topfive.team.2018.win.percentage$승률)
-
-table.result
-</code></pre>
-
+table.result</pre></td></tr></table>
+</div>
+</div>
 <h3 id="결과표">결과표</h3>
 
 <table>
@@ -564,12 +752,28 @@ table.result
 <h3 id="참고-10개-팀-결과">참고: 10개 팀 결과</h3>
 
 <p>다음 코드는 10개의 전체팀 결과를 보여줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Allteam&lt;-unique(KBO.2018.half$원정팀)[1:10]
 
-<pre><code>Allteam&lt;-unique(KBO.2018.half$원정팀)[1:10]
-
-Allteam.win.percentage&lt;-do.call(rbind,lapply(1:10,FUN = function(i){Yearly.Win.Per(data.cleaning(KBO.2018.half,&quot;2018&quot;,Allteam[i]))}))
-Allteam.expectation&lt;-do.call(rbind,lapply(1:10,FUN = function(i){pythagorean.expectation(data.cleaning(KBO.2018.half,&quot;2018&quot;,Allteam[i]),Allteam[i])}))
-Allteam.expectation.2017&lt;-do.call(rbind,lapply(1:10,FUN = function(i){pythagorean.expectation(data.cleaning(KBO.2017,&quot;2017&quot;,Allteam[i]),Allteam[i])}))
+Allteam.win.percentage&lt;-do.call(rbind,lapply(1:10,FUN = function(i){Yearly.Win.Per(data.cleaning(KBO.2018.half,&#34;2018&#34;,Allteam[i]))}))
+Allteam.expectation&lt;-do.call(rbind,lapply(1:10,FUN = function(i){pythagorean.expectation(data.cleaning(KBO.2018.half,&#34;2018&#34;,Allteam[i]),Allteam[i])}))
+Allteam.expectation.2017&lt;-do.call(rbind,lapply(1:10,FUN = function(i){pythagorean.expectation(data.cleaning(KBO.2017,&#34;2017&#34;,Allteam[i]),Allteam[i])}))
 
 Allteam.Runs.score.estimate.2018&lt;-Runs.score.estimate(Allteam.expectation.2017$총실점,win.percentage.mean)
 Allteam.Runs.score.estimate.result&lt;-data.frame(현재득점=Allteam.expectation$총득점,목표득점=Allteam.Runs.score.estimate.2018,요구득점=Allteam.Runs.score.estimate.2018-Allteam.expectation$총득점,row.names = Allteam)
@@ -577,10 +781,37 @@ Allteam.Runs.score.estimate.result&lt;-data.frame(현재득점=Allteam.expectati
 Allteam.table&lt;-cbind(Allteam.win.percentage,Allteam.expectation,Allteam.Runs.score.estimate.result[,2:3],평균승률=win.percentage.mean,기대vs평균=Allteam.expectation$기대승률&gt;win.percentage.mean,기대vs실제=Allteam.expectation$기대승률&gt;Allteam.win.percentage$승률)
 row.names(Allteam.table) &lt;- Allteam
 Allteam.table&lt;-Allteam.table[order(Allteam.table$승률,decreasing = TRUE),]
-Allteam.table
-</code></pre>
-
-<pre><code>##     승 패    무        승률      총득점   총실점   기대승률     목표득점
+Allteam.table</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">##     승 패    무        승률      총득점   총실점   기대승률     목표득점
 
 ## 두산 58 29 무승부 없음 0.6666667    555    435  0.6194570      781      
 ## 한화 52 37 무승부 없음 0.5842697    438    441  0.4965871      945      
@@ -603,9 +834,9 @@ Allteam.table
 ## 삼성     586      0.5704552      FALSE      FALSE
 ## 롯데     328      0.5704552      FALSE       TRUE
 ## KT      569      0.5704552      FALSE       TRUE
-## NC      495      0.5704552      FALSE      FALSE
-</code></pre>
-
+## NC      495      0.5704552      FALSE      FALSE</pre></td></tr></table>
+</div>
+</div>
     </div>
 
     
@@ -675,7 +906,7 @@ Allteam.table
 
   <span class="copyright-year">
     &copy;
-    2018
+    2019
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -690,16 +921,12 @@ Allteam.table
     </div>
   </div>
   
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
-  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
 
-<script></script>
-<script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
 <script type="text/javascript" src="/dist/even.min.js?v=3.1.1"></script>
   <script type="text/javascript">
     window.MathJax = {

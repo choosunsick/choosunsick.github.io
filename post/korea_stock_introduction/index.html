@@ -1,3 +1,12 @@
+
+
+There are two possible situations that led to this error:
+  1. You haven&#39;t copied the config.toml yet. See https://github.com/olOwOlo/hugo-theme-even#installation 
+  2. You have an incompatible update. See https://github.com/olOwOlo/hugo-theme-even/blob/master/CHANGELOG.md#300 
+
+有两种可能的情况会导致这个错误发生:
+  1. 你还没有复制 config.toml 参考 https://github.com/olOwOlo/hugo-theme-even/blob/master/README-zh.md#installation 
+  2. 你进行了一次不兼容的更新 参考 https://github.com/olOwOlo/hugo-theme-even/blob/master/CHANGELOG.md#300 
 <!DOCTYPE html>
 <html lang="UTF-8">
 <head>
@@ -44,7 +53,7 @@
 
 
 <link href="/dist/even.min.css?v=3.1.1" rel="stylesheet">
-<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
 
@@ -76,7 +85,7 @@
 
 <meta itemprop="datePublished" content="2018-08-31T15:42:21&#43;09:00" />
 <meta itemprop="dateModified" content="2018-08-31T15:42:21&#43;09:00" />
-<meta itemprop="wordCount" content="4657">
+<meta itemprop="wordCount" content="4729">
 
 
 
@@ -222,36 +231,83 @@
 <h3 id="주식-자료-읽어와서-수익률-구하기">주식 자료 읽어와서 수익률 구하기</h3>
 
 <p>먼저 5개 주식 데이터를 읽어옵니다. 저는 포스코, LG전자, SK하이닉스, 네이버, 현대건설을 선택했습니다. 포트폴리오를 구성하는 주식 데이터는 같은 기간을 뽑아 왔어도 거래 정지등의 이유로 자료의 숫자가 서로 다를 수 있습니다. 참고로 밑의 코드에서는 약 5년간의 일간 자료를 읽어옵니다. 데이터들의 숫자가 서로 다르기 때문에 월간형식으로 바꾸어줍니다. 그 외에 부족한 데이터가 있는 부분에 해당 자료의 평균값을 넣거나 결측치를 처리하는 다양한 방법으로 데이터의 수를 맞추어 줄 수 있습니다. 단 이런 방법들을 적용했음에도 데이터의 수가 서로 차이가 난다면 포트폴리오를 구성하는 종목을 바꿔야 합니다.</p>
-
-<pre><code>install.packages(&quot;xts&quot;)
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">install.packages(&#34;xts&#34;)
 library(xts)
-install.packages(&quot;quantmod&quot;)
+install.packages(&#34;quantmod&#34;)
 library(quantmod)
 
 read.file&lt;-function(x){#x=파일이름
-  path &lt;- &quot;../Korea_Stocks/Korea_Stocks_Full/&quot;
-  filename &lt;- paste(path,x,&quot;.csv&quot;,sep = &quot;&quot;)
+  path &lt;- &#34;../Korea_Stocks/Korea_Stocks_Full/&#34;
+  filename &lt;- paste(path,x,&#34;.csv&#34;,sep = &#34;&#34;)
   stockdata&lt;-read.csv(file = filename,header =T,stringsAsFactors = F)
-  colnames(stockdata)[1] &lt;-&quot;Date&quot;
-  stockdata &lt;- stockdata[which(stockdata$Date ==&quot;2013-07-01&quot;):which(stockdata$Date ==&quot;2018-07-31&quot;),]
+  colnames(stockdata)[1] &lt;-&#34;Date&#34;
+  stockdata &lt;- stockdata[which(stockdata$Date ==&#34;2013-07-01&#34;):which(stockdata$Date ==&#34;2018-07-31&#34;),]
   stockdata &lt;- as.xts(stockdata$Adj.Close,order.by=as.Date(stockdata$Date))
   stockdata &lt;- monthlyReturn(stockdata)
   return(stockdata)
-}
-
-</code></pre>
-
+}</pre></td></tr></table>
+</div>
+</div>
 <p>자료를 단순히 <code>read.csv()</code>함수로 읽어도 되지만, 디렉토리 문제를 피해가기 위해 새롭게 함수를 만들었습니다. 참고로 이 코드들은 CodeAndTool 파일을 중심으로 실행한 것으로 다른 환경에서 실행하려면 path를 변경해주셔야 합니다. 이 함수에서는 단순히 자료를 읽어오는 것과 함께 자료의 월율화가 이루어집니다. 월율화란 일간 자료를 월간 형식의 자료로 바꿔주는 것을 말합니다. 위 코드에서는 일간 수정 종가자료를 월간 수익률의 형식으로 바꿉니다. 이제 함수에 필요한 주식 코드만 입력하면 자료를 바로 읽어올 수 있게 됩니다.</p>
-
-<pre><code>stock_list &lt;- c(&quot;005490&quot;,&quot;066570&quot;,&quot;000660&quot;,&quot;035420&quot;,&quot;000720&quot;)
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">stock_list &lt;- c(&#34;005490&#34;,&#34;066570&#34;,&#34;000660&#34;,&#34;035420&#34;,&#34;000720&#34;)
 stock_data &lt;- do.call(cbind,lapply(stock_list,FUN = function(i){read.file(i)}))
-colnames(stock_data)&lt;- stock_list
-
-</code></pre>
-
+colnames(stock_data)&lt;- stock_list</pre></td></tr></table>
+</div>
+</div>
 <p>앞서 만든 <code>read.file()</code> 함수를 필요한 주식 코드별로 적용해 하나의 데이터로 만들어 줍니다. 데이터가 준비되었으니 투자 비율을 랜덤하게 적용해 단순 포트폴리오를 그려볼 수 있습니다.</p>
-
-<pre><code>install.packages(&quot;ggplot2&quot;)
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">install.packages(&#34;ggplot2&#34;)
 library(ggplot2)
 
 mu&lt;-matrix(colMeans(stock_data[,1:NCOL(stock_data)])*12,ncol = 1)
@@ -267,22 +323,48 @@ for (i in 1:500) {
   random_prets[i,1] &lt;- sum(mu*weights)
   random_pvols[i,1] &lt;- sqrt(t(weights)%*%(sigma%*%weights))
   p_random&lt;-data.frame(random_prets,random_pvols)
-  colnames(p_random) &lt;- c(&quot;pret&quot;,&quot;pvol&quot;)
+  colnames(p_random) &lt;- c(&#34;pret&#34;,&#34;pvol&#34;)
 }
 
-random_p&lt;-ggplot(data = p_random,aes(x = pvol,y = pret))+geom_point(color=&quot;red&quot;)+
-  labs(x = &quot;expected_volatility&quot;,y=&quot;expected_return&quot;)+theme(legend.position = &quot;none&quot;)
-random_p
-
-</code></pre>
-
+random_p&lt;-ggplot(data = p_random,aes(x = pvol,y = pret))+geom_point(color=&#34;red&#34;)+
+  labs(x = &#34;expected_volatility&#34;,y=&#34;expected_return&#34;)+theme(legend.position = &#34;none&#34;)
+random_p</pre></td></tr></table>
+</div>
+</div>
 <p>위 코드에서 포트폴리오의 평균 수익률과 공분산을 구해줍니다. 이것을 토대로 포트폴리오의 기대수익률과 분산의 계산을 반복해줍니다. 반복하는 이유는 가중치에 따라서 가능한 포트폴리오들이 다양하기 때문입니다. 가중치는 0~1 사이의 임의의 소수점으로 정해집니다. 여기서 가중치는 각 주식에 대한 투자 비율입니다. 이렇게 반복된 계산으로 구해진 기대 수익률(y)과 분산(x)의 집합들을 그리면 아래와 같이 나옵니다. 이 그래프를 무작위 포트폴리오가 그려진 것으로 단순 투자기회 집합이라 합니다. 참고로 아래의 그래프는 가중치가 무작위하게 정해지기 때문에 그릴 때 마다 점들의 위치가 달라집니다.</p>
 
 <p><img src="https://user-images.githubusercontent.com/19144813/44709797-73b0cf00-aae5-11e8-80d6-0d4be166dc2d.jpeg" alt="단순 투자기회 집합" /></p>
 
 <p>이제 최적의 투자기회 집합 즉 효율적 투자선(efficient frontier)을 그려보겠습니다. 효율적 투자선은 같은 위험 수준 대비 최대 기대수익률 또는 같은 수익률 대비 최소 위험 수준을 가지는 투자 집합들을 말합니다. 아래 코드에서 가중치 계산과 관련된 부분은 <a href="http://blog.naver.com/PostView.nhn?blogId=ggwlsrb&amp;logNo=220940357589&amp;parentCategoryNo=&amp;categoryNo=&amp;viewDate=&amp;isShowPopularPosts=false&amp;from=postView">ggwlsrb블로그</a>를 참조 했습니다.</p>
-
-<pre><code>n &lt;- 500
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">n &lt;- 500
 pvols&lt;-NULL
 prets&lt;-NULL
 weight_data &lt;- matrix(0,n,NCOL(stock_data))
@@ -305,17 +387,22 @@ calculate&lt;-function(x,n){#x=data
   }
   return(ptemp)
 }
-ptemp&lt;-calculate(stock_data,n)
+ptemp&lt;-calculate(stock_data,n)</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">p&lt;-ggplot(data = ptemp,aes(x = pvols,y = prets))+geom_point(color=&#34;blue&#34;)+
+  labs(x = &#34;expected_volatility&#34;,y=&#34;expected_return&#34;)+theme(legend.position = &#34;none&#34;)
 
-</code></pre>
-
-<pre><code>p&lt;-ggplot(data = ptemp,aes(x = pvols,y = prets))+geom_point(color=&quot;blue&quot;)+
-  labs(x = &quot;expected_volatility&quot;,y=&quot;expected_return&quot;)+theme(legend.position = &quot;none&quot;)
-
-p+annotate(&quot;text&quot;,x = c(ptemp$pvols[which.min(ptemp$pvols)],ptemp$pvols[which.max(ptemp$shape.ratio)]), y = c(ptemp$prets[which.min(ptemp$pvols)],ptemp$prets[which.max(ptemp$shape.ratio)]), label=c(&quot;MVP&quot;,&quot;MSP&quot;), col=c(&quot;black&quot;,&quot;red&quot;))
-
-</code></pre>
-
+p+annotate(&#34;text&#34;,x = c(ptemp$pvols[which.min(ptemp$pvols)],ptemp$pvols[which.max(ptemp$shape.ratio)]), y = c(ptemp$prets[which.min(ptemp$pvols)],ptemp$prets[which.max(ptemp$shape.ratio)]), label=c(&#34;MVP&#34;,&#34;MSP&#34;), col=c(&#34;black&#34;,&#34;red&#34;))</pre></td></tr></table>
+</div>
+</div>
 <p><img src="https://user-images.githubusercontent.com/19144813/44709792-701d4800-aae5-11e8-9d09-4ae602abff21.jpeg" alt="최적 투자기회 집합" /></p>
 
 <p>이 그래프는 앞서 본 단순 투자기회 집합 그래프와 달리 특정한 형태를 보이는데, 곡선처럼 보이지만 실제로는 일정하게 배치된 점들이 연결된 것입니다. 위의 두 그래프에서 하나의 점은 하나의 포트폴리오를 의미하는데, 점의 x, y 좌표는 그 포트폴리오의 위험 수준과 기대수익률을 의미합니다.</p>
@@ -328,19 +415,27 @@ p+annotate(&quot;text&quot;,x = c(ptemp$pvols[which.min(ptemp$pvols)],ptemp$pvol
 
 <p>이제 최적의 투자 비율일 때가 무작위로 투자 비율을 정했을 때보다 나은지 비교해보겠습니다.
 단순하게 투자 비율을 모두 같게 했을 때와 최대 샤프 비율일 때의 투자 비율과 기대수익률, 위험 수준 값을 비교하겠습니다. 아래의 코드는 투자 비율이 모두 20%일 때의 기대수익률과 위험 수준을 구하는 코드입니다.</p>
-
-<pre><code>t(matrix(0.2,ncol = 1,nrow = 5))%*%mu
-sqrt(t(matrix(0.2,ncol = 1,nrow = 5))%*%sigma%*%matrix(0.2,ncol = 1,nrow = 5))
-
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">t(matrix(0.2,ncol = 1,nrow = 5))%*%mu
+sqrt(t(matrix(0.2,ncol = 1,nrow = 5))%*%sigma%*%matrix(0.2,ncol = 1,nrow = 5))</pre></td></tr></table>
+</div>
+</div>
 <p>위 코드의 결과를 보면 기대수익률은 약 13%와 위험 수준은 16%가 나옵니다. 반면에 최대 샤프 비율 일때의 기대수익률과 위험 수준은 다음과 같습니다.</p>
-
-<pre><code>weight_data[which.max(ptemp$shape.ratio),]
-ptemp[which.max(ptemp$shape.ratio),]
-
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">weight_data[which.max(ptemp$shape.ratio),]
+ptemp[which.max(ptemp$shape.ratio),]</pre></td></tr></table>
+</div>
+</div>
 <p>위 코드에서 투자 비율은 약 15%, -2%, 55%, 26%, 5%로 나옵니다. 참고로 이때 투자 비율이 음수인 것은 공매도를 의미합니다. 이 투자 비율을 지닌 포트폴리오의 기대수익률은 약 20%이고 위험 수준은 약 17%입니다. 각각의 결과를 비교해보면, 기대수익률은 대략 7%가 올라갔지만, 위험 수준은 1%밖에 차이가 나지 않아 서로 비슷한 수준에서 머물고 있음을 확인할 수 있습니다.</p>
 
 <p>맨위의 예시를 적용해보면 각 주식에 200만원씩 투자하는 것보다 150만원, 0원, 550만원, 250만원, 50만원으로 투자를 하는게 비슷한 위험 수준을 가지면서 7% 더 높은 기대수익률을 얻을 수 있다는 것입니다. 이 비교에 따라 투자 비율을 최적화 하는 것이 임의로 투자 비율을 결정하는 것보다 더 좋은 선택인 것을 알 수 있습니다. 즉 포트폴리오의 최적화를 통해 같은 기대수익률 대비 최저 위험 수준 혹은 같은 위험 수준 대비 최대 기대수익률을 가진 포트폴리오들을 찾아볼 수 있습니다.</p>
@@ -414,7 +509,7 @@ ptemp[which.max(ptemp$shape.ratio),]
 
   <span class="copyright-year">
     &copy;
-    2018
+    2019
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -429,16 +524,12 @@ ptemp[which.max(ptemp$shape.ratio),]
     </div>
   </div>
   
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
-  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
 
-<script></script>
-<script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
 <script type="text/javascript" src="/dist/even.min.js?v=3.1.1"></script>
   <script type="text/javascript">
     window.MathJax = {
