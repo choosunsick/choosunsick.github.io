@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>KBO 경기에서 선수들의 기록 데이터 수집하고 분석하기 - Sunsick&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Sunsick" /><meta name="description" content="안녕하세요. LOPES 팀의 추선식 입니다. 이번에 저희 팀에서 KBO 사이트의 경기 리뷰와 관련된 자료를 파이썬(PYTHON)을 이용해 수집하는 코드를 작성했고 이를 공유" /><meta name="keywords" content="blog" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://choosunsick.github.io/post/kbo_data_wrangling/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="KBO 경기에서 선수들의 기록 데이터 수집하고 분석하기" />
+<meta property="og:description" content="안녕하세요. LOPES 팀의 추선식 입니다. 이번에 저희 팀에서 KBO 사이트의 경기 리뷰와 관련된 자료를 파이썬(PYTHON)을 이용해 수집하는 코드를 작성했고 이를 공유" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://choosunsick.github.io/post/kbo_data_wrangling/" /><meta property="article:published_time" content="2019-02-07T16:30:58&#43;09:00"/>
+<meta property="article:modified_time" content="2019-02-07T16:30:58&#43;09:00"/>
+
+<meta itemprop="name" content="KBO 경기에서 선수들의 기록 데이터 수집하고 분석하기">
+<meta itemprop="description" content="안녕하세요. LOPES 팀의 추선식 입니다. 이번에 저희 팀에서 KBO 사이트의 경기 리뷰와 관련된 자료를 파이썬(PYTHON)을 이용해 수집하는 코드를 작성했고 이를 공유">
+
+
+<meta itemprop="datePublished" content="2019-02-07T16:30:58&#43;09:00" />
+<meta itemprop="dateModified" content="2019-02-07T16:30:58&#43;09:00" />
+<meta itemprop="wordCount" content="3416">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="KBO 경기에서 선수들의 기록 데이터 수집하고 분석하기"/>
+<meta name="twitter:description" content="안녕하세요. LOPES 팀의 추선식 입니다. 이번에 저희 팀에서 KBO 사이트의 경기 리뷰와 관련된 자료를 파이썬(PYTHON)을 이용해 수집하는 코드를 작성했고 이를 공유"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">KBO 경기에서 선수들의 기록 데이터 수집하고 분석하기</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-02-07 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#준비작업-pipenv와-selenium-chrome-driver-설치">준비작업: pipenv와 selenium-chrome driver 설치</a></li>
+<li><a href="#한-경기의-데이터-수집하고-확인해보기">한 경기의 데이터 수집하고 확인해보기</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p>안녕하세요. LOPES 팀의 추선식 입니다. 이번에 저희 팀에서 KBO 사이트의 경기 리뷰와 관련된 자료를 파이썬(PYTHON)을 이용해 수집하는 코드를 작성했고 이를 공유하고자 합니다. 저희 팀에서 <a href="https://github.com/choosunsick/KBO_data">이전에 수집한 데이터</a>는 경기 결과를 수집했습니다. 그러나 이 자료만으로는 할 수 있는 분석에 한계가 있었습니다. 또한, 미국의 MLB 자료처럼 한국의 KBO 자료도 쉽게 찾아보고 다루기 위해 KBO 경기의 선수들 기록을 수집하는 <a href="https://github.com/LOPES-HUFS/KBO_Data_Wrangling">프로젝트</a>를 시작했습니다.
+ 위의 프로젝트에서 파이썬 코드로 데이터를 수집할 출처는 KBO 홈페이지의 경기 <a href="https://www.koreabaseball.com/Schedule/GameCenter/Main.aspx">리뷰 페이지</a>입니다. 데이터를 수집하는 파이썬 코드를 작동시키기에 앞서 준비작업이 필요합니다. 먼저 위 프로젝트의 링크로 들어가서 깃(git)이나 <a href="https://desktop.github.com/">깃허브 데스크톱</a>을 사용하여 이 프로젝트를 클론하거나 zip 파일로 다운로드해줍니다. 프로젝트의 파일들을 다운로드 한 이후 코드를 실행하는데 필요한 것들을 설치해야 합니다.</p>
+
+<h2 id="준비작업-pipenv와-selenium-chrome-driver-설치">준비작업: pipenv와 selenium-chrome driver 설치</h2>
+
+<p>윈도우에서 파이썬 가상환경, 셀레니움 크롬드라이버의 설치는 다음과 같습니다. 먼저 <a href="https://www.anaconda.com/download/#windows">아나콘다</a>로 파이썬을 설치합니다. 아나콘다를 통해 파이썬이 설치된 이후 pipenv와 셀레니움-크롬드라이버의 설치는 자세한 내용은 다음 <a href="https://github.com/LOPES-HUFS/KBO_Data_Wrangling/wiki/윈도우에-셀리리움-설치">링크</a>를 참고해 주시면 감사하겠습니다.
+ 우분투와 맥의 경우 가상환경의 설치는 <a href="https://pipenv.readthedocs.io/en/latest/">가상환경설치</a>를 참조하시면 됩니다. 이어서 우분투와 맥에서 셀레니움과 크롬드라이버의 설치입니다. 먼저 우분투에서 셀레니움과 크롬드라이버의 설치는 다음의 코드로 쉽게할 수 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">sudo apt-get install chromium-chromedriver
+sudo apt-get install python3-selenium</pre></td></tr></table>
+</div>
+</div>
+<p>맥에서 크롬드라이버 설치는 <a href="http://www.epistemology.pe.kr/2018/09/25/1153">셀레니움 크롬드라이버 설치</a>를 참조하시면 됩니다. 셀레니움과 크롬드라이버가 설치되어 가상환경에서 제대로 작동된다면 코드를 작동시키기 위한 준비는 끝났습니다. 준비작업에 대한 자세한 내용은 프로젝트의 <a href="https://github.com/LOPES-HUFS/KBO_Data_Wrangling/blob/master/README.md">README 파일</a>을 참고해주세요.</p>
+
+<h2 id="한-경기의-데이터-수집하고-확인해보기">한 경기의 데이터 수집하고 확인해보기</h2>
+
+<p>위에서 준비작업을 마쳤으면 가상환경에서 프로젝트를 실행시킬 수 있습니다. 먼저 이 프로젝트를 받은 폴더 위치(pipfile.lock 파일이 있는 위치)로 이동합니다. 그 다음 아래의 코드를 통해 가상환경을 실행하여 프로젝트에서 사용하는 패키지들을 받아줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">pipenv shell
+pipenv install</pre></td></tr></table>
+</div>
+</div>
+<p>가상환경이 실행되고 필요한 패키지들이 받아졌으면 이제 파이썬을 실행할 차례입니다. 맥이나 우분투에서는 아래의 코드로 가상환경에서 파이썬 3을 실행하실 수 있습니다. 윈도우에서는 conda를 기준으로 <code>python3</code>가 아닌 <code>python</code>을 쳐야 실행됩니다. 참고로 쥬피터 노트북으로 진행할 경우 아래의 코드에서 <code>python3</code> 대신 <code>jupyter notebook</code>을 치면 됩니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">#윈도우에서는 python
+python3</pre></td></tr></table>
+</div>
+</div>
+<p>이제 직접 경기를 수집해 보겠습니다. 예를 들어 2018년 10월 10일 KT와 롯데 간 첫 번째 경기를 수집해보겠습니다. 이 경기의 리뷰 내용을 가져와 데이터를 하나씩 확인하는 코드는 주피터 노트북 파일에 있기에 여기서는 단순히 확인만 하고 넘어가겠습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">import main
+import pandas as pd
+temp_data = main.get_data(&#34;20181010&#34;,&#34;KTLT1&#34;)</pre></td></tr></table>
+</div>
+</div>
+<p>위의 코드를 실행시키면 2018년 10월 10일 KT와 롯데 간의 1차전 경기 자료가 temp_data에 들어오게 됩니다. 아래는 해당 경기의 리뷰페이지에서 들어온 자료를 확인하는 코드입니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">pd.DataFrame(temp_data[&#39;20181010_KTLT1&#39;][&#39;scoreboard&#39;])
+temp_data[&#39;20181010_KTLT1&#39;][&#39;ETC_info&#39;]
+pd.DataFrame(temp_data[&#39;20181010_KTLT1&#39;][&#39;away_batter&#39;]).head()
+pd.DataFrame(temp_data[&#39;20181010_KTLT1&#39;][&#39;away_pitcher&#39;]).head()
+pd.DataFrame(temp_data[&#39;20181010_KTLT1&#39;][&#39;home_batter&#39;]).head()
+pd.DataFrame(temp_data[&#39;20181010_KTLT1&#39;][&#39;home_pitcher&#39;]).head()</pre></td></tr></table>
+</div>
+</div>
+<p>위에서 수집한 자료를 다루기 편하게 만들기 위해 일부 정보를 추가하고 변경해 보겠습니다. 아래의 코드를 작동시키면 원정팀과 홈팀의 타자 데이터와 투수 데이터가 어떻게 변했는지 확인할 수 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">temp = main.modify_data(temp_data)
+
+pd.DataFrame(temp[&#39;20181010_KTLT1&#39;][&#39;away_batter&#39;]).head()
+pd.DataFrame(temp[&#39;20181010_KTLT1&#39;][&#39;away_pitcher&#39;]).head()
+pd.DataFrame(temp[&#39;20181010_KTLT1&#39;][&#39;home_batter&#39;]).head()
+pd.DataFrame(temp[&#39;20181010_KTLT1&#39;][&#39;home_pitcher&#39;]).head()</pre></td></tr></table>
+</div>
+</div>
+<p>위에서 변경된 데이터를 확인하면 타자의 타격기록이 숫자로 범주화된 것을 확인할 수 있습니다. 한 타자가 한 이닝에 두 타석 들어올 경우가 있을 수 있기에 타격기록을 범주화하여 다루기 편하게 만들었습니다. 투수 데이터는 계산의 편의를 위해 이닝 열을 분리했습니다. 기존에 1이닝 이상인 경우 이닝의 정수 부분만 이닝 열로 두고 나머지 부분을 잔여이닝 열로 만들어 분리했습니다.</p>
+
+<p>##2018년 정규시즌 한화의 경기 자료로 분석해보기</p>
+
+<p>앞서 한 경기를 시범 삼아 수집해 보았으니 실제로 자료를 분석해보기 위해 2018년 한화의 정규시즌 경기를 모두 수집해 보겠습니다. 이미 2018년 한화의 경기를 수집한 결과가 sample 폴더에 Hanhwa_normalseason_2018.json 파일로 있습니다. 만약 직접 코드를 통해 자료를 만드실려면 쥬피터 노트북의 코드를 작동시키면 2018 정규시즌 한화의 경기 자료가 dict 형식으로 만들어집니다.
+이제 준비된 파일을 열어 약간의 처리 과정을 거치면 2018년 한화와 상대 팀의 타자, 투수 데이터가 만들 수 있습니다. 자세한 코드는 쥬피터 노트북에 있기에 일부만 소개하고 넘어가겠습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">#파일을 열어줍니다.
+temp_file_name = &#34;./sample/hanhwa_normalseason_2018.json&#34;
+
+with open(temp_file_name) as outfile:  
+    hanhwa_data = json.load(outfile)
+
+away_team = pd.DataFrame()
+home_team = pd.DataFrame()
+
+#away_batter와 home_batter 대신 away_pitcher와 home_pitcher를 넣으면 투수 데이터를 만들 수 있습니다.
+
+for i in hanhwa_data.keys():
+    away_team = away_team.append(pd.DataFrame(hanhwa_data[i][&#39;away_batter&#39;]),sort=True)
+    home_team = home_team.append(pd.DataFrame(hanhwa_data[i][&#39;home_batter&#39;]),sort=True)
+
+hanhwa_2018_all = pd.concat([away_team,home_team],ignore_index=True)
+hanhwa_2018_all = hanhwa_2018_all.fillna(0)
+
+hanhwa_batter = pd.DataFrame(hanhwa_2018_all,
+  columns=[&#39;경기날짜&#39;,&#39;선수명&#39;,&#39;포지션&#39;,&#39;팀&#39;,&#34;더블헤더여부&#34;,&#39;홈팀&#39;,&#39;원정팀&#39;,&#39;1&#39;,&#39;2&#39;,&#39;3&#39;,&#39;4&#39;,&#39;5&#39;,&#39;6&#39;,&#39;7&#39;,&#39;8&#39;,&#39;9&#39;,&#39;10&#39;,&#39;11&#39;,&#39;12&#39;,&#39;안타&#39;,&#39;타수&#39;,&#39;타율&#39;,&#39;타점&#39;,&#39;득점&#39;])
+
+#투수 데이터일 경우
+hanhwa_pitcher = pd.DataFrame(hanhwa_2018_all,
+  columns=[&#39;경기날짜&#39;,&#39;선수명&#39;,&#39;포지션&#39;,&#39;팀&#39;,&#39;더블헤더여부&#39;,&#39;홈팀&#39;,&#39;원정팀&#39;,&#39;등판&#39;, &#39;inning&#39;, &#39;restinning&#39;, &#39;승리&#39;,&#39;패배&#39;,&#39;무승부&#39;,&#39;세이브&#39;,&#39;홀드&#39;,&#39;삼진&#39;,&#39;4사구&#39;,&#39;실점&#39;,&#39;자책&#39;, &#39;타수&#39;, &#39;타자&#39;])</pre></td></tr></table>
+</div>
+</div>
+<p>위 코드를 작동시키고 나면 2018년 한화의 타자, 투수 데이터가 만들어집니다. 그럼 이 데이터로 어떤 분석을 할 수 있는지 알아보겠습니다. 간단하게 타자 개인의 타율부터 시작해서 안타, 득점, 타점의 개수와 1, 2, 3 루타와 홈런의 개수, 피삼진, 볼넷, 병살타의 개수, 출루율, 장타율 등을 구해볼 수 있습니다. 투수 쪽 기록 역시 방어율과 투구 수, 상대 타자수, 총 이닝, 피홈런 수, 피안타 수, 홀드, 세이브, 삼진과 볼넷의 개수, 이닝당 투구 수, 승률 등을 구할 수 있습니다. 개인뿐만 아니라 팀 전체의 기록도 분석할 수 있습니다. 그럼 간단하게 팀 타율과 팀 방어율을 구해 보겠습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"># 한화의 팀타율을 구해봅니다.
+# 한화의 상대팀 또한 자료에 들어있기 때문에 오직 한화 소속 선수들의 자료를 얻기위해 조건을 걸어줍니다.
+
+h = sum(hanhwa_batter[hanhwa_batter[&#39;팀&#39;] == &#34;한화&#34;][&#39;안타&#39;])
+ab = sum(hanhwa_batter[hanhwa_batter[&#39;팀&#39;] == &#34;한화&#34;][&#39;타수&#39;])
+# 팀타율
+h/ab
+
+# 팀 자책점을 구합니다.
+er = sum(hanhwa_pitcher[hanhwa_pitcher[&#39;팀&#39;] == &#34;한화&#34;][&#39;자책&#39;])*9
+
+# 팀 총 이닝을 구합니다.
+# 잔여 이닝 열을 사용할 때는 /3을 해주어야 원래의 분수 값이 나옵니다.
+ip = (sum(hanhwa_pitcher[hanhwa_pitcher[&#39;팀&#39;] == &#34;한화&#34;][&#39;inning&#39;].astype(int))+
+    sum(hanhwa_pitcher[hanhwa_pitcher[&#39;팀&#39;] == &#34;한화&#34;][&#39;restinning&#39;].astype(int))/3)
+
+# 팀방어율
+er/ip</pre></td></tr></table>
+</div>
+</div>
+<p>지금까지 KBO에서 자료를 수집하고 이것을 통해 간단한 분석을 해봤습니다. 참고로 2018년 한화의 데이터 뿐만 아니라 2010년부터 2018년까지의 정규시즌 자료를 정리한 파일이 data 폴더에 있습니다. 덧붙여 <a href="http://lopes.hufs.ac.kr">저희 홈페이지</a>에서 진행하고 있는 다른 프로젝트들도 확인해 보실 수 있습니다. 긴 글 읽어주셔서 감사합니다.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Sunsick</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-02-07</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/sweep_fun_introduction/">
+            <span class="next-text nav-default">R에서 서로 다른 크기의 행렬 연산</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.google.com/" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/choosunsick" class="iconfont icon-github" title="github"></a>
+  <a href="https://choosunsick.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Sunsick</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="/lib/mathjax/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

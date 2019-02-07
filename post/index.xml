@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Tue, 09 Oct 2018 15:52:32 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 07 Feb 2019 16:30:58 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>KBO 경기에서 선수들의 기록 데이터 수집하고 분석하기</title>
+      <link>https://choosunsick.github.io/post/kbo_data_wrangling/</link>
+      <pubDate>Thu, 07 Feb 2019 16:30:58 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/kbo_data_wrangling/</guid>
+      <description>안녕하세요. LOPES 팀의 추선식 입니다. 이번에 저희 팀에서 KBO 사이트의 경기 리뷰와 관련된 자료를 파이썬(PYTHON)을 이용해 수집하는 코드를 작성했고 이를 공유</description>
+    </item>
     
     <item>
       <title>R에서 서로 다른 크기의 행렬 연산</title>
