@@ -6,10 +6,19 @@
     <description>Recent content on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Thu, 07 Feb 2019 16:30:58 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jul 2019 17:16:03 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>R을 사용해 모든 주식 종목 데이터를 하나의 파일로 저장하기</title>
+      <link>https://choosunsick.github.io/post/stockdata_to_hdf5/</link>
+      <pubDate>Wed, 10 Jul 2019 17:16:03 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/stockdata_to_hdf5/</guid>
+      <description>안녕하세요. 스터디 그룹 LOPES의 추선식 입니다. 이전의 프로젝트 소개글에서 언급한 것과 같이 이번에는 HDF5 형식에 대한 간략한 소개와 함께 R을 사용해 HDF5 파일을</description>
+    </item>
     
     <item>
       <title>KBO 경기에서 선수들의 기록 데이터 수집하고 분석하기</title>

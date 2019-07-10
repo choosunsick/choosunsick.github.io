@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>R을 사용해 모든 주식 종목 데이터를 하나의 파일로 저장하기 - Sunsick&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Sunsick" /><meta name="description" content="안녕하세요. 스터디 그룹 LOPES의 추선식 입니다. 이전의 프로젝트 소개글에서 언급한 것과 같이 이번에는 HDF5 형식에 대한 간략한 소개와 함께 R을 사용해 HDF5 파일을" /><meta name="keywords" content="blog" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://choosunsick.github.io/post/stockdata_to_hdf5/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="R을 사용해 모든 주식 종목 데이터를 하나의 파일로 저장하기" />
+<meta property="og:description" content="안녕하세요. 스터디 그룹 LOPES의 추선식 입니다. 이전의 프로젝트 소개글에서 언급한 것과 같이 이번에는 HDF5 형식에 대한 간략한 소개와 함께 R을 사용해 HDF5 파일을" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://choosunsick.github.io/post/stockdata_to_hdf5/" /><meta property="article:published_time" content="2019-07-10T17:16:03&#43;09:00"/>
+<meta property="article:modified_time" content="2019-07-10T17:16:03&#43;09:00"/>
+
+<meta itemprop="name" content="R을 사용해 모든 주식 종목 데이터를 하나의 파일로 저장하기">
+<meta itemprop="description" content="안녕하세요. 스터디 그룹 LOPES의 추선식 입니다. 이전의 프로젝트 소개글에서 언급한 것과 같이 이번에는 HDF5 형식에 대한 간략한 소개와 함께 R을 사용해 HDF5 파일을">
+
+
+<meta itemprop="datePublished" content="2019-07-10T17:16:03&#43;09:00" />
+<meta itemprop="dateModified" content="2019-07-10T17:16:03&#43;09:00" />
+<meta itemprop="wordCount" content="3399">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="R을 사용해 모든 주식 종목 데이터를 하나의 파일로 저장하기"/>
+<meta name="twitter:description" content="안녕하세요. 스터디 그룹 LOPES의 추선식 입니다. 이전의 프로젝트 소개글에서 언급한 것과 같이 이번에는 HDF5 형식에 대한 간략한 소개와 함께 R을 사용해 HDF5 파일을"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">R을 사용해 모든 주식 종목 데이터를 하나의 파일로 저장하기</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-07-10 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#hdf-hierarchical-data-format-파일-형식이란">HDF(Hierarchical Data Format) 파일 형식이란 ?</a></li>
+<li><a href="#튜토리얼">튜토리얼</a></li>
+<li><a href="#r에서-hdf5-파일-형식-만들기">R에서 HDF5 파일 형식 만들기</a></li>
+<li><a href="#hdf5-파일의-데이터-구조-그룹과-데이터-셋">HDF5 파일의 데이터 구조 - 그룹과 데이터 셋</a></li>
+<li><a href="#만들어진-hdf5-파일에서-데이터-읽어오기">만들어진 HDF5 파일에서 데이터 읽어오기</a></li>
+<li><a href="#전체-주식-종목-하나의-파일로-만들기-압축하기">전체 주식 종목 하나의 파일로 만들기 - 압축하기</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p>안녕하세요. 스터디 그룹 LOPES의 추선식 입니다. 이전의 <a href="https://github.com/LOPES-HUFS/Korea_Stocks_for_HDF5">프로젝트</a> 소개글에서 언급한 것과 같이 이번에는 HDF5 형식에 대한 간략한 소개와 함께 R을 사용해 HDF5 파일을 만드는 튜토리얼을 소개하겠습니다. 간단한 튜토리얼에 이어서 전체 주식 종목을 하나의 HDF5 파일로 만들면서 HDF5 파일이 가지는 가장 큰 장점인 압축하는 기능에 대해서 알아볼 것입니다. 그럼 본격적으로 들어가기에 앞서서 HDF5 파일 형식이 무엇인지부터 알아보겠습니다.</p>
+
+<h2 id="hdf-hierarchical-data-format-파일-형식이란">HDF(Hierarchical Data Format) 파일 형식이란 ?</h2>
+
+<p>HDF 파일은 데이터를 저장하는 형식 중 하나입니다. 이 HDF 파일은 계층적 데이터 형식(Hierarchical Data Format)이란 이름으로 데이터를 그룹(group)과 데이터 셋(dataset)으로 만들어 계층적으로 저장합니다. 이 형식의 최근 버전인 HDF5는 현재 <a href="https://www.hdfgroup.org/solutions/hdf5/">HDF그룹</a>에서 관리하고 있습니다. HDF5 형식의 데이터 관리 방식은 마치 폴더와 파일의 구조와 유사합니다. HDF5 형식이 주식 종목 데이터를 저장하는 과정을 폴더와 파일에 비유하자면 다음과 같습니다.</p>
+
+<p>HDF5 형식의 그룹(group) 구조는 KOSPI와 KOSDAQ 을 분리하는 분류용 폴더입니다. 이후 주식 종목의 데이터가 그룹 안에 데이터 셋(dataset)으로 입력되는데 이는 종목들이 KOSPI와 KOSDAQ 에 따라 분류되어 파일로 저장되는 과정입니다. 즉 데이터 셋 구조는 폴더에 저장되는 파일들이라 생각할 수 있습니다. HDF5 파일은 KOSPI와 KOSDAQ 을 모두 포함하는 전체 주식이란 폴더로 생각할 수 있습니다. 이런 구조에 따라 데이터들이 저장되기 때문에 HDF5 형식은 대용량 자료를 단일한 파일로 다룰 수 있다는 장점이 있습니다. 현재 HDF5형식은 R과 파이썬(Python) 등에서도 호환되어 쉽게 읽고 데이터를 다룰 수 있습니다. 이 형식에 대해 좀 더 자세히 알고 싶다면 <a href="https://support.hdfgroup.org/HDF5/whatishdf5.html">링크</a>를 참조해주시기 바랍니다.</p>
+
+<h2 id="튜토리얼">튜토리얼</h2>
+
+<p>이제 본격적으로 R을 사용해 HDF5 형식의 파일을 만드는 방법에 대해 알아보겠습니다. R에서 HDF5 형식을 다루기 위해서는 &lsquo;rhdf5&rsquo; 라는 패키지가 필요합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">install.packages(&#34;BiocManager&#34;)
+BiocManager::install(&#34;rhdf5&#34;)
+library(rhdf5)</pre></td></tr></table>
+</div>
+</div>
+<p>위와 같은 코드로 rhdf5 패키지를 설치할 수 있습니다. 패키지 설치가 완료되면 이제 R에서 HDF5 파일을 다룰 기본적인 준비가 된 것입니다.</p>
+
+<h2 id="r에서-hdf5-파일-형식-만들기">R에서 HDF5 파일 형식 만들기</h2>
+
+<p>이제 주식 종목 데이터들을 하나의 HDF5 파일로 만들 차례입니다. 전체 주식 종목을 하나로 만들기에 앞서서 먼저 삼성전자(005930)와 LG전자(066570)의 주식 종목 데이터를 가지고 HDF5 파일로 저장하는 과정을 살펴보겠습니다. 참고로 전체 주식 종목을 가지고 HDF5 파일로 만들 경우 약 90MB 정도의 크기가 나오게 됩니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">stock_005930 &lt;- read.csv(file =  &#34;https://raw.githubusercontent.com/LOPES-HUFS/Korea_Stocks_for_HDF5/master/stocks/005930.csv&#34;, header = TRUE, stringsAsFactors=FALSE)
+
+str(stock_005930)
+
+stock_005930$Date &lt;- as.integer(paste(substr(stock_005930$Date,1,4),substr(stock_005930$Date,6,7),substr(stock_005930$Date,9,10),sep = &#34;&#34;))</pre></td></tr></table>
+</div>
+</div>
+<p>우선 삼성전자와 LG전자의 종목 데이터를 깃허브에서 <code>read.csv()</code> 함수로 읽어와 줍니다. <code>str()</code> 함수를 통해 데이터의 행과 열을 확인할 수 있는데, 이때 데이터의 행과 열이 너무 많거나 적지는 않은지 확인해야 합니다. 나중에 파일의 압축과 관련하거나 HDF5 파일을 쓰거나 읽을 때 데이터의 크기가 문제가 될 수 있기 때문에 데이터의 행과 열을 확인해야 합니다. 각 열의 데이터 타입 역시 확인할 수 있는데 날짜가 string 형식이므로 나중에 파일의 크기를 줄이기 위해 &ldquo;-&ldquo;를 지우고 int 타입으로 만들어 모든 열의 데이터 타입을 통일 시켜 줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">h5createFile(&#34;sample.h5&#34;)</pre></td></tr></table>
+</div>
+</div>
+<p>이제 주식 종목을 읽어왔으니 저장할 HDF5 파일을 만들 차례입니다. 새로운 HDF5 파일을 만드는 방식은 <code>h5createFile(&quot;파일이름&quot;)</code> 함수를 사용합니다. 이 함수가 정상적으로 작동했다면 결괏값으로 TRUE가 나오는데, 만약 FALSE가 결과로 나온다면 같은 이름의 HDF5 파일이 존재하는 경우로 에러가 발생한 경우입니다.</p>
+
+<h2 id="hdf5-파일의-데이터-구조-그룹과-데이터-셋">HDF5 파일의 데이터 구조 - 그룹과 데이터 셋</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"># 그룹 구조 만들기
+h5createGroup(&#34;sample.h5&#34;,&#34;KOSPI&#34;)
+
+# 그룹 안의 데이터 셋으로 저장하는 방식
+h5write(as.matrix(stock_005930), file=&#34;sample.h5&#34;,name=&#34;KOSPI/kor_005930&#34;)
+
+# 데이터 셋으로 바로 저장하는 방식
+h5write(c(&#34;Date&#34;,&#34;Open&#34;,&#34;High&#34;,&#34;Low&#34;,&#34;Close&#34;,&#34;Volume&#34;,&#34;Adj_Close&#34;), file=&#34;sample.h5&#34;,name=&#34;colnames&#34;)</pre></td></tr></table>
+</div>
+</div>
+<p>HDF5 파일에는 그룹과 데이터 셋이란 두 가지 구조가 있습니다. 그룹은 데이터 셋들을 저장하는 상위 구조의 역할을 합니다. 그룹은 <code>h5createGroup(&quot;만든 HDF5 파일&quot;, &quot;그룹의 이름&quot;)</code> 코드를 통해 만들 수 있습니다. 그룹을 만들었으니 이제 그룹 안에 데이터 셋으로 종목 데이터를 집어넣을 차례입니다. <code>h5write(데이터, file=&quot;HDF5 파일이름&quot;,name=&quot;그룹이름/데이터셋이름&quot;)</code>으로 데이터를 그룹 안에 넣을 수 있습니다. 물론 그룹을 만들지 않고, 데이터를 여러 데이터 셋 집합으로 저장할 수도 있습니다. 세부 분류가 필요 없으면 데이터 셋의 집합으로 데이터를 저장하는 방식이 파일의 크기를 줄이는 데 도움이 됩니다. 이 방식으로 주식 종목 데이터의 열 이름을 저장해 볼 것입니다. 기존에 그룹 안에 데이터를 넣을 때와 차이점은 이름에 그룹 경로를 포함하느냐 차이만 나고 같은 방식으로 <code>h5write()</code> 함수로 데이터 셋을 만들 수 있습니다. 같은 방식으로 LG전자 데이터를 입력할 수 있습니다.</p>
+
+<h2 id="만들어진-hdf5-파일에서-데이터-읽어오기">만들어진 HDF5 파일에서 데이터 읽어오기</h2>
+
+<p>이제 위에서 만든 h5 파일인 &ldquo;sample.h5&rdquo;를 열어서 입력한 데이터를 다루어 보겠습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">sample &lt;- H5Fopen(&#34;sample.h5&#34;)
+
+# 입력된 데이터 셋 확인
+h5ls(sample)</pre></td></tr></table>
+</div>
+</div>
+<p><code>H5Fopen(&quot;HDF5파일이름&quot;)</code> 함수를 사용해서 만든 sample 파일을 읽어와 줍니다. 읽어온 파일을 변수로 저장해주고 <code>h5ls()</code> 함수로 저장된 데이터 셋들을 확인해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">samsung_sample &lt;- data.frame(sample$KOSPI$kor_005930)
+colnames(samsung_sample) &lt;- sample$colnames
+samsung_sample$Date &lt;- paste(substr(samsung_sample$Date,1,4),&#34;-&#34;,substr(samsung_sample$Date,5,6),&#34;-&#34;,substr(samsung_sample$Date,7,8),sep = &#34;&#34;)
+
+# HDF5 파일을 닫기
+h5closeAll()</pre></td></tr></table>
+</div>
+</div>
+<p>읽어온 삼성전자의 데이터를 새로운 데이터 프레임으로 만들어줍니다. 그룹 안에 있는 데이터 셋은 $, $ 두 번 쓰거나, &ldquo;그룹 이름/데이터 셋 이름&rdquo; 같은 데이터 셋의 경로로 확인할 수 있습니다. 이어서 해당 데이터의 열 정보인 colnames로 열 이름을 다시 입력해 줍니다. 기존의 종목 데이터로 만들기 위해 숫자로 된 날짜 정보를 &ldquo;-&ldquo;를 사용해 복원해줍니다. 그러면 기존의 종목 데이터와 같은 모습을 되찾는 것을 확인할 수 있습니다. 이렇게 데이터를 원래대로 만들었으니 만들기위해 열었던 HDF5 파일을 닫아줍니다.</p>
+
+<h2 id="전체-주식-종목-하나의-파일로-만들기-압축하기">전체 주식 종목 하나의 파일로 만들기 - 압축하기</h2>
+
+<p>이제 튜토리얼이 끝났으니 전체 주식 종목을 하나의 파일로 저장해보겠습니다. 튜토리얼에서처럼 2가지의 주식 종목만으로는 HDF5 파일의 형식이 가진 장점인 대용량 자료를 하나의 파일에 저장한다는 장점을 잘 보여 주지 못합니다. 전체 주식 종목 데이터를 깃허브에서 하나하나 읽어올 경우 시간이 오래 걸리기 때문에 폴더에서 파일을 읽어오도록 변경합니다. 따라서 이 프로젝트를 클론하거나 zip으로 받아서 이용해야 합니다. 또한, 다운로드한 주식 파일들을 R의 디렉터리 환경을 다운로드한 파일로 변경해주어야 합니다. <code>setwd(&quot;자료를 다운로드한 위치/Korea_Stocks_for_HDF5&quot;)</code> 이 코드를 통해 R의 기본 디렉터리를 변경해주면 이후 다운로드한 주식 종목 데이터를 읽어오는 과정에서 문제가 생기지 않습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">h5createFile(&#34;all_stock.h5&#34;)
+
+create_h5_file &lt;- function(stocknumber){
+    file_path &lt;- paste(&#34;./stocks&#34;,stocknumber,sep=&#34;&#34;)
+    stock_temp &lt;- read.csv(file = file_path, header = TRUE, stringsAsFactors=FALSE)
+    stock_temp$Date &lt;- as.integer(paste(substr(stock_temp$Date,1,4),substr(stock_temp$Date,6,7),substr(stock_temp$Date,9,10),sep = &#34;&#34;))
+    data_name &lt;- paste(&#34;kor_&#34;,stocknumber,sep = &#34;&#34;)
+    h5createDataset(&#34;all_stock.h5&#34;, data_name, c(NROW(stock_temp),7),storage.mode = &#34;integer&#34;,level=9)
+    h5write(as.matrix(stock_temp), file=&#34;all_stock.h5&#34;,name=data_name)
+  }
+
+stock_list &lt;- dir(&#34;./stocks&#34;)
+lapply(stock_list,function(x){create_h5_file(x)})</pre></td></tr></table>
+</div>
+</div>
+<p>전체 종목 데이터를 하나의 파일로 만들 때는 튜토리얼에서 진행한 HDF5 파일을 만드는 과정과 차이가 있습니다. 그 차이점은 데이터 입력에서 스스로 데이터 셋의 구조를 정한다는 점입니다. 데이터 셋의 구조를 정하는 이유는 가장 최적의 파일 크기로 만들기 위해서 입니다. 전체 주식 종목 데이터 파일들의 크기를 다 더하면 약 340MB가 됩니다. 이 파일들을 하나의 파일로 병합하더라도 최소 200MB가 넘어갈 것입니다. 그렇다면 파일의 크기를 최적화하려면 어떻게 해야할 까요?</p>
+
+<p>파일 크기 최적화에 대한 해답은 압축 기능을 사용하는 것입니다. 데이터를 저장할 때 <code>h5createDataset()</code> 함수를 사용해 데이터 셋의 구조와 압축과 관련된 요소들을 직접 설정할 수 있습니다. 일반적으로 파일의 크기에 관련되는 요소는 입력 데이터의 크기와 데이터 저장 타입과 압축률 등이 있습니다. 여기서 데이터의 크기는 정해져 있는 경우가 많기에 저장 타입과 압축률에 대하여 스스로 설정할 수 있습니다. 예를 들면, 문자열보다는 integer 형식의 데이터 타입이 더 크기가 작기 때문에 입력 데이터의 형식을 integer로 통일합니다. 데이터 형식을 통일 시켜주면, 이제 저장 타입을 integer로 설정할 수 있습니다. 그리고, 최적의 파일 크기를 만들기 위해 압축률을 최고 수준인 9로 설정합니다.</p>
+
+<p>이렇게 압축을 통해 파일의 크기를 최적화하는 것은 HDF5 파일이 가진 가장 큰 장점 중의 하나입니다. 만약 압축하지 않는다면 파일의 크기는 약 200MB 정도의 크기를 가지게 됩니다. 그러나 모든 주식 종목의 데이터를 최적의 데이터 셋 구조로 설정하여 파일로 만들 경우 약 90MB 정도 크기가 나오게 됩니다. 이렇게 만들어진 결과물은 &ldquo;all_stock.h5&rdquo; 파일에 담겨 있습니다.</p>
+
+<p>지금까지 R을 사용해 HDF5 파일을 만들고 사용하는 방법과 HDF5 파일의 꽃인 압축 기능에 대해 알아보았습니다. 다음에는 HDF5 파일을 만드는 과정에서 알아두면 좋은 팁들을 소개해보겠습니다. 긴 글 읽어주셔서 감사합니다.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Sunsick</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-07-10</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/kbo_data_wrangling/">
+            <span class="next-text nav-default">KBO 경기에서 선수들의 기록 데이터 수집하고 분석하기</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.google.com/" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/choosunsick" class="iconfont icon-github" title="github"></a>
+  <a href="https://choosunsick.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Sunsick</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="/lib/mathjax/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
