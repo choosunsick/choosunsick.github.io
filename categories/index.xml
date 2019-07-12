@@ -10,5 +10,23 @@
 	<atom:link href="https://choosunsick.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
+    <item>
+      <title>Data Analysis</title>
+      <link>https://choosunsick.github.io/categories/data-analysis/</link>
+      <pubDate>Wed, 10 Jul 2019 17:16:03 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/categories/data-analysis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>https://choosunsick.github.io/categories/r/</link>
+      <pubDate>Wed, 10 Jul 2019 17:16:03 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/categories/r/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
