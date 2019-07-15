@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-07-10T17:16:03&#43;09:00" />
 <meta itemprop="dateModified" content="2019-07-10T17:16:03&#43;09:00" />
-<meta itemprop="wordCount" content="3399">
+<meta itemprop="wordCount" content="3392">
 
 
 
@@ -228,7 +228,7 @@ h5createGroup(&#34;sample.h5&#34;,&#34;KOSPI&#34;)
 h5write(as.matrix(stock_005930), file=&#34;sample.h5&#34;,name=&#34;KOSPI/kor_005930&#34;)
 
 # 데이터 셋으로 바로 저장하는 방식
-h5write(c(&#34;Date&#34;,&#34;Open&#34;,&#34;High&#34;,&#34;Low&#34;,&#34;Close&#34;,&#34;Volume&#34;,&#34;Adj_Close&#34;), file=&#34;sample.h5&#34;,name=&#34;colnames&#34;)</pre></td></tr></table>
+h5write(colnames(stock_005930), file=&#34;sample.h5&#34;,name=&#34;colnames&#34;)</pre></td></tr></table>
 </div>
 </div>
 <p>HDF5 파일에는 그룹과 데이터 셋이란 두 가지 구조가 있습니다. 그룹은 데이터 셋들을 저장하는 상위 구조의 역할을 합니다. 그룹은 <code>h5createGroup(&quot;만든 HDF5 파일&quot;, &quot;그룹의 이름&quot;)</code> 코드를 통해 만들 수 있습니다. 그룹을 만들었으니 이제 그룹 안에 데이터 셋으로 종목 데이터를 집어넣을 차례입니다. <code>h5write(데이터, file=&quot;HDF5 파일이름&quot;,name=&quot;그룹이름/데이터셋이름&quot;)</code>으로 데이터를 그룹 안에 넣을 수 있습니다. 물론 그룹을 만들지 않고, 데이터를 여러 데이터 셋 집합으로 저장할 수도 있습니다. 세부 분류가 필요 없으면 데이터 셋의 집합으로 데이터를 저장하는 방식이 파일의 크기를 줄이는 데 도움이 됩니다. 이 방식으로 주식 종목 데이터의 열 이름을 저장해 볼 것입니다. 기존에 그룹 안에 데이터를 넣을 때와 차이점은 이름에 그룹 경로를 포함하느냐 차이만 나고 같은 방식으로 <code>h5write()</code> 함수로 데이터 셋을 만들 수 있습니다. 같은 방식으로 LG전자 데이터를 입력할 수 있습니다.</p>
@@ -258,13 +258,11 @@ h5ls(sample)</pre></td></tr></table>
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
-</span><span class="lnt">6
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">samsung_sample &lt;- data.frame(sample$KOSPI$kor_005930)
 colnames(samsung_sample) &lt;- sample$colnames
-samsung_sample$Date &lt;- paste(substr(samsung_sample$Date,1,4),&#34;-&#34;,substr(samsung_sample$Date,5,6),&#34;-&#34;,substr(samsung_sample$Date,7,8),sep = &#34;&#34;)
-
+stock_005930$Date&lt;-as.integer(gsub(&#34;-&#34;,&#34;&#34;,stock_005930$Date))
 # HDF5 파일을 닫기
 h5closeAll()</pre></td></tr></table>
 </div>
@@ -296,9 +294,9 @@ h5closeAll()</pre></td></tr></table>
 create_h5_file &lt;- function(stocknumber){
     file_path &lt;- paste(&#34;./stocks&#34;,stocknumber,sep=&#34;&#34;)
     stock_temp &lt;- read.csv(file = file_path, header = TRUE, stringsAsFactors=FALSE)
-    stock_temp$Date &lt;- as.integer(paste(substr(stock_temp$Date,1,4),substr(stock_temp$Date,6,7),substr(stock_temp$Date,9,10),sep = &#34;&#34;))
+    stock_temp$Date &lt;- as.integer(gsub(&#34;-&#34;,&#34;&#34;,stock_temp$Date))
     data_name &lt;- paste(&#34;kor_&#34;,stocknumber,sep = &#34;&#34;)
-    h5createDataset(&#34;all_stock.h5&#34;, data_name, c(NROW(stock_temp),7),storage.mode = &#34;integer&#34;,level=9)
+    h5createDataset(&#34;all_stock.h5&#34;, data_name, dim(stock_temp),storage.mode = &#34;integer&#34;,level=9)
     h5write(as.matrix(stock_temp), file=&#34;all_stock.h5&#34;,name=data_name)
   }
 
