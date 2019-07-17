@@ -6,10 +6,19 @@
     <description>Recent content in Data Analysis on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Wed, 10 Jul 2019 17:16:03 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jul 2019 17:21:17 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/categories/data-analysis/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>R을 사용해 HDF5 파일로 만들고 데이터 관리하기</title>
+      <link>https://choosunsick.github.io/post/make_hdf_5_for_r/</link>
+      <pubDate>Wed, 17 Jul 2019 17:21:17 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/make_hdf_5_for_r/</guid>
+      <description>R로 HDF5 파일 만들기 안녕하세요. 스터디 그룹 LOPES의 추선식 입니다. 오늘은 저번에 소개한 프로젝트에 이어 R을 사용해 데이터를 HDF5 파일로 저장하는 방법을 소개</description>
+    </item>
     
     <item>
       <title>R을 사용해 모든 주식 종목 데이터를 하나의 파일로 저장하기</title>
