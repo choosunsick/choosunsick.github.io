@@ -3,6 +3,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://choosunsick.github.io/post/automatic_voicekit_operation/</loc>
+    <lastmod>2019-09-08T17:20:30+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/post/make_voicekit/</loc>
+    <lastmod>2019-09-08T16:30:30+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://choosunsick.github.io/post/make_hdf_5_for_r/</loc>
     <lastmod>2019-07-17T17:21:17+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -73,7 +87,7 @@
   
   <url>
     <loc>https://choosunsick.github.io/post/</loc>
-    <lastmod>2019-07-17T17:21:17+09:00</lastmod>
+    <lastmod>2019-09-08T17:20:30+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -87,7 +101,7 @@
   
   <url>
     <loc>https://choosunsick.github.io/</loc>
-    <lastmod>2019-07-17T17:21:17+09:00</lastmod>
+    <lastmod>2019-09-08T17:20:30+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

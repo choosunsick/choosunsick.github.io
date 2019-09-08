@@ -6,10 +6,28 @@
     <description>Recent content on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Wed, 17 Jul 2019 17:21:17 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 08 Sep 2019 17:20:30 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>구글 Voice Kit 부팅 시 바로 실행하기</title>
+      <link>https://choosunsick.github.io/post/automatic_voicekit_operation/</link>
+      <pubDate>Sun, 08 Sep 2019 17:20:30 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/automatic_voicekit_operation/</guid>
+      <description>라즈베리파이 터미널 환경과 개인 노트북 터미널 환경 연결하기 Google Voice Kit을 자동으로 실행시키는 작업에 앞서 라즈베리파이의 실행을 본인의 노트북에서 진행하기 위한</description>
+    </item>
+    
+    <item>
+      <title>구글 보이스 킷을 조립해보자 !</title>
+      <link>https://choosunsick.github.io/post/make_voicekit/</link>
+      <pubDate>Sun, 08 Sep 2019 16:30:30 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/make_voicekit/</guid>
+      <description>이번에 시간이 없어서 그동안 조립하지 못했던 Google AIY Voice Kit을 조립해 보았습니다. Google AIY Voice Kit은 음성인식 AI입니다. 현재 AI 스피커는 구글 홈, 네이버의 클로바</description>
+    </item>
     
     <item>
       <title>R을 사용해 HDF5 파일로 만들고 데이터 압축하기</title>

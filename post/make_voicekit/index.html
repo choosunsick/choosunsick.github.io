@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>구글 보이스 킷을 조립해보자 ! - Sunsick&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Sunsick" /><meta name="description" content="이번에 시간이 없어서 그동안 조립하지 못했던 Google AIY Voice Kit을 조립해 보았습니다. Google AIY Voice Kit은 음성인식 AI입니다. 현재 AI 스피커는 구글 홈, 네이버의 클로바" /><meta name="keywords" content="blog, R, Data Analysis" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://choosunsick.github.io/post/make_voicekit/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="구글 보이스 킷을 조립해보자 !" />
+<meta property="og:description" content="이번에 시간이 없어서 그동안 조립하지 못했던 Google AIY Voice Kit을 조립해 보았습니다. Google AIY Voice Kit은 음성인식 AI입니다. 현재 AI 스피커는 구글 홈, 네이버의 클로바" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://choosunsick.github.io/post/make_voicekit/" /><meta property="article:published_time" content="2019-09-08T16:30:30&#43;09:00"/>
+<meta property="article:modified_time" content="2019-09-08T16:30:30&#43;09:00"/>
+
+<meta itemprop="name" content="구글 보이스 킷을 조립해보자 !">
+<meta itemprop="description" content="이번에 시간이 없어서 그동안 조립하지 못했던 Google AIY Voice Kit을 조립해 보았습니다. Google AIY Voice Kit은 음성인식 AI입니다. 현재 AI 스피커는 구글 홈, 네이버의 클로바">
+
+
+<meta itemprop="datePublished" content="2019-09-08T16:30:30&#43;09:00" />
+<meta itemprop="dateModified" content="2019-09-08T16:30:30&#43;09:00" />
+<meta itemprop="wordCount" content="2461">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="구글 보이스 킷을 조립해보자 !"/>
+<meta name="twitter:description" content="이번에 시간이 없어서 그동안 조립하지 못했던 Google AIY Voice Kit을 조립해 보았습니다. Google AIY Voice Kit은 음성인식 AI입니다. 현재 AI 스피커는 구글 홈, 네이버의 클로바"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Choo&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Choo&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">구글 보이스 킷을 조립해보자 !</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-09-08 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#조립-과정">조립 과정</a></li>
+<li><a href="#보이스-킷-음성-테스트-하기">보이스 킷 음성 테스트 하기</a></li>
+<li><a href="#라즈베리파이-설정하기">라즈베리파이 설정하기</a></li>
+<li><a href="#구글-클라우드-api-설정하기">구글 클라우드 API 설정하기</a></li>
+<li><a href="#google-voice-kit-실제로-작동하기">google voice kit 실제로 작동하기</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p>이번에 시간이 없어서 그동안 조립하지 못했던 Google AIY Voice Kit을 조립해 보았습니다. Google AIY Voice Kit은 음성인식 AI입니다. 현재 AI 스피커는 구글 홈, 네이버의 클로바, 카카오미니 등 여러 가지 제품이 있습니다. 이 중 구글 홈과 같은 음성인식 AI 스피커의 음성인식 기술의 원류를 Google AIY Voice Kit에서 찾아 볼 수 있습니다. 현재 Google AIY Voice Kit은 최신 버전 Google AIY Voice Kit 2가 나와 있는 상태입니다. 아쉽게도 이번에 제가 조립할 Google AIY Voice Kit은 최신 버전이 아닌 초창기 버전의 것입니다. 조립하기에 앞서 요즘에 나오는 Voice Kit 제품에는 작은 드라이버와 충전기를 빼고는 필요한 것들이 다 키트 내에 포함되어 있지만, 구 버전의 것에는 <img src="https://user-images.githubusercontent.com/19144813/64485106-0a66ae80-d257-11e9-9996-2f007490b235.jpeg" alt="라즈베리파이" />를 별도로 구매해야 했습니다. 나아가 <img src="https://user-images.githubusercontent.com/19144813/64485141-85c86000-d257-11e9-8618-84cd81de595f.jpeg" alt="라즈베리파이 충전기" />는 역시 별도 구매해야하지만 휴대폰 충전기로도 대체할 수 있습니다.</p>
+
+<h2 id="조립-과정">조립 과정</h2>
+
+<p>먼저 제품 상자와 내용물을 살펴보겠습니다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/19144813/64485200-6251e500-d258-11e9-90ab-3d3e0d3aa244.jpeg" alt="보이스 킷 상자" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/19144813/64485213-962d0a80-d258-11e9-804c-d9ba2cb0d279.jpeg" alt="조립 부품들" /></p>
+
+<p>사진에서는 많은 부품이 있는 것처럼 보이지만 실제로는 그렇게 많은 부품이 있지 않기 때문에 조립하는 것은 어렵지 않습니다. 키트 상자 안에 그림으로 설명된 설명서가 함께 동봉되어 있으며, <a href="https://www.youtube.com/watch?v=HER_885yVDM">유튜브</a>에서 자세한 조립 동영상도 찾아볼 수 있습니다. 그 외 <a href="https://aiyprojects.withgoogle.com/voice/">구글 AIY 프로젝트의 공식 사이트</a>에서도 자세한 조립 방법과 순서를 살펴보실 수 있습니다. 조립을 시작하기 전에 빠진 부품 없이 모든 부품이 다 있는지 확인하고 조립을 시작해봅시다.</p>
+
+<p>음성 인식 보드를 설명서를 보고 조립해줍니다.
+<img src="https://user-images.githubusercontent.com/19144813/64485374-ffae1880-d25a-11e9-90b6-571f9f27c9d5.jpeg" alt="음성 인식 보드" /></p>
+
+<p>음성 인식 보드에 라즈베리파이를 장착합니다.
+<img src="https://user-images.githubusercontent.com/19144813/64485385-28361280-d25b-11e9-8bea-55f8cb82f2dc.jpeg" alt="라즈베리파이 장착" /></p>
+
+<p>보드에 스피커에 연결할 커넥터를 장착합니다.
+<img src="https://user-images.githubusercontent.com/19144813/64485389-3c7a0f80-d25b-11e9-8262-193ac9a0a993.jpeg" alt="커넥터 장착" /></p>
+
+<p>보드를 보호할 상자를 조립합니다.
+<img src="https://user-images.githubusercontent.com/19144813/64485395-5ddafb80-d25b-11e9-8552-6263c29cdcea.jpeg" alt="상자 조립" /></p>
+
+<p>상자 안에 보드를 넣어줍니다.
+<img src="https://user-images.githubusercontent.com/19144813/64485406-78ad7000-d25b-11e9-9a31-c4f31f96774c.jpeg" alt="상자와 보드 스피커 합체" /></p>
+
+<p>상자에 버튼을 붙여줍니다.
+<img src="https://user-images.githubusercontent.com/19144813/64485496-831c3980-d25c-11e9-8c94-22cbe839d29b.jpeg" alt="버튼 장착" /></p>
+
+<p>조립 완성
+<img src="https://user-images.githubusercontent.com/19144813/64485504-98916380-d25c-11e9-80a1-ca561f141114.jpeg" alt="완성" /></p>
+
+<p>보이스 킷의 조립이 끝났다면, 제품에 키보드, 마우스, 모니터(HDMI 단자)를 연결해주고 전원선을 꽂아 라즈베리파이를 부팅해서 작동시켜줍니다. 보이스 킷이 작동되면 라즈베리파이의 기본설정을 하게 되는데 이 때 국적과 시간대를 한국과 서울로 시작하면 와이파이를 인식하지 못 하기 때문에 일단 영국과 런던으로 맞추어 줍니다. 차후에 와이파이가 연결된 이후 라즈베리파이의 설정을 통해 국적과 시간대를 재조정할 수 있으니 걱정말고 영국으로 설정하셔도 됩니다.</p>
+
+<h2 id="보이스-킷-음성-테스트-하기">보이스 킷 음성 테스트 하기</h2>
+
+<p>이제 보이스 킷의 조립이 제대로 되었는지 기능을 시험해 볼 차례입니다. 가장 먼저 마이크와 스피커의 기능을 검사하는 check audio를 눌러 줍니다. 이 때 터미널의 메세지에 playing a test sound가 나오면 오디오 테스트 시작됩니다.</p>
+
+<p><a href="https://user-images.githubusercontent.com/19144813/64485512-bb237c80-d25c-11e9-92a6-ef694d7e9f4e.png">test 정상작동</a></p>
+
+<p>만약 위의 사진과 같은 화면이 아니라 사운드 카드가 설치되지 않았다는 터미널에 에러 메세지가 나올 경우 아래의 코드를 통해 문제를 해결할 수 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"># config.txt를 수정
+sudo pico /boot/config.txt
+
+# config.txt 맨 아래에 코드 추가 이후 컨트롤 x와 y를 눌러서 config.txt 변경 사항을 저장
+dtoverlay=googlevoicehat-soundcard
+
+# 리부트
+sudo reboot -h now</pre></td></tr></table>
+</div>
+</div>
+<p>새로운 터미널에서 위의 코드 입력을 마치면 재부팅이 됩니다. 재부팅 이후 다시 바탕화면이 보이면 check audio를 눌러서 다시 한번 마이크와 스피커를 테스트해 줍니다. 위의 사진과 같이 오디오 테스트가 정상적으로 작동하면 터미널에서 출력되는 요청에 따라서 테스트를 진행하게 됩니다.</p>
+
+<h2 id="라즈베리파이-설정하기">라즈베리파이 설정하기</h2>
+
+<p>오디오 기능에 문제가 없다면, 라즈베리파이의 설정을 통해 지역과 시간대를 알맞게 변경할 차례입니다. 설정 변경에 앞서 라즈베리파이의 모듈들을 업데이트와 업그레이드를 진행해 줍니다. 업데이트와 업그레이드 과정은 생각보다 오랜 시간이 걸립니다. 업데이트와 업그레이드가 끝난다면 이어서 한글 폰트를 설치해줍니다. 아래는 그 방법입니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">sudo apt-get update
+sudo apt-get upgrade
+
+# 한글 폰트 설치 코드
+
+sudo apt-get install ibus ibus-hangul fonts-unfonts-core</pre></td></tr></table>
+</div>
+</div>
+<p>한글 폰트가 설치되면 다시 원래의 국적과 시간대로 돌아올 차례입니다. 라즈베리파이 설정 변경 방법은 다음과 같습니다. 바탕화면의 라즈베리파이 모양을 누르고 preferences의 Raspberry Pi Configuration의 Localization을 선택해 줍니다. 이제 Set Locale과 Set Timezone 등의 설정을 한국으로 변경해줍니다. 변경된 설정을 적용하기 위해 리부트를 눌러줍니다. 재부팅이 되면 본래 한국과 서울의 시간대로 돌아온 것을 확인하실 수 있습니다.</p>
+
+<h2 id="구글-클라우드-api-설정하기">구글 클라우드 API 설정하기</h2>
+
+<p>설정을 변경했다면, 이제 보이스 킷 실행까지 한 단계만 남았습니다. 남은 것은 구글 클라우드 API 설정 및 적용입니다. 구글 클라우드의 API 설정은 굳이 라즈베리파이 내에서 진행할 필요가 없습니다. 본인의 pc나 노트북에서 <a href="https://console.cloud.google.com/">링크</a>로 가서 구글에 로그인합니다. 로그인 되면 프로젝트 선택 후 새로운 프로젝트(NEW PROJECT)를 클릭해 줍니다. 새로운 프로젝트의 이름을 설정해 만들었다면 이제 해당 프로젝트를 클릭하여 선택해 줍니다.  이 프로젝트에서 google assistant API를 설정해 줍니다. API 및 서비스 사용자 설정에 들어가서 &ldquo;google assistant&rdquo;를 검색해줍니다. 검색 결과로 google assistant API를 클릭하고 사용설정을 눌러줍니다.
+이제 API 사용을 위한 사용자 인증 정보를 만들어야 합니다. 사용자 인증 정보 만들기를 눌르면 3 가지 목록이 나오는데 이 중 0Auth 클라이언트 ID를 눌러줍니다. 클라이언트 ID를 만들기 위해 동의 화면 구성을 눌러 제품 이름과 이메일 등의 정보를 입력 후 저장한 다음 애플리케이션 유형에 기타를 누르고 이름을 입력해 ID를 생성해줍니다. 생성한 클라이언트 ID를 옆에 다운로드 버튼을 눌러줍니다. 클라이언트 ID가 json 형식으로 다운로드되면 이 파일을 본인의 이메일로 보내줍니다. 다시 라즈베리파이로 이동해서 클라이언트 ID가 담긴 json 파일을 내려받아 줍니다. 내려받은 json 파일의 이름을 assistant.json으로 변경한 뒤 라즈베리파이의 home/pi에 넣어줍니다.</p>
+
+<h2 id="google-voice-kit-실제로-작동하기">google voice kit 실제로 작동하기</h2>
+
+<p>구글 보이스 킷 사용을 위한 기본 설정은 이제 모두 끝났습니다. 이제 보이스 킷이 실제 작동하는 것을 확인해볼 차례입니다. 보이스 킷은 예제 파일을 통해 실행할 수 있습니다. 터미널을 열고 아래의 코드를 통해 예제 파일을 실행할 수 있습니다. 여러 예제(demo) 파일 중 하나를 선택해서 보이스 킷의 기능을 작동시킬 수 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">cd /home/pi/AIY-projects-python/src/examples/voice
+
+python3 assistant_library_demo.py</pre></td></tr></table>
+</div>
+</div>
+<p>위의 코드를 실행하면 웹 페이지에 AIY projects의 구글 엑세스 관련 요청이 나옵니다. 여기서 허용을 눌러주면 이제 인공지능 스피커를 테스트해 볼 수 있습니다. OK google이라는 시동 어를 말하고 궁금한 영어 문장들을 말하면 발음이 정확할 경우 그에 대해 대답을 해줍니다.</p>
+
+<p>이상으로 보이스 킷 조립기를 마칩니다. 이어서 다음 글에서는 구글 보이스 킷을 라즈베리파이 부팅 시 자동으로 실행하는 방식에 대해 소개하겠습니다.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Sunsick</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-09-08</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/automatic_voicekit_operation/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">구글 Voice Kit 부팅 시 바로 실행하기</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/make_hdf_5_for_r/">
+            <span class="next-text nav-default">R을 사용해 HDF5 파일로 만들고 데이터 압축하기</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.google.com/" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/choosunsick" class="iconfont icon-github" title="github"></a>
+  <a href="https://choosunsick.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Sunsick</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="/lib/mathjax/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
