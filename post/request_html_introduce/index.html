@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-09-30T15:50:02&#43;09:00" />
 <meta itemprop="dateModified" content="2019-09-30T15:50:02&#43;09:00" />
-<meta itemprop="wordCount" content="1320">
+<meta itemprop="wordCount" content="1802">
 
 
 
@@ -180,6 +180,8 @@ pip install lxml</pre></td></tr></table>
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">import requests
@@ -191,7 +193,9 @@ temp_url = &#39;https://www.koreabaseball.com/Schedule/GameCenter/Main.aspx?game
 
 temp = requests.get(temp_url)
 soup = BeautifulSoup(temp.text, &#39;lxml&#39;)
-soup.find_all(&#39;table&#39;)</pre></td></tr></table>
+soup.find_all(&#39;table&#39;)
+
+[]</pre></td></tr></table>
 </div>
 </div>
 <p>위 코드의 결과와 같이 Requests를 사용했을 때는 결과가 아무런 값도 없는 빈 리스트임을 확인할 수 있습니다. 만약에 입력한 주소의 자료를 가져왔다면 해당 주소의 리뷰 페이지에 있는 첫 번째 테이블인 스코어보드에 대한 정보가 보여야 합니다. 보시다싶이 Request 패키지로는 자료를 가져오는 데 실패했습니다만, 셀레니움과 크롬드라이버를 설치해서 이용하면 자료를 가져올 수 있습니다. 그러나 셀레니움과 크롬드라이버를 사용하기 전에 Request_html 패키지를 사용해서 정보를 가져와 봅시다.</p>
@@ -199,18 +203,44 @@ soup.find_all(&#39;table&#39;)</pre></td></tr></table>
 <h2 id="requset-html-패키지를-통해-자료-가져오기">Requset_html 패키지를 통해 자료 가져오기</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">session = HTMLSession()
 r = session.get(temp_url)
 r.html.render()
 soup = BeautifulSoup(r.html.html, &#34;lxml&#34;)
-soup.find_all(&#39;table&#39;)[0]</pre></td></tr></table>
+soup.find_all(&#39;table&#39;)[0]
+
+&lt;table class=&#34;tbl&#34; id=&#34;tblScordboard1&#34;&gt;
+&lt;colgroup&gt;
+&lt;col width=&#34;35%&#34;/&gt;
+&lt;col width=&#34;65%&#34;/&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt; &lt;/th&gt;
+&lt;th&gt;TEAM&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;&lt;td class=&#34;lose&#34;&gt;패&lt;/td&gt;&lt;th&gt;&lt;span class=&#34;logo&#34;&gt;&lt;img alt=&#34;&#34; src=&#34;//crdfcowjurxm984864.cdn.ntruss.com/resources/images/emblem/regular/2018/initial_HT.png&#34;/&gt;&lt;/span&gt;0승 1패 0무&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;win&#34;&gt;승&lt;/td&gt;&lt;th&gt;&lt;span class=&#34;logo&#34;&gt;&lt;img alt=&#34;&#34; src=&#34;//crdfcowjurxm984864.cdn.ntruss.com/resources/images/emblem/regular/2018/initial_OB.png&#34;/&gt;&lt;/span&gt;1승 0패 0무&lt;/th&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</pre></td></tr></table>
 </div>
 </div>
 <p>먼저 <code>HTMLSession()</code> 코드로 세션을 열어줍니다. 이 작업은 마치 셀레니움과 크롬드라이버를 사용할 때 크롬드라이버의 위치를 선택해 잡아주는 것이랑 똑같은 것입니다. 이어서 <code>session.get()</code>은 셀레니움과 크롬드라이버에서 <code>driver.get()</code>의 역할과 같습니다. 가장 중요한 자바스크립트로 구성된 페이지를 푸는 것은 <code>r.html.render()</code> 코드로 이루어집니다. 참고로 render 기능을 처음 사용할 때에는 자신의 홈 디렉토리에 pyppeteer와 같은 Chromium을 설치해주어야 합니다. 마지막 코드 결과를 보면 셀레니움과 크롬드라이버가 없이도 리뷰 페이지의 테이블 내용이 가져와 진것을 확인할 수 있습니다.</p>
