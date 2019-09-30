@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-09-30T15:50:02&#43;09:00" />
 <meta itemprop="dateModified" content="2019-09-30T15:50:02&#43;09:00" />
-<meta itemprop="wordCount" content="1802">
+<meta itemprop="wordCount" content="1813">
 
 
 
@@ -181,20 +181,18 @@ pip install lxml</pre></td></tr></table>
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
-</span><span class="lnt">12
 </span></pre></td>
 <td class="lntd">
-<pre class="chroma">import requests
-from requests_html import HTMLSession
-from bs4 import BeautifulSoup
-import lxml
+<pre class="chroma">&gt;&gt;&gt; import requests
+&gt;&gt;&gt; from requests_html import HTMLSession
+&gt;&gt;&gt; from bs4 import BeautifulSoup
+&gt;&gt;&gt; import lxml
 
-temp_url = &#39;https://www.koreabaseball.com/Schedule/GameCenter/Main.aspx?gameDate=20100327&amp;gameId=20100327HTOB0&amp;section=REVIEW&#39;
+&gt;&gt;&gt; temp_url = &#39;https://www.koreabaseball.com/Schedule/GameCenter/Main.aspx?gameDate=20100327&amp;gameId=20100327HTOB0&amp;section=REVIEW&#39;
 
-temp = requests.get(temp_url)
-soup = BeautifulSoup(temp.text, &#39;lxml&#39;)
-soup.find_all(&#39;table&#39;)
-
+&gt;&gt;&gt; temp = requests.get(temp_url)
+&gt;&gt;&gt; soup = BeautifulSoup(temp.text, &#39;lxml&#39;)
+&gt;&gt;&gt; soup.find_all(&#39;table&#39;)
 []</pre></td></tr></table>
 </div>
 </div>
@@ -220,15 +218,13 @@ soup.find_all(&#39;table&#39;)
 </span><span class="lnt">15
 </span><span class="lnt">16
 </span><span class="lnt">17
-</span><span class="lnt">18
 </span></pre></td>
 <td class="lntd">
-<pre class="chroma">session = HTMLSession()
-r = session.get(temp_url)
-r.html.render()
-soup = BeautifulSoup(r.html.html, &#34;lxml&#34;)
-soup.find_all(&#39;table&#39;)[0]
-
+<pre class="chroma">&gt;&gt;&gt; session = HTMLSession()
+&gt;&gt;&gt; r = session.get(temp_url)
+&gt;&gt;&gt; r.html.render()
+&gt;&gt;&gt; soup = BeautifulSoup(r.html.html, &#34;lxml&#34;)
+&gt;&gt;&gt; soup.find_all(&#39;table&#39;)[0]
 &lt;table class=&#34;tbl&#34; id=&#34;tblScordboard1&#34;&gt;
 &lt;colgroup&gt;
 &lt;col width=&#34;35%&#34;/&gt;
