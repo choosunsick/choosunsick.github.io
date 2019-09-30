@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Sun, 08 Sep 2019 17:20:30 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 30 Sep 2019 15:50:02 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Request_html 패키지 소개</title>
+      <link>https://choosunsick.github.io/post/request_html_introduce/</link>
+      <pubDate>Mon, 30 Sep 2019 15:50:02 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/request_html_introduce/</guid>
+      <description>안녕하세요. LOPES 팀의 추선식 입니다. 이번에 기존의 프로젝트를 개선하면서 자료를 수집하는 데 좋은 패키지를 찾아서 소개를 해볼까 합니다. 제가 소개할 패키지는 Re</description>
+    </item>
     
     <item>
       <title>구글 Voice Kit 부팅 시 바로 실행하기</title>

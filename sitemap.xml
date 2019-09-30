@@ -3,6 +3,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://choosunsick.github.io/post/request_html_introduce/</loc>
+    <lastmod>2019-09-30T15:50:02+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://choosunsick.github.io/post/automatic_voicekit_operation/</loc>
     <lastmod>2019-09-08T17:20:30+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -87,7 +94,7 @@
   
   <url>
     <loc>https://choosunsick.github.io/post/</loc>
-    <lastmod>2019-09-08T17:20:30+09:00</lastmod>
+    <lastmod>2019-09-30T15:50:02+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -101,7 +108,7 @@
   
   <url>
     <loc>https://choosunsick.github.io/</loc>
-    <lastmod>2019-09-08T17:20:30+09:00</lastmod>
+    <lastmod>2019-09-30T15:50:02+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
