@@ -3,6 +3,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://choosunsick.github.io/post/r_programming_grammar/</loc>
+    <lastmod>2020-01-17T17:43:41+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/post/r_structure/</loc>
+    <lastmod>2020-01-17T17:42:53+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/post/r_install/</loc>
+    <lastmod>2020-01-17T17:39:27+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://choosunsick.github.io/post/request_html_introduce/</loc>
     <lastmod>2019-09-30T15:50:02+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -73,6 +94,13 @@
   </url>
   
   <url>
+    <loc>https://choosunsick.github.io/tags/1%EB%B2%88/</loc>
+    <lastmod>2020-01-17T17:43:41+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://choosunsick.github.io/categories/</loc>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -94,27 +122,77 @@
   
   <url>
     <loc>https://choosunsick.github.io/post/</loc>
-    <lastmod>2019-09-30T15:50:02+09:00</lastmod>
+    <lastmod>2020-01-17T17:43:41+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://choosunsick.github.io/categories/r/</loc>
-    <lastmod>2019-07-17T17:21:17+09:00</lastmod>
+    <lastmod>2020-01-17T17:43:41+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/tags/r-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%80%EC%9E%85/</loc>
+    <lastmod>2020-01-17T17:39:27+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/tags/r-%EC%84%A4%EC%B9%98/</loc>
+    <lastmod>2020-01-17T17:39:27+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/tags/r-%EC%B4%88%EC%8B%AC%EC%9E%90%EB%A5%BC-%EC%9C%84%ED%95%9C-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%82%AC%EC%9A%A9%EB%B2%95-1/</loc>
+    <lastmod>2020-01-17T17:42:53+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/tags/r-%EC%B4%88%EC%8B%AC%EC%9E%90%EB%A5%BC-%EC%9C%84%ED%95%9C-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%82%AC%EC%9A%A9%EB%B2%95-2/</loc>
+    <lastmod>2020-01-17T17:43:41+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/tags/r%EB%A1%9C-%EB%94%A5%EB%9F%AC%EB%8B%9D%ED%95%98%EA%B8%B0/</loc>
+    <lastmod>2020-01-17T17:43:41+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://choosunsick.github.io/</loc>
-    <lastmod>2019-09-30T15:50:02+09:00</lastmod>
+    <lastmod>2020-01-17T17:43:41+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://choosunsick.github.io/tags/</loc>
+    <lastmod>2020-01-17T17:43:41+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/tags/%EA%B8%B0%EC%B4%88/</loc>
+    <lastmod>2020-01-17T17:43:41+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/tags/%EA%B8%B0%EC%B4%88-%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95/</loc>
+    <lastmod>2020-01-17T17:39:27+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

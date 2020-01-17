@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>R_programming_grammar - Sunsick&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Sunsick" /><meta name="description" content="1.2 R 사용시 필요한 대표적인 기초 문법 1.2.1 함수 함수는 특정 동작을 수행하는 블럭입니다. 다른 객체로 값을 전달하거나 계산을 하거나 등의 기능을 처리한 후 그 값을 반환합" /><meta name="keywords" content="blog, R, Data Analysis" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://choosunsick.github.io/post/r_programming_grammar/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="R_programming_grammar" />
+<meta property="og:description" content="1.2 R 사용시 필요한 대표적인 기초 문법 1.2.1 함수 함수는 특정 동작을 수행하는 블럭입니다. 다른 객체로 값을 전달하거나 계산을 하거나 등의 기능을 처리한 후 그 값을 반환합" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://choosunsick.github.io/post/r_programming_grammar/" /><meta property="article:published_time" content="2020-01-17T17:43:41&#43;09:00"/>
+<meta property="article:modified_time" content="2020-01-17T17:43:41&#43;09:00"/>
+
+<meta itemprop="name" content="R_programming_grammar">
+<meta itemprop="description" content="1.2 R 사용시 필요한 대표적인 기초 문법 1.2.1 함수 함수는 특정 동작을 수행하는 블럭입니다. 다른 객체로 값을 전달하거나 계산을 하거나 등의 기능을 처리한 후 그 값을 반환합">
+
+
+<meta itemprop="datePublished" content="2020-01-17T17:43:41&#43;09:00" />
+<meta itemprop="dateModified" content="2020-01-17T17:43:41&#43;09:00" />
+<meta itemprop="wordCount" content="2608">
+
+
+
+<meta itemprop="keywords" content="R로 딥러닝하기,1번,기초,R 초심자를 위한 간단한 사용법 2," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="R_programming_grammar"/>
+<meta name="twitter:description" content="1.2 R 사용시 필요한 대표적인 기초 문법 1.2.1 함수 함수는 특정 동작을 수행하는 블럭입니다. 다른 객체로 값을 전달하거나 계산을 하거나 등의 기능을 처리한 후 그 값을 반환합"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Choo&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Choo&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">R_programming_grammar</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-01-17 </span>
+        <div class="post-category">
+            <a href="/categories/r/"> R </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#1-2-r-사용시-필요한-대표적인-기초-문법">1.2 R 사용시 필요한 대표적인 기초 문법</a>
+<ul>
+<li><a href="#1-2-1-함수">1.2.1 함수</a></li>
+<li><a href="#1-2-2-반복문">1.2.2 반복문</a></li>
+<li><a href="#1-2-3-조건문">1.2.3 조건문</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="1-2-r-사용시-필요한-대표적인-기초-문법">1.2 R 사용시 필요한 대표적인 기초 문법</h2>
+
+<h3 id="1-2-1-함수">1.2.1 함수</h3>
+
+<p>함수는 특정 동작을 수행하는 블럭입니다. 다른 객체로 값을 전달하거나 계산을 하거나 등의 기능을 처리한 후 그 값을 반환합니다. 함수는 인자와 처리, 결과 3가지로 구성됩니다. 함수의 인자는 함수가 특정 동작을 수행하기 위해 정의에 따라서 반드시 필요한 경우도 있지만, 부분적으로 필요한 옵션들을 설정하는 경우도 있습니다. 처리는 함수가 수행하는 특정 동작에 대한 정의를 나타내는 부분입니다. 결과는 동작을 수행하여 도출된 것을 산출하는 부분입니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">a &lt;- c(1:10)
+a
+
+plus &lt;- function(x,y){
+  #단 x,y는 숫자형 변수나 숫자형 데이터 벡터
+  return(x+y)
+}
+plus(a,a)</pre></td></tr></table>
+</div>
+</div>
+<p>다음으로는 함수의 사용법을 설명하겠습니다. R에서 함수를 만드는 방법은 <code>function()</code> 코드를 사용해, ()안에 인자를 정의하고 {} 안에 함수의 기능(처리)과 산출되는 결과(return)를 정의하여 만들고 이름을 할당해 사용할 수 있습니다. 인자는 보통 2~3개 정도로 설정하지만 여러 개도 설정할 수 있습니다. 이렇게 글로 표현하는 것보다 직접 함수를 만들어 사용해보는 것이 함수의 사용법에 대한 이해를 도울 수 있습니다. 예를 들면 두 개의 변수를 받아 두 변수를 서로 더하는 기능의 함수를 만들어 봅시다.</p>
+
+<p>plus란 이름으로 정의한 이 함수는 임의의 변수 x,y를 인자로 받으며 해당 변수들을 더하는 결과를 산출합니다. 이 함수는 인자로 받은 데이터 타입에 대한 제약이 있는 경우입니다. 함수의 +연산자는 숫자형 데이터 타입에서만 작동하기 때문에 문자형 데이터 타입이 인자로 들어가게되면 에러가 발생합니다. 따라서 함수를 정의할 때는 이용편의를 위해 인자의 데이터 타입과 그 역할 등을 # 이나 &ldquo;&rsquo; &ldquo;&lsquo;로 설명을 추가하여 적어두는 것이 좋습니다.</p>
+
+<h3 id="1-2-2-반복문">1.2.2 반복문</h3>
+
+<p>함수에 대해 알아보았으니 이번에는 반복문에 대해 알아봅시다. 반복문은 이름 그대로 계산이나 특정 처리를 반복적으로 하여 적용하기 위해 사용하는 방법입니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">square_vec &lt;- c()
+for(i in 1:10){
+  square_vec&lt;-rbind(square_vec,i^2)
+}
+square_vec</pre></td></tr></table>
+</div>
+</div>
+<p>자 이제 예를 들어봅시다. 우리가 1부터 10까지의 제곱값을 구해야 하는 문제를 받았다고 해봅시다. 우리는 그 값을 구하기 위해 1부터 10까지의 숫자에 모두에 ^2을 쳐서 계산하는 방법을 선택할 수 있습니다. 그러나 이 방법은 만약 숫자가 늘어 1부터 100까지 제곱 값을 구해야하는 경우에는 시간이 너무 오래걸리게 됩니다. 그러므로 각 숫자에 대해 자동으로 제곱 연산을 반복하면 그 값을 구하는 시간과 오류가 크게 줄어들 것입니다.</p>
+
+<p>이제 위의 예를 R에서 반복문으로 구현해보겠습니다. 반복문은 <code>for()</code> 함수를 통해 만들 수 있습니다. 1부터 10까지의 제곱값을 구한다고 할 때 우리는 괄호 안에 1:10을 <code>for(i in 1:10)</code> 다음과 같은 방식으로 표현할 수 있습니다. 여기서 i는 1:10 벡터의 원소 하나를 의미합니다. 또한, i가 아닌 다른 임의의 문자로도 지칭할 수 있습니다. 이제 제곱 계산을 반복적으로 처리를 위해 {}에는 숫자에 대해 제곱값을 계산하는 코드 <code>{i^2}</code>를 작성합니다.</p>
+
+<p>참고로 rbind() 함수와 square_vec이라는 빈 벡터에 대해서는 설명하지 않았는데, 이 코드들은 반복문의 일부이지만 반복문에서 필수적인 부분이 아니기 때문입니다. 먼저 square_vec은 반복문의 처리 결과를 저장할 임의의 빈 벡터를 나타냅니다. rbind()란 함수는 두 데이터를 묶어서 하나로 만들어주는 기능을 가진 함수로 square_vec에 결과 값이 반복될 때마다 대치되지 않고 누적되도록 하는 역할을 합니다.</p>
+
+<h3 id="1-2-3-조건문">1.2.3 조건문</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">iffivetest &lt;- function(x){
+  if (x &gt; 5){
+    return(&#34;5보다 더 크다&#34;)
+    }
+  else if(x&lt;5){
+    return(&#34;5보다 더 작다&#34;)
+    }
+  else{
+    return(&#34;5다&#34;)
+    }
+}
+iffivetest(2)
+iffivetest(5)
+iffivetest(7)
+
+ifelse(1:10&gt;5,&#34;5보다 더 크다&#34;,ifelse(1:10&lt;5,&#34;5보다 더 작다&#34;,&#34;5다&#34;))</pre></td></tr></table>
+</div>
+</div>
+<p>조건문은 데이터를 조건에 따라 분류하거나, 조건에 맞는 데이터를 추출하는 경우에 사용합니다. 일반적으로 조건문은 <code>if(), else</code> 블럭 2 가지로 구성됩니다. 즉 조건과 그 조건이 아닌 나머지로 구성됩니다. 물론 조건이 하나가 아닌 경우에는 <code>else if()</code>를 사용하여 추가합니다.</p>
+
+<p>if는 첫 번째 조건이자 거름망입니다. 여기서 조건은 ()안에 표현되는데 이 조건에 해당하는 데이터들은 분류되어 ()바로 뒤의 {}안의 처리가 이루어지게 됩니다. else if 는 하나의 조건 그 이상을 표현하기 위해 사용합니다. else if 역시 if와 마찬가지로 ()안에 조건을 쓰고 {}안에서 해당 조건의 데이터를 처리합니다. else는 조건 외 나머지 모든 경우를 나타냅니다. 따라서 하나의 조건만 사용한다면 일반적으로 <code>else if()</code> 블럭은 사용할 필요가 없습니다.</p>
+
+<p>이제 조건문의 개념을 더 명확하게 하기 위해 5를 기준으로 작은 수와 그보다 큰 수를 분류하는 기능을 지닌 조건문을 만들어 봅시다. 조건문의 경우 함수와 별개로 사용할 수 있습니다만, 이 예시에서는 편리성을 위해 함수로 만들어 보겠습니다.</p>
+
+<p>5보다 크거나 작거나를 구분하기 위해서 필요한 조건은 2가지 입니다. 첫째 5보다 큰 경우, 둘째 5보다 작은 경우 이 2가지를 조건으로 표현하면 나머지는 자연스럽게 5가 됩니다. 먼저 5보다 큰 경우에 대한 조건은 x &gt; 5 표현할 수 있습니다. 이 것을 첫 번째 조건으로 if() 안에 들어갑니다. 조건을 서술했으니 해당 조건일 경우 처리를 {}안에 코딩합니다. 여기서는 &ldquo;5보다 크다&rdquo;라는 문자열을 결과 보이도록 처리했습니다.</p>
+
+<p>그 다음 5보다 작은 경우에 대한 조건이 필요합니다. 5보다 작다는 것은 x &lt; 5로 표현할 수 있습니다. 이 조건을 else if()부분에 넣으면 두 번째 조건이 생기게 됩니다. 두 번째 조건에 해당하는 처리 역시 마찬가지로 &ldquo;5보다 작다&rdquo;라는 문자열로 처리합니다. 그러면 이제 5인 경우만 남게 됩니다.</p>
+
+<p>따라서 else 블록에서 5임을 확인하는 문구를 아웃풋으로 한다면 5보다 크거나 작거나를 구분하는 함수가 완성됩니다. 이제 이 함수를 다음과 같이 <code>iffivetest(2)</code>,<code>iffivetest(5)</code>,<code>iffivetest(7)</code>각 조건에 해당하는 경우에 대해 실행해 보면 조건별 처리가 잘 작동되는지 확인할 수 있습니다.</p>
+
+<p>위와 같이 조건물을 함수로 만들 수도 있지만, R에서는 조건물을 좀 더 같단하게 만드는 방법이 있습니다. 기본 함수로 ifelse()라는 함수를 사용하면 좀 더 편리하게 조건문을 구현할 수 있습니다. 이 함수는 한번에 조건에 해당할 때의 처리방법과 나머지 경우에 해당할 때 처리 방법을 따라서 위에서 만든 5보다 크거나 작거나 5인 경우를 구분하는 조건문을 ifelse 함수를 통해 구현하면 위와 같이 한 줄로 표현할 수 있습니다.</p>
+
+<p>이것으로 R 초심자를 위한 R 사용방법과 배경지식에 대한 글을 마치겠습니다. 다음에는 딥러닝에서 계산의 핵심이 되는 벡터와 행렬의 연산에 대해 알아보겠습니다.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Sunsick</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2020-01-17</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/r%EB%A1%9C-%EB%94%A5%EB%9F%AC%EB%8B%9D%ED%95%98%EA%B8%B0/">R로 딥러닝하기</a>
+          <a href="/tags/1%EB%B2%88/">1번</a>
+          <a href="/tags/%EA%B8%B0%EC%B4%88/">기초</a>
+          <a href="/tags/r-%EC%B4%88%EC%8B%AC%EC%9E%90%EB%A5%BC-%EC%9C%84%ED%95%9C-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%82%AC%EC%9A%A9%EB%B2%95-2/">R 초심자를 위한 간단한 사용법 2</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/r_structure/">
+            <span class="next-text nav-default">1.1 R의 자료형에 대해서 알아보자 !</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.google.com/" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/choosunsick" class="iconfont icon-github" title="github"></a>
+  <a href="https://choosunsick.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Sunsick</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="/lib/mathjax/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
