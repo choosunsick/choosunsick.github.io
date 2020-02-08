@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>벡터 on Sunsick&#39;s blog</title>
+    <link>https://choosunsick.github.io/tags/%EB%B2%A1%ED%84%B0/</link>
+    <description>Recent content in 벡터 on Sunsick&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko</language>
+    <lastBuildDate>Sat, 08 Feb 2020 20:21:30 +0900</lastBuildDate>
+    
+	<atom:link href="https://choosunsick.github.io/tags/%EB%B2%A1%ED%84%B0/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>벡터의 연산</title>
+      <link>https://choosunsick.github.io/post/vector_operation/</link>
+      <pubDate>Sat, 08 Feb 2020 20:21:30 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/vector_operation/</guid>
+      <description>소개 이번 글에서는 벡터, 행렬의 연산 방법에 대해 알아볼 것입니다. 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로</description>
+    </item>
+    
+  </channel>
+</rss>

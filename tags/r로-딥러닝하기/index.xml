@@ -6,10 +6,37 @@
     <description>Recent content in R로 딥러닝하기 on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Fri, 17 Jan 2020 17:43:41 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 08 Feb 2020 20:22:00 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/tags/r%EB%A1%9C-%EB%94%A5%EB%9F%AC%EB%8B%9D%ED%95%98%EA%B8%B0/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>브로드캐스트</title>
+      <link>https://choosunsick.github.io/post/broadcast_operation/</link>
+      <pubDate>Sat, 08 Feb 2020 20:22:00 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/broadcast_operation/</guid>
+      <description>브로드캐스트 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙을 사용하여 연산이 이루어진다고 언급한 적이 있습니다. 그러나 사실 다른 방법으로도 행렬과 벡터 간 연산이 가</description>
+    </item>
+    
+    <item>
+      <title>행렬의 연산</title>
+      <link>https://choosunsick.github.io/post/matrix_operation/</link>
+      <pubDate>Sat, 08 Feb 2020 20:21:45 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/matrix_operation/</guid>
+      <description>행렬의 연산 이제 벡터의 연산에 이어 행렬의 연산에 대해 알아보겠습니다. 행렬의 연산의 경우 행렬과 오브젝트 간 연산 행렬과 행렬 간 연산 두 가지 경우가 있습니다. 행렬</description>
+    </item>
+    
+    <item>
+      <title>벡터의 연산</title>
+      <link>https://choosunsick.github.io/post/vector_operation/</link>
+      <pubDate>Sat, 08 Feb 2020 20:21:30 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/vector_operation/</guid>
+      <description>소개 이번 글에서는 벡터, 행렬의 연산 방법에 대해 알아볼 것입니다. 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로</description>
+    </item>
     
     <item>
       <title>R 초심자를 위한 간단한 사용법 2</title>
