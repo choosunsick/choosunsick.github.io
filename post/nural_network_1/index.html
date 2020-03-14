@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>신경망 학습의 개념 - Sunsick&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Sunsick" /><meta name="description" content="소개 이번 글에서는 신경망 분류 모델이 어떻게 학습하는지 그 과정에 대해서 알아보겠습니다. 여기서 학습이라는 것은 모델이 더 분류를 잘할 수 있게 만드는 것을 의미합니" /><meta name="keywords" content="blog, R, Data Analysis" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://choosunsick.github.io/post/nural_network_1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="신경망 학습의 개념" />
+<meta property="og:description" content="소개 이번 글에서는 신경망 분류 모델이 어떻게 학습하는지 그 과정에 대해서 알아보겠습니다. 여기서 학습이라는 것은 모델이 더 분류를 잘할 수 있게 만드는 것을 의미합니" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://choosunsick.github.io/post/nural_network_1/" /><meta property="article:published_time" content="2020-03-14T22:09:52&#43;09:00"/>
+<meta property="article:modified_time" content="2020-03-14T22:09:52&#43;09:00"/>
+
+<meta itemprop="name" content="신경망 학습의 개념">
+<meta itemprop="description" content="소개 이번 글에서는 신경망 분류 모델이 어떻게 학습하는지 그 과정에 대해서 알아보겠습니다. 여기서 학습이라는 것은 모델이 더 분류를 잘할 수 있게 만드는 것을 의미합니">
+
+
+<meta itemprop="datePublished" content="2020-03-14T22:09:52&#43;09:00" />
+<meta itemprop="dateModified" content="2020-03-14T22:09:52&#43;09:00" />
+<meta itemprop="wordCount" content="998">
+
+
+
+<meta itemprop="keywords" content="R로 딥러닝하기,신경망,순전파," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="신경망 학습의 개념"/>
+<meta name="twitter:description" content="소개 이번 글에서는 신경망 분류 모델이 어떻게 학습하는지 그 과정에 대해서 알아보겠습니다. 여기서 학습이라는 것은 모델이 더 분류를 잘할 수 있게 만드는 것을 의미합니"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Choo&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Choo&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">신경망 학습의 개념</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-03-14 </span>
+        <div class="post-category">
+            <a href="/categories/r/"> R </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#소개">소개</a>
+<ul>
+<li><a href="#용어소개">용어소개</a></li>
+<li><a href="#데이터-주도-학습">데이터 주도 학습</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="소개">소개</h1>
+
+<p>이번 글에서는 신경망 분류 모델이 어떻게 학습하는지 그 과정에 대해서 알아보겠습니다. 여기서 학습이라는 것은 모델이 더 분류를 잘할 수 있게 만드는 것을 의미합니다. 모델의 학습 과정은 각 층의 가중치값이 최적값을 찾는 계산을 하는 것을 의미합니다. 이 학습 과정에서 최적값을 찾는데 필요한 지표가 손실 함수입니다. 따라서 이번 글에서는 손실 함수의 결괏 값을 최소화하는 방법과 모델이 어떻게 학습을 진행해 나가는지 전체적인 과정을 살펴보고 직접학습과정을 구현해 볼 것입니다.</p>
+
+<h2 id="용어소개">용어소개</h2>
+
+<p>데이터 특징: 데이터에서 추출할 수 있는 기준입니다. 예를 들면 물품판매 데이터에서 고객 정보(나이, 성별 등)가 될 수 있습니다.</p>
+
+<p>오버피팅: 어떤 모델이 하나의 데이터 셋에만 지나치게 최적화된 상태를 말합니다. 즉 최적화된 데이터 셋을 제외한 다른 데이터 셋에 대해서는 모델의 분류나 예측 능력이 떨어지는 상태를 의미합니다.</p>
+
+<p>손실 함수(비용함수): 신경망 모델에서 사용하는 학습의 지표로서, 모델이 훈련데이터를 잘 처리하지 못하는지(모델의 성능이 얼마나 나쁜지)를 값으로 판단합니다.</p>
+
+<h2 id="데이터-주도-학습">데이터 주도 학습</h2>
+
+<p>신경망 모델의 학습 방법을 알기 전에 학습 과정에서 기존의 머신러닝 모델들과는 어떠한 차이가 있는지부터 알아보겠습니다.
+기존의 머신러닝 모델의 경우 모델이 분류를 하기 위해서는 사람이 데이터에서 특징을 추출해주는 작업이 필수적이였습니다. 예를 들어 고객 데이터에서 고객의 나이, 성별 등의 정보를 데이터에서 따로 추출해야 한다는 의미입니다. 물론 어느 특징의 고객들이 구분되는지는 모델이 자체적으로 수행하지만 이 작업을 위해서는 데이터 내에서 고객의 특징들을 따로 분리해야하는 작업이 필요합니다. 그렇기 때문에 사람의 개입이 필수적이라는 것입니다.</p>
+
+<p>그러나 신경망 모델의 경우에는 사람의 개입이 필요하지 않습니다. 왜냐하면, 사람의 개입으로 데이터의 특징을 찾는 작업조차 모델이 스스로 학습하기 때문입니다. 이를 종단간 기계학습이라 말합니다. R의 기본데이터인 iris 데이터를 예로 들어보면, 기존의 머신러닝 모델은 꽃잎과 꽃받침의 높이와 넓이를 바탕으로 붓꽃의 종류를 구분하게 됩니다. 여기서 꽃잎과 꽃받침의 높이와 넓이가 특징이 되며, 이 부분은 사람의 개입으로 만들어집니다.</p>
+
+<p>신경망 모델에서 분류를 할 경우 우리는 각 숫자가 꽃잎의 높이인지 넓이인지 아니면 꽃받침의 높이인지 넓이 따위 등을 데이터에 명시할 필요가 없습니다. 단지 일련의 숫자들을 입력하면 신경망 모델은 그 숫자들 사이에서 스스로 특징을 찾고 패턴이나 규칙을 발견해 붓꽃의 종류를 분류해 낼 것입니다. 이런 점에서 신경망 모델은 사람의 개입이 필요없습니다.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Sunsick</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2020-03-14</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/r%EB%A1%9C-%EB%94%A5%EB%9F%AC%EB%8B%9D%ED%95%98%EA%B8%B0/">R로 딥러닝하기</a>
+          <a href="/tags/%EC%8B%A0%EA%B2%BD%EB%A7%9D/">신경망</a>
+          <a href="/tags/%EC%88%9C%EC%A0%84%ED%8C%8C/">순전파</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/nural_network_2/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">손실 함수의 개념</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/broadcast_operation/">
+            <span class="next-text nav-default">브로드캐스트</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.google.com/" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/choosunsick" class="iconfont icon-github" title="github"></a>
+  <a href="https://choosunsick.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Sunsick</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="/lib/mathjax/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>미니 배치 학습과 손실 함수 사용의 이유 - Sunsick&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Sunsick" /><meta name="description" content="미니배치 학습 머신러닝에서 모델의 성능을 높이기 위해서는 훈련데이터를 사용합니다. 신경망 모델에서도 마찬가지로 훈련데이터를 이용해 손실 함수 값이 최소화가 되" /><meta name="keywords" content="blog, R, Data Analysis" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://choosunsick.github.io/post/nural_network_3/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="미니 배치 학습과 손실 함수 사용의 이유" />
+<meta property="og:description" content="미니배치 학습 머신러닝에서 모델의 성능을 높이기 위해서는 훈련데이터를 사용합니다. 신경망 모델에서도 마찬가지로 훈련데이터를 이용해 손실 함수 값이 최소화가 되" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://choosunsick.github.io/post/nural_network_3/" /><meta property="article:published_time" content="2020-03-14T22:14:04&#43;09:00"/>
+<meta property="article:modified_time" content="2020-03-14T22:14:04&#43;09:00"/>
+
+<meta itemprop="name" content="미니 배치 학습과 손실 함수 사용의 이유">
+<meta itemprop="description" content="미니배치 학습 머신러닝에서 모델의 성능을 높이기 위해서는 훈련데이터를 사용합니다. 신경망 모델에서도 마찬가지로 훈련데이터를 이용해 손실 함수 값이 최소화가 되">
+
+
+<meta itemprop="datePublished" content="2020-03-14T22:14:04&#43;09:00" />
+<meta itemprop="dateModified" content="2020-03-14T22:14:04&#43;09:00" />
+<meta itemprop="wordCount" content="1815">
+
+
+
+<meta itemprop="keywords" content="R로 딥러닝하기,신경망,순전파,손실 함수," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="미니 배치 학습과 손실 함수 사용의 이유"/>
+<meta name="twitter:description" content="미니배치 학습 머신러닝에서 모델의 성능을 높이기 위해서는 훈련데이터를 사용합니다. 신경망 모델에서도 마찬가지로 훈련데이터를 이용해 손실 함수 값이 최소화가 되"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Choo&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Choo&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">미니 배치 학습과 손실 함수 사용의 이유</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-03-14 </span>
+        <div class="post-category">
+            <a href="/categories/r/"> R </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#미니배치-학습">미니배치 학습</a></li>
+<li><a href="#왜-손실-함수를-사용할까요">왜 손실 함수를 사용할까요?</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="미니배치-학습">미니배치 학습</h2>
+
+<p>머신러닝에서 모델의 성능을 높이기 위해서는 훈련데이터를 사용합니다. 신경망 모델에서도 마찬가지로 훈련데이터를 이용해 손실 함수 값이 최소화가 되는 가중치와 편향 값을 찾게됩니다. 이 과정에서 모든 훈련데이터에 대한 손실 함수 값의 계산이 필요합니다. 이런 필요에 따라 데이터가 n개일 때도 계산이 가능하게끔 손실 함수를 변경해주어야 합니다. 그 방법은 평균 손실 함수 값을 구하는 것입니다. 방법으로는 계산된 손실 함수 값을 전부 더하고 데이터의 개수로 나누어주는 과정이 추가됩니다.</p>
+
+<p>그러나 MNIST 데이터 셋의 훈련데이터만 하더라도 6만개의 데이터가 있으며, 빅데이터 수준이 되면 이보다 더 큰 경우도 종종 있습니다. 이렇게 훈련 데이터가 클 경우 전부 사용하여 손실 함수를 계산하면 시간이 오래 걸립니다. 따라서 데이터 중 일부를 추출하여 학습을 진행하는데 이를 미니배치 학습이라 합니다. 이제 직접 MNIST 훈련 데이터에서 100개씩 데이터를 추출하여 미니배치 학습을 위한 교차 엔트로피 오차 함수를 구현해보겠습니다.</p>
+
+<p>먼저 <a href="https://github.com/LOPES-HUFS/DeepLearningFromForR/wiki/4.2">이전 글</a> 에서 다음과 같이 MNIST 데이터 셋을 불러와 데이터 정규화와 라벨의 원-핫 인코딩 과정을 진행해 줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>dslabs<span class="p">)</span>
+
+MNIST <span class="o">&lt;-</span> read_MNIST<span class="p">()</span>
+str<span class="p">(</span>MNIST<span class="p">)</span>
+
+x_train <span class="o">&lt;-</span> MNIST<span class="o">$</span>train<span class="o">$</span>images
+t_train <span class="o">&lt;-</span> MNIST<span class="o">$</span>train<span class="o">$</span><span class="kp">labels</span>
+x_test <span class="o">&lt;-</span> MNIST<span class="o">$</span>test<span class="o">$</span>images
+t_test <span class="o">&lt;-</span> MNIST<span class="o">$</span>test<span class="o">$</span><span class="kp">labels</span>
+
+x_train_normalize <span class="o">&lt;-</span> x_train<span class="o">/</span><span class="m">255</span>
+x_test_normalize <span class="o">&lt;-</span> x_test<span class="o">/</span><span class="m">255</span>
+
+making_one_hot_label <span class="o">&lt;-</span><span class="kr">function</span><span class="p">(</span>t_label<span class="p">,</span><span class="kp">nrow</span><span class="p">,</span><span class="kp">ncol</span><span class="p">){</span>
+    data <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kc">FALSE</span><span class="p">,</span>nrow <span class="o">=</span> <span class="kp">nrow</span><span class="p">,</span>ncol <span class="o">=</span> <span class="kp">ncol</span><span class="p">)</span>
+    t_index <span class="o">&lt;-</span> t_label<span class="m">+1</span>
+    <span class="kr">for</span><span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span><span class="o">:</span><span class="kp">NROW</span><span class="p">(</span>data<span class="p">)){</span>
+        data<span class="p">[</span>i<span class="p">,</span> t_index<span class="p">[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> <span class="kc">TRUE</span>
+    <span class="p">}</span>
+    <span class="kr">return</span><span class="p">(</span>data<span class="p">)</span>
+<span class="p">}</span>
+
+t_train_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class="p">(</span>t_train<span class="p">,</span><span class="m">60000</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
+t_test_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class="p">(</span>t_test<span class="p">,</span><span class="m">10000</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
+str<span class="p">(</span>x_train_normalize<span class="p">)</span>
+str<span class="p">(</span>t_train_onehotlabel<span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>데이터를 10개를 임의로 뽑을 경우 다음과 같이 할 수 있습니다. R에서는 <code>sample()</code> 함수를 사용하여 범위 내의 임의의 숫자를 n개 뽑을 수 있습니다. MNIST 훈련데이터에서 10개를 뽑아봅시다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">trainsize <span class="o">&lt;-</span> <span class="kp">dim</span><span class="p">(</span>x_train_normalize<span class="o">/</span><span class="m">255</span><span class="p">)[</span><span class="m">1</span><span class="p">]</span>
+trainsize
+batch_size <span class="o">&lt;-</span> <span class="m">10</span>
+batch_size
+batch_mask <span class="o">&lt;-</span> <span class="kp">sample</span><span class="p">(</span>trainsize<span class="p">,</span>batch_size<span class="p">)</span>
+batch_mask
+x_batch <span class="o">&lt;-</span> x_train_normalize<span class="p">[</span>batch_mask<span class="p">,]</span>
+str<span class="p">(</span>x_batch<span class="p">)</span>
+t_batch <span class="o">&lt;-</span> t_train_onehotlabel<span class="p">[</span>batch_mask<span class="p">,]</span>
+str<span class="p">(</span>t_batch<span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>이제 교차 엔트로피 오차 함수에 평균 값 계산을 추가해봅시다. 기존의 계산과정에서 달라지는 것은 데이터의 개수로 나누는 과정 말고는 없습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">y1  <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.6</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> nrow <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+y2  <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span>y <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.6</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> nrow <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+t <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> nrow <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+new_y <span class="o">&lt;-</span> <span class="kp">rbind</span><span class="p">(</span>y1<span class="p">,</span>y2<span class="p">)</span>
+new_t <span class="o">&lt;-</span> <span class="kp">rbind</span><span class="p">(</span><span class="kp">t</span><span class="p">,</span><span class="kp">t</span><span class="p">)</span>
+new_y
+new_t
+
+cross_entropy_error <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>y<span class="p">,</span> <span class="kp">t</span><span class="p">){</span>
+    batchsize <span class="o">&lt;-</span> <span class="kp">dim</span><span class="p">(</span>y<span class="p">)[</span><span class="m">1</span><span class="p">]</span>
+    <span class="kr">return</span><span class="p">(</span><span class="o">-</span><span class="kp">sum</span><span class="p">(</span>t <span class="o">*</span> <span class="kp">log</span><span class="p">(</span>y <span class="o">+</span> <span class="m">1e-7</span><span class="p">))</span><span class="o">/</span>batchsize<span class="p">)</span>
+<span class="p">}</span>
+cross_entropy_error<span class="p">(</span>y1<span class="p">,</span><span class="kp">t</span><span class="p">)</span>
+cross_entropy_error<span class="p">(</span>new_y<span class="p">,</span>new_t<span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>평균 교차 엔트로피 오차 함수에 2개의 이미지 데이터를 넣어도 손실 함수의 값이 계산되는 것을 확인할 수 있습니다. 단 이 함수는 정답 라벨이 원-핫 인코딩으로 만들어진 경우만 교차 엔트로피 오차 값을 계산합니다.</p>
+
+<h2 id="왜-손실-함수를-사용할까요">왜 손실 함수를 사용할까요?</h2>
+
+<p>신경망 모델에서 왜 손실함수를 설정하는지 머신러닝 모델의 일반적인 성능 평가 지표인 정확도를 쓰면 안되는 것인지 등의 의문이 있을 것입니다. 이 의문을 해결하기에 앞서 신경망 모델의 성능 평가의 목적을 다시 한 번 떠올려보아야 합니다. 그 목적은 모델의 분류 정확도를 높이기 위한 가중치와 편향 값을 찾는 것입니다.</p>
+
+<p>분류를 더 잘 해내기 위한 가중치와 편향 값은 손실 함수를 작게 하는 방향으로 새롭게 갱신되며, 손실 함수의 값이 최저가 될 때 값의 갱신도 종료됩니다. 이 과정은 가중치와 편향 값을 아주 작게 변화시켰을 때 손실 함수의 값이 어떻게 변화하는지를 살펴보는 것입니다. 만약 계산한 손실 함수의 값이 이전 값보다 커진다면 손실 함수의 값을 작은 값으로 만드는 방향으로 가중치와 편향 값을 갱신하는 것입니다. 예를 들어 가중치와 편향의 변화량(미분 값)이 음수면 가중치와 편향의 값을 양의 방향으로 변화시켜 손실 함수의 값을 줄일 수 있습니다. 반대로 가중치와 편향의 변화량(미분 값)이 양수면 가중치와 편향의 값을 음의 방향으로 변화시켜 손실 함수의 값을 줄일 수 있습니다. 만약 손실 함수 값이 0이 되면 변화가 없으므로 가중치와 편향의 갱신도 자동으로 멈추게 됩니다.</p>
+
+<p>-갱신에 포인트 잡아서 리뉴얼</p>
+
+<p>그렇다면 다시 왜 정확도를 성능 평가 모델로 사용하면 안되는지 알아봅시다. 정확도를 지표로 사용할 경우 가중치와 편향의 갱신에 문제가 생기게 됩니다. 만약 정확도를 지표로 사용할 경우 왜 가중치와 편향의 갱신이 어려운지를 알아봅시다. 정확도가 지표로 사용되면 가중치와 편향의 미분 값이 대부분에서 0이 되는 문제가 생깁니다. 이 문제로 인해 가중치와 편향의 갱신이 멈추기 때문에 정확도를 지표로 사용하지 못하게 됩니다.</p>
+
+<p>그렇다면, 정확도를 지표로 사용했을 때 대부분의 가중치와 편향의 미분 값이 0이 되는 이유는 무엇 때문일까요? 만약 모델이 32장의 이미지를 정확하게 추정한 경우 정확도가 32%일 것입니다. 이때 가중치와 편향의 값을 조금 조정한다고해도 정확도는 여전히 32%이거나 변화하더라도 32.01% 같은 연속적인 값의 변화가 일어나는 것이 아니기 때문에 미분 값으로 인한 변화가 의미 없게 되어버립니다.</p>
+
+<p>이런 불연속적이고 큰 변화는 신경망 모델의 학습을 잘 반영하지 못합니다. 활성화 함수로 계단 함수가 아닌 시그모이드 함수를 사용하는 것도 연속적인 값의 변화를 위해서 사용하듯 지표로서 정확도가 아닌 손실 함수를 사용합니다. 즉 가중치와 편향의 작은 변화가 연속적인 값으로 모델에 반영되고 그것을 이용해 최적의 값을 찾기위해서 정확도가 아닌 손실 함수를 지표로 사용합니다.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Sunsick</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2020-03-14</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/r%EB%A1%9C-%EB%94%A5%EB%9F%AC%EB%8B%9D%ED%95%98%EA%B8%B0/">R로 딥러닝하기</a>
+          <a href="/tags/%EC%8B%A0%EA%B2%BD%EB%A7%9D/">신경망</a>
+          <a href="/tags/%EC%88%9C%EC%A0%84%ED%8C%8C/">순전파</a>
+          <a href="/tags/%EC%86%90%EC%8B%A4-%ED%95%A8%EC%88%98/">손실 함수</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/nural_network_4/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">미분과 확률적 경사하강법</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/nural_network_2/">
+            <span class="next-text nav-default">손실 함수의 개념</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.google.com/" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/choosunsick" class="iconfont icon-github" title="github"></a>
+  <a href="https://choosunsick.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Sunsick</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="/lib/mathjax/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
