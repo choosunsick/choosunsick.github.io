@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>소프트맥스 on Sunsick&#39;s blog</title>
+    <link>https://choosunsick.github.io/tags/%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4/</link>
+    <description>Recent content in 소프트맥스 on Sunsick&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko</language>
+    <lastBuildDate>Mon, 16 Mar 2020 19:35:04 +0900</lastBuildDate>
+    
+	<atom:link href="https://choosunsick.github.io/tags/%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>손글씨 인식하기</title>
+      <link>https://choosunsick.github.io/post/neural_network_practice/</link>
+      <pubDate>Mon, 16 Mar 2020 19:35:04 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/neural_network_practice/</guid>
+      <description>손글씨 데이터 인식하고 분류하기 모델을 만들었지만 이 모델을 사용하기에는 아직 제한이 있습니다. 왜냐하면, 이 모델은 훈련을 거치지 않았기 때문에 성능이 좋지 못합</description>
+    </item>
+    
+    <item>
+      <title>3층 신경망 구현</title>
+      <link>https://choosunsick.github.io/post/softmax_function/</link>
+      <pubDate>Mon, 16 Mar 2020 19:34:26 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/softmax_function/</guid>
+      <description>소프트맥스 함수 출력층에서 사용하는 함수에는 항등함수와 소프트맥스 함수가 있습니다. 항등함수의 경우 이름 그대로 입력이 곧 출력이 되는 함수로 신경망 회귀 모델을</description>
+    </item>
+    
+  </channel>
+</rss>

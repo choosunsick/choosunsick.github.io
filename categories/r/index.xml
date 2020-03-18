@@ -6,10 +6,46 @@
     <description>Recent content in R on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 14 Mar 2020 22:14:14 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2020 19:35:04 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>손글씨 인식하기</title>
+      <link>https://choosunsick.github.io/post/neural_network_practice/</link>
+      <pubDate>Mon, 16 Mar 2020 19:35:04 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/neural_network_practice/</guid>
+      <description>손글씨 데이터 인식하고 분류하기 모델을 만들었지만 이 모델을 사용하기에는 아직 제한이 있습니다. 왜냐하면, 이 모델은 훈련을 거치지 않았기 때문에 성능이 좋지 못합</description>
+    </item>
+    
+    <item>
+      <title>3층 신경망 구현</title>
+      <link>https://choosunsick.github.io/post/softmax_function/</link>
+      <pubDate>Mon, 16 Mar 2020 19:34:26 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/softmax_function/</guid>
+      <description>소프트맥스 함수 출력층에서 사용하는 함수에는 항등함수와 소프트맥스 함수가 있습니다. 항등함수의 경우 이름 그대로 입력이 곧 출력이 되는 함수로 신경망 회귀 모델을</description>
+    </item>
+    
+    <item>
+      <title>활성화 함수 소개</title>
+      <link>https://choosunsick.github.io/post/activation_fuctions/</link>
+      <pubDate>Mon, 16 Mar 2020 19:34:03 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/activation_fuctions/</guid>
+      <description>활성화 함수 활성화 함수는 이전층(layer)의 뉴런에서 다음 층의 뉴런으로 신호를 전달하는 역할을 합니다. 이때 활성화 함수의 값에 따라서 다음 층의 뉴런으로 출</description>
+    </item>
+    
+    <item>
+      <title>신경망 소개</title>
+      <link>https://choosunsick.github.io/post/neural_network_intro/</link>
+      <pubDate>Mon, 16 Mar 2020 19:32:28 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/neural_network_intro/</guid>
+      <description>소개 이번 글에서는 인공지능 분야에서 가장 기초가 되는 신경망이 무엇인지 알아보고 그것에 요소들과 신경망을 R로 구현해 손글씨 인식 및 분류 모델을 만들어 보겠습니다</description>
+    </item>
     
     <item>
       <title>2층 신경망 구현</title>
