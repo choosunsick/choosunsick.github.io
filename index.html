@@ -44,7 +44,7 @@
 <meta property="og:description" content="Sunsick&#39;s Blog." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://choosunsick.github.io/" />
-<meta property="og:updated_time" content="2020-03-16T19:35:04&#43;09:00"/>
+<meta property="og:updated_time" content="2020-03-30T22:07:37&#43;09:00"/>
 
 <meta itemprop="name" content="Sunsick&#39;s blog">
 <meta itemprop="description" content="Sunsick&#39;s Blog.">
@@ -114,6 +114,90 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/neural_network_backward_4/">오차역전파법을 적용한 2층 신경망 구현하기</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-03-30 </span>
+      <div class="post-category">
+          <a href="/categories/r/"> R </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      오차역전파법을 적용한 2층 신경망 구현하기 이제 오차역전파법이 적용된 2층 신경망을 구현해보겠습니다. 역전파가 적용된 신경망 모델 역시 기존 순전파에서 진행한
+    </div>
+    <div class="read-more">
+      <a href="/post/neural_network_backward_4/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/neural_network_backward_3/">다양한 역전파 계층 구현하기</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-03-30 </span>
+      <div class="post-category">
+          <a href="/categories/r/"> R </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      각 계층 구현하기 이번에는 신경망 모델에서 역전파를 하기 위해 필요한 함수들 예를 들어 softmax()와 loss(), sigmoid(), ReLU() 기존 순전파 계산model.forward(
+    </div>
+    <div class="read-more">
+      <a href="/post/neural_network_backward_3/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/neural_network_backward_2/">역전파와 간단한 계산문제</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-03-30 </span>
+      <div class="post-category">
+          <a href="/categories/r/"> R </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      역전파 계산그래프의 역전파는 부분적인 계산을 계속 출력하여 최종 계산을 이끌어내듯이 연쇄법칙과 같은 원리를 사용합니다. 즉 복잡한 미분을 작은 계산들의 곱으로 표
+    </div>
+    <div class="read-more">
+      <a href="/post/neural_network_backward_2/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/neural_network_backward_1/">계산 그래프와 연쇄법칙</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-03-30 </span>
+      <div class="post-category">
+          <a href="/categories/r/"> R </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      앞선 글에서는 손실 함수의 기울기를 계산해 각 가중치와 편향에 대해 수치미분으로 그 값을 갱신하였습니다. 그러나 이 방식은 너무 오래걸린다는 단점이 있습니다. 이번
+    </div>
+    <div class="read-more">
+      <a href="/post/neural_network_backward_1/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/neural_network_practice/">손글씨 인식하기</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2020-03-16 </span>
@@ -129,90 +213,6 @@
     </div>
     <div class="read-more">
       <a href="/post/neural_network_practice/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/softmax_function/">3층 신경망 구현</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-03-16 </span>
-      <div class="post-category">
-          <a href="/categories/r/"> R </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      소프트맥스 함수 출력층에서 사용하는 함수에는 항등함수와 소프트맥스 함수가 있습니다. 항등함수의 경우 이름 그대로 입력이 곧 출력이 되는 함수로 신경망 회귀 모델을
-    </div>
-    <div class="read-more">
-      <a href="/post/softmax_function/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/activation_fuctions/">활성화 함수 소개</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-03-16 </span>
-      <div class="post-category">
-          <a href="/categories/r/"> R </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      활성화 함수 활성화 함수는 이전층(layer)의 뉴런에서 다음 층의 뉴런으로 신호를 전달하는 역할을 합니다. 이때 활성화 함수의 값에 따라서 다음 층의 뉴런으로 출
-    </div>
-    <div class="read-more">
-      <a href="/post/activation_fuctions/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/neural_network_intro/">신경망 소개</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-03-16 </span>
-      <div class="post-category">
-          <a href="/categories/r/"> R </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      소개 이번 글에서는 인공지능 분야에서 가장 기초가 되는 신경망이 무엇인지 알아보고 그것에 요소들과 신경망을 R로 구현해 손글씨 인식 및 분류 모델을 만들어 보겠습니다
-    </div>
-    <div class="read-more">
-      <a href="/post/neural_network_intro/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/nural_network_5/">2층 신경망 구현</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-03-14 </span>
-      <div class="post-category">
-          <a href="/categories/r/"> R </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      신경망 모델에서 기울기 신경망 모델에서 기울기는 무엇을 의미할까요? 신경망 모델에서 기울기는 가중치 행렬의 원소들이 각각 조금 씩 변할 때 손실 함수의 변화정도를 의
-    </div>
-    <div class="read-more">
-      <a href="/post/nural_network_5/" class="read-more-link">Read more..</a>
     </div>
   </div>
 </article>

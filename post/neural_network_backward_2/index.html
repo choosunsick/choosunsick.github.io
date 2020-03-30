@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>역전파와 간단한 계산문제 - Sunsick&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Sunsick" /><meta name="description" content="역전파 계산그래프의 역전파는 부분적인 계산을 계속 출력하여 최종 계산을 이끌어내듯이 연쇄법칙과 같은 원리를 사용합니다. 즉 복잡한 미분을 작은 계산들의 곱으로 표" /><meta name="keywords" content="blog, R, Data Analysis" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://choosunsick.github.io/post/neural_network_backward_2/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="역전파와 간단한 계산문제" />
+<meta property="og:description" content="역전파 계산그래프의 역전파는 부분적인 계산을 계속 출력하여 최종 계산을 이끌어내듯이 연쇄법칙과 같은 원리를 사용합니다. 즉 복잡한 미분을 작은 계산들의 곱으로 표" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://choosunsick.github.io/post/neural_network_backward_2/" /><meta property="article:published_time" content="2020-03-30T22:07:33&#43;09:00"/>
+<meta property="article:modified_time" content="2020-03-30T22:07:33&#43;09:00"/>
+
+<meta itemprop="name" content="역전파와 간단한 계산문제">
+<meta itemprop="description" content="역전파 계산그래프의 역전파는 부분적인 계산을 계속 출력하여 최종 계산을 이끌어내듯이 연쇄법칙과 같은 원리를 사용합니다. 즉 복잡한 미분을 작은 계산들의 곱으로 표">
+
+
+<meta itemprop="datePublished" content="2020-03-30T22:07:33&#43;09:00" />
+<meta itemprop="dateModified" content="2020-03-30T22:07:33&#43;09:00" />
+<meta itemprop="wordCount" content="2633">
+
+
+
+<meta itemprop="keywords" content="R로 딥러닝하기,신경망,역전파," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="역전파와 간단한 계산문제"/>
+<meta name="twitter:description" content="역전파 계산그래프의 역전파는 부분적인 계산을 계속 출력하여 최종 계산을 이끌어내듯이 연쇄법칙과 같은 원리를 사용합니다. 즉 복잡한 미분을 작은 계산들의 곱으로 표"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Choo&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Choo&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">역전파와 간단한 계산문제</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-03-30 </span>
+        <div class="post-category">
+            <a href="/categories/r/"> R </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#역전파">역전파</a>
+<ul>
+<li><a href="#간단한-계층-구현하기">간단한 계층 구현하기</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="역전파">역전파</h2>
+
+<p>계산그래프의 역전파는 부분적인 계산을 계속 출력하여 최종 계산을 이끌어내듯이 연쇄법칙과 같은 원리를 사용합니다. 즉 복잡한 미분을 작은 계산들의 곱으로 표현하여 쉽게 계산해낼 수 있는 것이 계산그래프를 이용한 역전파의 장점입니다. 참고로 역전파의 목표 역시 가중치와 편향의 입력값 변화에 따른 손실함수의 변화량을 구하는 것이 목표이기에 여전히 미분을 사용한다는 점을 알아두어야합니다.</p>
+
+<p>계산그래프의 역전파가 어떤 구조로 구성되는지 알아봅시다. 먼저 자주 사용되는 덧셈과 곱셈노드의 역전파 구조와 계산방법을 파악해 봅시다. 첫 번째로 덧셈노드의 역전파입니다. 덧셈노드의 역전파는 흘러온 신호를 그대로 출력하는 역할을 합니다.</p>
+
+<p>예를 들어보면, $$z = x+y$$일 때 이것의 역전파는 x에 대한 z의 미분과 y에 대한 z의 미분 값이 x와y 두 가지로 전파 됩니다. 먼저 역전파에서 최초의 입력값 1이 출력되어 덧셈노드로 출력됩니다. 이후 각각의 미분 값은 1로 이 값을 곱하여 각 방향으로 그대로 출력하게 됩니다. 따라서 덧셈노드의 역전파는 항등함수와 같이 입력신호를 그대로 출력하여 다음 노드로 전달합니다.</p>
+
+<p>두 번째로 곱셈노드의 역전파는 입력신호에 순전파 때 값을 서로 바꿔서 곱해주는 방식입니다. 예를 들면 $$z = xy$$라 하고 $$x=10$$ $$y=5$$이면 x에 대한 z의 미분은 5가됩니다. y에 대한 z의 미분 값은 10이됩니다. 만약 이전의 노드에서 1.3이라는 값이 출력되었다면, x값이 전파된 쪽에는 $$1.3*5=6.5$$가 되며, y값이 전파된 쪽에는 $$1.3*10=13$$이 됩니다.</p>
+
+<p>두 역전파 구조에서 최초 입력값이 모두 1이라는 점부터 살펴봅시다. 역전파의 최초 입력 신호는 왜 1로 주어지는 것일까요? 그 이유는 값의 변화가 있다고 가정하기 때문입니다. 단순히 수식으로 살펴보면 z에 대한 z의 미분 값으로 1이 나옵니다. 그러나 그 의미는 구하고자하는 변화량이 있다고 가정하는 것으로 나타낼 수 있습니다.</p>
+
+<p>이제 사과와 오렌지를 사는 예제에서 덧셈노드와 곱셈노드가 섞인 간단한 역전파 계층을 직접 코드로 구현해봅시다.</p>
+
+<h3 id="간단한-계층-구현하기">간단한 계층 구현하기</h3>
+
+<p>개당 100원하는 사과를 2개, 개당 150원하는 오렌지를 3개 산다고 할 때 최종 금액에 소비세 10%가 붙으면 전체 가격을 구하고, 사과와 오렌지 가격 및 개수 변동에 대한 전체 금액의 변화 값을 알아봅시다. 이 계산을 위해서는 곱셈노드와 덧셈노드의 순전파와 역전파가 필요합니다. 먼저 곱셈노드의 순전파와 역전파부터 구현해보도록 하겠습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">MulLayer.forward <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">,</span> y<span class="p">){</span>
+  <span class="kr">return</span><span class="p">(</span><span class="kt">list</span><span class="p">(</span>x  <span class="o">=</span>  x<span class="p">,</span> y <span class="o">=</span> y<span class="p">,</span> out <span class="o">=</span> <span class="p">(</span>x <span class="o">*</span> y<span class="p">)))</span>
+<span class="p">}</span>
+
+MulLayer.backward <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>forward<span class="p">,</span> dout<span class="p">){</span>
+  dx <span class="o">&lt;-</span> dout <span class="o">*</span> forward<span class="o">$</span>y
+  dy <span class="o">&lt;-</span> dout <span class="o">*</span> forward<span class="o">$</span>x
+  <span class="kr">return</span><span class="p">(</span><span class="kt">list</span><span class="p">(</span>dx <span class="o">=</span> dx<span class="p">,</span> dy <span class="o">=</span> dy<span class="p">))</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>곱셈노드의 순전파는 일반적인 수학계산과 같습니다. 대신 순전파 때 값을 역전파에서 사용해야하기 때문에 입력 받은 x와 y를 함수에서 리스트로 저장해 출력해줍니다. 곱셈노드의 역전파 계산은 설명한 바와 같이 순전파의 입력신호들을 순서를 바꿔서 곱한 값을 계산하여 출력합니다.</p>
+
+<p>다음은 덧셈노드의 구현입니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">AddLayer.forward <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">,</span> y<span class="p">){</span>
+  <span class="kr">return</span><span class="p">(</span><span class="kt">list</span><span class="p">(</span>out  <span class="o">=</span> <span class="p">(</span>x <span class="o">+</span> y<span class="p">)))</span>
+<span class="p">}</span>
+
+AddLayer.backward <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>dout<span class="p">){</span>
+  dx <span class="o">&lt;-</span> dout <span class="o">*</span> <span class="m">1</span>
+  dy <span class="o">&lt;-</span> dout <span class="o">*</span> <span class="m">1</span>
+  <span class="kr">return</span><span class="p">(</span><span class="kt">list</span><span class="p">(</span>dx  <span class="o">=</span>  dx<span class="p">,</span>dy  <span class="o">=</span>  dy<span class="p">))</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>덧셈노드의 순전파 역시 수학식과 똑같습니다. 역전파 또한, 간단합니다. 역전파의 이전 노드에서 받은 출력신호를 입력신호로 받고 그 값에 각 변수 x,y의 미분 값 1을 곱한 값들을 출력합니다. 이제 구현한 곱셈노드와 덧셈노드를 가지고 문제를 풀어 봅시다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">apple <span class="o">&lt;-</span> <span class="m">100</span>
+apple_num <span class="o">&lt;-</span> <span class="m">2</span>
+orange <span class="o">&lt;-</span> <span class="m">150</span>
+orange_num <span class="o">&lt;-</span> <span class="m">3</span>
+tax <span class="o">&lt;-</span> <span class="m">1.1</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>기본적인 문제 세팅인 사과와 오렌지의 가격과 개수 세금 등부터 변수로 저장해줍니다. 다음은 사과와 오렌지의 총 가격을 계산할 차례입니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">mul_apple_layer.forward <span class="o">&lt;-</span> MulLayer.forward<span class="p">(</span>apple<span class="p">,</span> apple_num<span class="p">)</span>
+mul_apple_layer.forward
+
+apple_price <span class="o">&lt;-</span> mul_apple_layer.forward<span class="o">$</span>out
+apple_price
+
+mul_orange_layer.forward <span class="o">&lt;-</span> MulLayer.forward<span class="p">(</span>orange<span class="p">,</span> orange_num<span class="p">)</span>
+mul_orange_layer.forward
+
+orange_price <span class="o">&lt;-</span> mul_orange_layer.forward<span class="o">$</span>out
+orange_price</code></pre></td></tr></table>
+</div>
+</div>
+<p>전체 사과의 가격은 사과의 구매 개수에 사과의 개당 가격을 곱한 것입니다. 오렌지도 마찬가지 방식으로 계산해줍니다. 사과는 개당 100원에 2개를 샀으니 $$100*2=200원$$이 되고, 오렌지는 개당 150원에 3개를 샀으니 $$150*3=450$$원이 됩니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">add_apple_orange_layer.forward <span class="o">&lt;-</span> AddLayer.forward<span class="p">(</span>apple_price<span class="p">,</span> orange_price<span class="p">)</span>
+add_apple_orange_layer.forward
+
+all_price <span class="o">&lt;-</span> add_apple_orange_layer.forward<span class="o">$</span>out
+all_price
+
+mul_tax_layer.forward <span class="o">&lt;-</span> MulLayer.forward<span class="p">(</span>all_price<span class="p">,</span> tax<span class="p">)</span>
+mul_tax_layer.forward
+
+price <span class="o">&lt;-</span> mul_tax_layer.forward<span class="o">$</span>out
+price</code></pre></td></tr></table>
+</div>
+</div>
+<p>전체 가격은 $$200+450=650원$$으로 그 가격에 세금 10%를 곱하면 구할 수 있습니다. 이제 650원에 소비세 10%를 곱해주면 $$650+650*0.1=715원$$이 됩니다.</p>
+
+<p>이제 사과나 오렌지의 개수나 개당 가격 혹은 소비세가 변화할 때 전체 가격이 어떻게 변화할지를 알아봅시다. 먼저 소비세가 변화할 때 전체 가격의 변화를 살펴봅시다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">dprice <span class="o">&lt;-</span> <span class="m">1</span>
+
+tax.backward<span class="o">&lt;-</span> MulLayer.backward<span class="p">(</span>mul_tax_layer.forward<span class="p">,</span> dprice<span class="p">)</span>
+tax.backward
+
+dall_price <span class="o">&lt;-</span> tax.backward<span class="o">$</span>dx
+dall_price
+
+dtax <span class="o">&lt;-</span> tax.backward<span class="o">$</span>dy
+dtax</code></pre></td></tr></table>
+</div>
+</div>
+<p><code>dall_price</code>, <code>dtax</code>두 개의 출력값을 찾을 수 있는데 이것 중 소비세의 변화에 따른 전체 가격의 변화는 <code>dtax</code> 값을 의미합니다. 즉 소비세 1(100%) 오르면 전체 가격은 650원 올라갑니다. 실제로 1이 오르면 $$650*2.1=1365$$로 기존 715원에서 650원 오른 1365원인 것을 확인할 수 있습니다. 참고로 소비세의 경우 %이기 때문에 1값이 오르면, 100%가 상승한 것으로 봐야합니다. 이제 <code>dall_price</code>의 행방을 살펴보면 이 값은 1.1로 다음 덧셈노드의 입력신호가 됩니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">add_apple_orange_layer.backward <span class="o">&lt;-</span> AddLayer.backward<span class="p">(</span>dall_price<span class="p">)</span>
+add_apple_orange_layer.backward
+
+dapple_price <span class="o">&lt;-</span> add_apple_orange_layer.backward<span class="o">$</span>dx
+dapple_price
+
+dorange_price <span class="o">&lt;-</span> add_apple_orange_layer.backward<span class="o">$</span>dy
+dorange_price</code></pre></td></tr></table>
+</div>
+</div>
+<p>덧셈노드의 역전파는 입력값을 그대로 출력합니다. 따라서 사과와 오렌지의 가격을 계산한 곱셈노드에 1.1을 입력신호로 받게 됩니다. 이제 사과의 가격이나 개수가 변화할 때 전체 가격의 변화를 살펴봅시다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">apple.backward<span class="o">&lt;-</span> MulLayer.backward<span class="p">(</span>mul_apple_layer.forward<span class="p">,</span> dapple_price<span class="p">)</span>
+apple.backward
+dapple <span class="o">&lt;-</span> apple.backward<span class="o">$</span>dx
+dapple
+dapple_num <span class="o">&lt;-</span> apple.backward<span class="o">$</span>dy
+dapple_num</code></pre></td></tr></table>
+</div>
+</div>
+<p>사과의 전체 가격은 사과의 개수와 개당 가격으로 이루어지는데, 사과의 개수가 변화할 때 전체 가격의 변화를 살펴보겠습니다. 이 문제에서 곱셈노드의 역전파는 순전파에서 사과의 가격인 100에 1.1을 곱한 값인 110이 출력됩니다. 즉 사과의 개수가 1개 늘어나면 전체 가격은 110원 만큼 증가한다는 의미입니다.</p>
+
+<p>같은 방식으로 사과의 개당 가격이 변화할 때 전체 가격의 변화량을 살펴본다면, 사과의 개수인 2를 1.1과 곱하여 2.2를 출력하게 됩니다. 즉 사과의 개당 가격이 1원 올라갈 때 전체 가격은 2.2원 올라간다는 의미입니다. 1원이라는 단위는 의미있는 돈의 단위가 아니기에 100원으로 본다면 개당 가격이 100원 올라가면 전체 가격은 220원 증가하는 것을 의미합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">orange.backward<span class="o">&lt;-</span> MulLayer.backward<span class="p">(</span>mul_orange_layer.forward<span class="p">,</span> dorange_price<span class="p">)</span>
+
+dorange <span class="o">&lt;-</span> orange.backward<span class="o">$</span>dx
+dorange_num <span class="o">&lt;-</span> orange.backward<span class="o">$</span>dy
+
+<span class="kt">c</span><span class="p">(</span>dapple_num<span class="p">,</span> dapple<span class="p">,</span> dorange_num<span class="p">,</span> dorange<span class="p">,</span> dtax<span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>마찬가지로 오렌지에 대해서 살펴봅시다. 역전파 입력신호로는 1.1이 입력됩니다. 순전파에서 입력된 오렌지의 개당 가격과 개수를 서로 바꿔서 곱해주면 개당 가격이 입력되는 쪽에 개수 3개를 곱한 3.3이 출력됩니다. 반대로 개수가 입력되는 쪽에는 $$150*1.1= 165$$가 출력됩니다.</p>
+
+<p>최종적으로 각 변화량에 대해 정리하자면 다음과 같습니다. 먼저 사과의 경우 사과를 1개 더 살 때마다 전체 가격은 110원 올라가며, 사과 가격이 1원 오르면, 전체 가격은 2.2원 올라간다는 의미입니다. 오렌지의 경우는 오렌지를 1개 더 살 때마다 전체 가격은 165원 올라가며, 오렌지 가격이 1원 오르면 전체 가격은 3.3원이 올라간다는 의미입니다.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Sunsick</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2020-03-30</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/r%EB%A1%9C-%EB%94%A5%EB%9F%AC%EB%8B%9D%ED%95%98%EA%B8%B0/">R로 딥러닝하기</a>
+          <a href="/tags/%EC%8B%A0%EA%B2%BD%EB%A7%9D/">신경망</a>
+          <a href="/tags/%EC%97%AD%EC%A0%84%ED%8C%8C/">역전파</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/neural_network_backward_3/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">다양한 역전파 계층 구현하기</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/neural_network_backward_1/">
+            <span class="next-text nav-default">계산 그래프와 연쇄법칙</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.google.com/" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/choosunsick" class="iconfont icon-github" title="github"></a>
+  <a href="https://choosunsick.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Sunsick</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="/lib/mathjax/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
