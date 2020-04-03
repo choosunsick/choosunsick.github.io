@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2020-03-30T22:07:30&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-30T22:07:30&#43;09:00" />
-<meta itemprop="wordCount" content="1326">
+<meta itemprop="wordCount" content="1200">
 
 
 
@@ -161,16 +161,20 @@
 
 <p>전치행렬: 전치행렬은 행렬의 행과 열을 서로 바꾼 행렬을 의미합니다. 예를 들면 2행 1열의 전치행렬은 1행 2열의 행렬이 되고 2행 1열의 원소가 1행 2열의 원소로 바뀌게 됩니다.</p>
 
-<p>$$\overrightarrow{a}=
+<p>$$
+\overrightarrow{a}=
 \begin{bmatrix}
 X <br />
 Y <br />
-\end{bmatrix}$$</p>
+\end{bmatrix}
+$$</p>
 
-<p>$$\overrightarrow{a}^T=
+<p>$$
+\overrightarrow{a}^T=
 \begin{bmatrix}
 X&amp;Y
-\end{bmatrix}$$</p>
+\end{bmatrix}
+$$</p>
 
 <h2 id="계산그래프와-연쇄-법칙">계산그래프와 연쇄 법칙</h2>
 
@@ -178,7 +182,7 @@ X&amp;Y
 
 <p>그렇다면 계산그래프가 무엇인지 알아보겠습니다. 간단한 수학 문제를 예로 들어보겠습니다. 슈퍼에서 1개에 100원인 사과 2개를 살 때 총 지불 금액은 얼마일까요? 단 최종 지불 금액에 소비세 10%가 붙습니다. 이 문제를 계산그래프를 통해 어떻게 풀 수 있을까요? 아래의 그림과 같은 그래프 계산을 통해 가능합니다.</p>
 
-<p>![계산그래프 그림 5-2](&ldquo;<a href="https://user-images.githubusercontent.com/19144813/77724487-6f88c280-7036-11ea-9ece-0b96d775a44b.png&quot;">https://user-images.githubusercontent.com/19144813/77724487-6f88c280-7036-11ea-9ece-0b96d775a44b.png&quot;</a>)</p>
+<p><img src="https://user-images.githubusercontent.com/19144813/77724487-6f88c280-7036-11ea-9ece-0b96d775a44b.png" alt="계산그래프 그림 5-2" /></p>
 
 <p>계산그래프의 계산 진행 방식은 순전파(왼쪽에서 오른쪽으로) 방식으로 진행됩니다. 이렇게 계산을 했을 때 수식으로 접근하는 것에 비해 어떤 장점이 있을까요? 계산그래프 방식으로 계산을 진행하는 가장 큰 이유는 미분을 아주 효율적으로 계산할 수 있다는 장점과 중간 계산 결과를 저장할 수 있다는 점입니다.</p>
 
@@ -192,15 +196,15 @@ X&amp;Y
 
 <p>연쇄법칙은 계산그래프의 역전파 계산 과정에서 미분을 쉽게 다룰 수 있는 원리 중 하나입니다. 연쇄법칙이란 다음과 같이 두 개의 미분 값을 통해 하나의 미분 값을 쉽게 구할 수 있습니다.</p>
 
-<p>$z = t^2, t = x+y$</p>
+<p>$ z = t^2, t = x+y</p>
 
 <p>일 때 x에 대한 z의 미분 값은 다음과 같이 정의할 수 있습니다.</p>
 
-<p>$dz/dx = dz/dt*dt/dx$</p>
+<p>$ dz/dx = dz/dt*dt/dx $</p>
 
 <p>위 수식에서 x에 대한 z의 미분 값은 부분적인 미분 값들의 곱으로 정의되었습니다. t에 대한 z의 미분과 x에 대한 t의 미분 두 부분적인 미분 값들을 살펴보면 dt가 서로 나누어져 본래의 미분 값과 동일한 수식임을 알수 있는데 이 과정처럼 하나의 미분 값을 여러개의 부분적인 미분 값의 곱으로 만드는 것을 연쇄법칙이라 합니다.</p>
 
-<p>![그림5-8](&ldquo;<a href="https://user-images.githubusercontent.com/19144813/77724687-f2aa1880-7036-11ea-84ed-6b54a56c132f.png&quot;">https://user-images.githubusercontent.com/19144813/77724687-f2aa1880-7036-11ea-84ed-6b54a56c132f.png&quot;</a>)</p>
+<p><img src="https://user-images.githubusercontent.com/19144813/77724687-f2aa1880-7036-11ea-84ed-6b54a56c132f.png" alt="그림5-8" /></p>
 
     </div>
 
