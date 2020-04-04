@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Sunsick" /><meta name="description" content="R 사용에 익숙하신 분들은 1번글부터 보시면 됩니다. 순서 R 초심자를 위한 기초 사용법 R 설치(https://choosunsick.github.io" /><meta name="keywords" content="blog, R, Data Analysis" />
+<meta name="author" content="Sunsick" /><meta name="description" content="R 사용에 익숙하신 분들은 1번글부터 보시면 됩니다. 순서 벡터와 행렬의 연산 벡터 연산 행렬 연산 브로드 캐스트 신경망 신경망 소개 활성화 함수 소개 3층 신경망 구현 신" /><meta name="keywords" content="blog, R, Data Analysis" />
 
 
 
@@ -39,25 +39,25 @@
 
 
 <meta property="og:title" content="글 목차" />
-<meta property="og:description" content="R 사용에 익숙하신 분들은 1번글부터 보시면 됩니다. 순서 R 초심자를 위한 기초 사용법 R 설치(https://choosunsick.github.io" />
+<meta property="og:description" content="R 사용에 익숙하신 분들은 1번글부터 보시면 됩니다. 순서 벡터와 행렬의 연산 벡터 연산 행렬 연산 브로드 캐스트 신경망 신경망 소개 활성화 함수 소개 3층 신경망 구현 신" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://choosunsick.github.io/post/contents_list/" /><meta property="article:published_time" content="2020-04-04T14:06:58&#43;09:00"/>
 <meta property="article:modified_time" content="2020-04-04T14:06:58&#43;09:00"/>
 
 <meta itemprop="name" content="글 목차">
-<meta itemprop="description" content="R 사용에 익숙하신 분들은 1번글부터 보시면 됩니다. 순서 R 초심자를 위한 기초 사용법 R 설치(https://choosunsick.github.io">
+<meta itemprop="description" content="R 사용에 익숙하신 분들은 1번글부터 보시면 됩니다. 순서 벡터와 행렬의 연산 벡터 연산 행렬 연산 브로드 캐스트 신경망 신경망 소개 활성화 함수 소개 3층 신경망 구현 신">
 
 
 <meta itemprop="datePublished" content="2020-04-04T14:06:58&#43;09:00" />
 <meta itemprop="dateModified" content="2020-04-04T14:06:58&#43;09:00" />
-<meta itemprop="wordCount" content="1251">
+<meta itemprop="wordCount" content="179">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="글 목차"/>
-<meta name="twitter:description" content="R 사용에 익숙하신 분들은 1번글부터 보시면 됩니다. 순서 R 초심자를 위한 기초 사용법 R 설치(https://choosunsick.github.io"/>
+<meta name="twitter:description" content="R 사용에 익숙하신 분들은 1번글부터 보시면 됩니다. 순서 벡터와 행렬의 연산 벡터 연산 행렬 연산 브로드 캐스트 신경망 신경망 소개 활성화 함수 소개 3층 신경망 구현 신"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -136,7 +136,10 @@
 <ul>
 <li>
 <ul>
-<li><a href="#순서">순서</a></li>
+<li><a href="#순서">순서</a>
+<ul>
+<li><a href="#r-초심자를-위한-기초-사용법">R 초심자를 위한 기초 사용법</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -150,48 +153,50 @@
 <h2 id="순서">순서</h2>
 
 <ol>
-<li>R 초심자를 위한 기초 사용법</li>
+<li><p>벡터와 행렬의 연산</p>
+
+<ul>
+<li><a href="https://choosunsick.github.io/post/vector_operation/">벡터 연산</a></li>
+<li><a href="https://choosunsick.github.io/post/matrix_operation/">행렬 연산</a></li>
+<li><a href="https://choosunsick.github.io/post/broadcast_operation/">브로드 캐스트</a></li>
+</ul></li>
+
+<li><p>신경망</p>
+
+<ul>
+<li><a href="https://choosunsick.github.io/post/neural_network_intro/">신경망 소개</a></li>
+<li><a href="https://choosunsick.github.io/post/activation_fuctions/">활성화 함수 소개</a></li>
+<li><a href="https://choosunsick.github.io/post/softmax_function/">3층 신경망 구현</a></li>
+<li><a href="https://choosunsick.github.io/post/neural_network_practice/">신경망 연습 - 손글씨 인식하기</a><br /></li>
+</ul></li>
+
+<li><p>신경망 학습과정</p>
+
+<ul>
+<li><a href="https://choosunsick.github.io/post/neural_network_1/">신경망 학습이론</a></li>
+<li><a href="https://choosunsick.github.io/post/neural_network_2/">손실함수</a></li>
+<li><a href="https://choosunsick.github.io/post/neural_network_3/">미니배치 학습</a></li>
+<li><a href="https://choosunsick.github.io/post/neural_network_4/">미분과 경사하강법</a></li>
+<li><a href="https://choosunsick.github.io/post/neural_network_5/">학습알고리즘 구현</a></li>
+</ul></li>
+
+<li><p>오차역전파법</p>
+
+<ul>
+<li><a href="https://choosunsick.github.io/post/neural_network_backward_1/">계산그래프와 연쇄법칙</a></li>
+<li><a href="https://choosunsick.github.io/post/neural_network_backward_2/">역전파 예제</a></li>
+<li><a href="https://choosunsick.github.io/post/neural_network_backward_3/">다양한 역전파 계층</a></li>
+<li><a href="https://choosunsick.github.io/post/neural_network_backward_4/">역전파 적용하기</a></li>
+</ul></li>
 </ol>
 
-<p>R 설치(<a href="https://choosunsick.github.io/post/r_install/">https://choosunsick.github.io/post/r_install/</a>)
-  기초1(<a href="https://choosunsick.github.io/post/r_structure/">https://choosunsick.github.io/post/r_structure/</a>)
-  기초2(<a href="https://choosunsick.github.io/post/r_programming_grammar/">https://choosunsick.github.io/post/r_programming_grammar/</a>)</p>
+<h3 id="r-초심자를-위한-기초-사용법">R 초심자를 위한 기초 사용법</h3>
 
-<ol>
-<li>벡터와 행렬의 연산</li>
-</ol>
-
-<p>벡터 연산(<a href="https://choosunsick.github.io/post/vector_operation/">https://choosunsick.github.io/post/vector_operation/</a>)
-  행렬 연산(<a href="https://choosunsick.github.io/post/matrix_operation/">https://choosunsick.github.io/post/matrix_operation/</a>)
-  브로드 캐스트(<a href="https://choosunsick.github.io/post/broadcast_operation/">https://choosunsick.github.io/post/broadcast_operation/</a>)</p>
-
-<ol>
-<li>신경망</li>
-</ol>
-
-<p>신경망 소개(<a href="https://choosunsick.github.io/post/neural_network_intro/">https://choosunsick.github.io/post/neural_network_intro/</a>)
-  활성화 함수 소개(<a href="https://choosunsick.github.io/post/activation_fuctions/">https://choosunsick.github.io/post/activation_fuctions/</a>)
-  3층 신경망 구현(<a href="https://choosunsick.github.io/post/softmax_function/">https://choosunsick.github.io/post/softmax_function/</a>)
-  신경망 연습 - 손글씨 인식하기(<a href="https://choosunsick.github.io/post/neural_network_practice/">https://choosunsick.github.io/post/neural_network_practice/</a>)</p>
-
-<ol>
-<li>신경망 학습과정</li>
-</ol>
-
-<p>신경망 학습이론(<a href="https://choosunsick.github.io/post/neural_network_1/">https://choosunsick.github.io/post/neural_network_1/</a>)
-  손실함수(<a href="https://choosunsick.github.io/post/neural_network_2/">https://choosunsick.github.io/post/neural_network_2/</a>)
-  미니배치 학습(<a href="https://choosunsick.github.io/post/neural_network_3/">https://choosunsick.github.io/post/neural_network_3/</a>)
-  미분과 경사하강법(<a href="https://choosunsick.github.io/post/neural_network_4/">https://choosunsick.github.io/post/neural_network_4/</a>)
-  학습알고리즘 구현(<a href="https://choosunsick.github.io/post/neural_network_5/">https://choosunsick.github.io/post/neural_network_5/</a>)</p>
-
-<ol>
-<li>오차역전파법</li>
-</ol>
-
-<p>계산그래프와 연쇄법칙(<a href="https://choosunsick.github.io/post/neural_network_backward_1/">https://choosunsick.github.io/post/neural_network_backward_1/</a>)
-  역전파 예제(<a href="https://choosunsick.github.io/post/neural_network_backward_2/">https://choosunsick.github.io/post/neural_network_backward_2/</a>)
-  다양한 역전파 계층(<a href="https://choosunsick.github.io/post/neural_network_backward_3/">https://choosunsick.github.io/post/neural_network_backward_3/</a>)
-  역전파 적용하기(<a href="https://choosunsick.github.io/post/neural_network_backward_4/">https://choosunsick.github.io/post/neural_network_backward_4/</a>)</p>
+<ul>
+<li><a href="https://choosunsick.github.io/post/r_install/">R 설치</a></li>
+<li><a href="https://choosunsick.github.io/post/r_structure/">기초1</a></li>
+<li><a href="https://choosunsick.github.io/post/r_programming_grammar/">기초2</a></li>
+</ul>
 
     </div>
 
