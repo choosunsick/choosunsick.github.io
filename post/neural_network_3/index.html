@@ -187,13 +187,13 @@
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>dslabs<span class="p">)</span>
 
-MNIST <span class="o">&lt;-</span> read_MNIST<span class="p">()</span>
-str<span class="p">(</span>MNIST<span class="p">)</span>
+mnist <span class="o">&lt;-</span> read_mnist<span class="p">()</span>
+str<span class="p">(</span>mnist<span class="p">)</span>
 
-x_train <span class="o">&lt;-</span> MNIST<span class="o">$</span>train<span class="o">$</span>images
-t_train <span class="o">&lt;-</span> MNIST<span class="o">$</span>train<span class="o">$</span><span class="kp">labels</span>
-x_test <span class="o">&lt;-</span> MNIST<span class="o">$</span>test<span class="o">$</span>images
-t_test <span class="o">&lt;-</span> MNIST<span class="o">$</span>test<span class="o">$</span><span class="kp">labels</span>
+x_train <span class="o">&lt;-</span> mnist<span class="o">$</span>train<span class="o">$</span>images
+t_train <span class="o">&lt;-</span> mnist<span class="o">$</span>train<span class="o">$</span><span class="kp">labels</span>
+x_test <span class="o">&lt;-</span> mnist<span class="o">$</span>test<span class="o">$</span>images
+t_test <span class="o">&lt;-</span> mnist<span class="o">$</span>test<span class="o">$</span><span class="kp">labels</span>
 
 x_train_normalize <span class="o">&lt;-</span> x_train<span class="o">/</span><span class="m">255</span>
 x_test_normalize <span class="o">&lt;-</span> x_test<span class="o">/</span><span class="m">255</span>
