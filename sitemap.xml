@@ -3,6 +3,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://choosunsick.github.io/post/contents_list/</loc>
+    <lastmod>2020-04-04T14:06:58+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://choosunsick.github.io/post/neural_network_backward_4/</loc>
     <lastmod>2020-03-30T22:07:37+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -241,7 +248,7 @@
   
   <url>
     <loc>https://choosunsick.github.io/post/</loc>
-    <lastmod>2020-03-30T22:07:37+09:00</lastmod>
+    <lastmod>2020-04-04T14:06:58+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -276,7 +283,7 @@
   
   <url>
     <loc>https://choosunsick.github.io/</loc>
-    <lastmod>2020-03-30T22:07:37+09:00</lastmod>
+    <lastmod>2020-04-04T14:06:58+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

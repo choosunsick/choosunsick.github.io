@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Mon, 30 Mar 2020 22:07:37 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2020 14:06:58 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>글 목차</title>
+      <link>https://choosunsick.github.io/post/contents_list/</link>
+      <pubDate>Sat, 04 Apr 2020 14:06:58 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/contents_list/</guid>
+      <description>R 사용에 익숙하신 분들은 1번글부터 보시면 됩니다. 순서 R 초심자를 위한 기초 사용법 R 설치(https://choosunsick.github.io</description>
+    </item>
     
     <item>
       <title>Chapter5 오차역전파법을 적용하기</title>
