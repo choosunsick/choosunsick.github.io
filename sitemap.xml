@@ -255,7 +255,7 @@
   
   <url>
     <loc>https://choosunsick.github.io/categories/r/</loc>
-    <lastmod>2020-03-30T22:07:37+09:00</lastmod>
+    <lastmod>2020-04-04T14:06:58+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -276,7 +276,7 @@
   
   <url>
     <loc>https://choosunsick.github.io/tags/r%EB%A1%9C-%EB%94%A5%EB%9F%AC%EB%8B%9D%ED%95%98%EA%B8%B0/</loc>
-    <lastmod>2020-03-30T22:07:37+09:00</lastmod>
+    <lastmod>2020-04-04T14:06:58+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -368,6 +368,13 @@
   <url>
     <loc>https://choosunsick.github.io/tags/%EC%86%90%EC%8B%A4-%ED%95%A8%EC%88%98/</loc>
     <lastmod>2020-03-14T22:14:04+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/tags/%EC%88%9C%EC%84%9C/</loc>
+    <lastmod>2020-04-04T14:06:58+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

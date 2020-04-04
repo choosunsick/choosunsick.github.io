@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>순서 on Sunsick&#39;s blog</title>
+    <link>https://choosunsick.github.io/tags/%EC%88%9C%EC%84%9C/</link>
+    <description>Recent content in 순서 on Sunsick&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko</language>
+    <lastBuildDate>Sat, 04 Apr 2020 14:06:58 +0900</lastBuildDate>
+    
+	<atom:link href="https://choosunsick.github.io/tags/%EC%88%9C%EC%84%9C/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>R로 딥러닝하기 목차</title>
+      <link>https://choosunsick.github.io/post/contents_list/</link>
+      <pubDate>Sat, 04 Apr 2020 14:06:58 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/contents_list/</guid>
+      <description>R 사용에 익숙하신 분들은 1번글부터 보시면 됩니다. 순서 벡터와 행렬의 연산 벡터 연산 행렬 연산 브로드 캐스트 신경망 신경망 소개 활성화 함수 소개 3층 신경망 구현 신</description>
+    </item>
+    
+  </channel>
+</rss>
