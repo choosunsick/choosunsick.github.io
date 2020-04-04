@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Chapter3 신경망 연습 - Sunsick&#39;s blog</title>
+  <title>Chapter2 신경망 연습 - Sunsick&#39;s blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -38,25 +38,25 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Chapter3 신경망 연습" />
+<meta property="og:title" content="Chapter2 신경망 연습" />
 <meta property="og:description" content="손글씨 데이터 인식하고 분류하기 모델을 만들었지만 이 모델을 사용하기에는 아직 제한이 있습니다. 왜냐하면, 이 모델은 훈련을 거치지 않았기 때문에 성능이 좋지 못합" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://choosunsick.github.io/post/neural_network_practice/" /><meta property="article:published_time" content="2020-03-16T19:35:04&#43;09:00"/>
 <meta property="article:modified_time" content="2020-03-16T19:35:04&#43;09:00"/>
 
-<meta itemprop="name" content="Chapter3 신경망 연습">
+<meta itemprop="name" content="Chapter2 신경망 연습">
 <meta itemprop="description" content="손글씨 데이터 인식하고 분류하기 모델을 만들었지만 이 모델을 사용하기에는 아직 제한이 있습니다. 왜냐하면, 이 모델은 훈련을 거치지 않았기 때문에 성능이 좋지 못합">
 
 
 <meta itemprop="datePublished" content="2020-03-16T19:35:04&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-16T19:35:04&#43;09:00" />
-<meta itemprop="wordCount" content="2056">
+<meta itemprop="wordCount" content="1995">
 
 
 
 <meta itemprop="keywords" content="R로 딥러닝하기,신경망,소프트맥스,3층 신경망 구현," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Chapter3 신경망 연습"/>
+<meta name="twitter:title" content="Chapter2 신경망 연습"/>
 <meta name="twitter:description" content="손글씨 데이터 인식하고 분류하기 모델을 만들었지만 이 모델을 사용하기에는 아직 제한이 있습니다. 왜냐하면, 이 모델은 훈련을 거치지 않았기 때문에 성능이 좋지 못합"/>
 
 <!--[if lte IE 9]>
@@ -120,7 +120,7 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Chapter3 신경망 연습</h1>
+      <h1 class="post-title">Chapter2 신경망 연습</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2020-03-16 </span>
@@ -230,42 +230,12 @@ t_test_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class=
 <p>이제 모델을 준비할 차례입니다. 참고로 손글씨 데이터의 각층의 노드 개수는 입력층은 이미지의 크기에 따라 784개이고, 첫 번째 은닉층의 경우 50개, 두 번째 은닉층의 경우 100개, 출력층은 10개로 설정됩니다. 두 은닉층의 노드 개수 설정은 임의로 정한 값입니다. 모델은 손글씨 인식과 분류에 사용할 모델의 초기값 설정과 항등함수 대신 소프트맥스 함수를 사용하는 것  외에 기존의 3층 신경망과 똑같습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r">sigmoid <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">){</span>
-  <span class="kr">return</span><span class="p">(</span><span class="m">1</span> <span class="o">/</span> <span class="p">(</span><span class="m">1</span> <span class="o">+</span> <span class="kp">exp</span><span class="p">(</span><span class="o">-</span>x<span class="p">)))</span>
-<span class="p">}</span>
-
-softmax <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>a<span class="p">){</span>
-  exp_a <span class="o">&lt;-</span> <span class="kp">exp</span><span class="p">(</span>a <span class="o">-</span>  <span class="kp">max</span><span class="p">(</span>a<span class="p">))</span>
-  <span class="kr">return</span><span class="p">(</span>exp_a <span class="o">/</span> <span class="kp">sum</span><span class="p">(</span>exp_a<span class="p">))</span>
-<span class="p">}</span>
-
-model.forward <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>model<span class="p">,</span> x<span class="p">){</span>
-  a1 <span class="o">&lt;-</span> <span class="kp">sweep</span><span class="p">(</span>x <span class="o">%*%</span> model<span class="o">$</span>W1<span class="p">,</span><span class="m">2</span><span class="p">,</span>model<span class="o">$</span>b1<span class="p">,</span><span class="s">&#34;+&#34;</span><span class="p">)</span>
-  z1 <span class="o">&lt;-</span> sigmoid<span class="p">(</span>a1<span class="p">)</span>
-  a2 <span class="o">&lt;-</span> <span class="kp">sweep</span><span class="p">(</span>z1 <span class="o">%*%</span> model<span class="o">$</span>W2<span class="p">,</span><span class="m">2</span><span class="p">,</span>model<span class="o">$</span>b2<span class="p">,</span><span class="s">&#34;+&#34;</span><span class="p">)</span>
-  z2 <span class="o">&lt;-</span> sigmoid<span class="p">(</span>a2<span class="p">)</span>
-  a3 <span class="o">&lt;-</span> <span class="kp">sweep</span><span class="p">(</span>z2 <span class="o">%*%</span> model<span class="o">$</span>W3<span class="p">,</span><span class="m">2</span><span class="p">,</span>model<span class="o">$</span>b3<span class="p">,</span><span class="s">&#34;+&#34;</span><span class="p">)</span>
-  <span class="kr">return</span><span class="p">(</span>softmax<span class="p">(</span>a3<span class="p">))</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#34;./DeepLearningFromForR/functions.R&#34;</span><span class="p">)</span>
+<span class="kn">source</span><span class="p">(</span><span class="s">&#34;./DeepLearningFromForR/chapter_2_3.R&#34;</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>이제 초기값을 불러와 보겠습니다. 초기값을 불러오는 방식은 hdf5 형식을 이용하거나 json 파일 형식을 이용하는 방식 등 여러가지가 있습니다. 이 글에서는 최근 자주 사용되는 hdf5 형식으로 저장된 데이터를 R로 읽어와 가중치와 편향 행렬을 객체로 저장해보겠습니다. 참고로 hdf5 형식은 데이터를 계층적으로 저장하는 형식입니다. 이 형식에 대해 더 자세히 알고 싶은 분들은 링크(<a href="https://www.hdfgroup.org/solutions/hdf5/)를">https://www.hdfgroup.org/solutions/hdf5/)를</a> 참조해주시기 바랍니다.</p>
@@ -376,7 +346,7 @@ model.evaluate<span class="p">(</span>model<span class="p">,</span>x_test_normal
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         <a class="next" href="/post/softmax_function/">
-            <span class="next-text nav-default">Chapter3 3층 신경망 구현</span>
+            <span class="next-text nav-default">Chapter2 3층 신경망 구현</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>

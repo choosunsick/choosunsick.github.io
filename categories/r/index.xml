@@ -17,7 +17,7 @@
       <pubDate>Sat, 04 Apr 2020 14:06:58 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/contents_list/</guid>
-      <description>R 사용에 익숙하신 분들은 1번글부터 보시면 됩니다. 순서 벡터와 행렬의 연산 벡터 연산 행렬 연산 브로드 캐스트 신경망 신경망 소개 활성화 함수 소개 3층 신경망 구현 신</description>
+      <description>R 사용에 익숙하신 분들은 1번글부터 보시면 됩니다. R 사용이 처음 이신분은 맨 밑에 R 초심자를 위한 글을 참고해주세요. 순서 벡터와 행렬의 연산 벡터 연산 행렬 연산</description>
     </item>
     
     <item>
@@ -57,7 +57,7 @@
     </item>
     
     <item>
-      <title>Chapter3 신경망 연습</title>
+      <title>Chapter2 신경망 연습</title>
       <link>https://choosunsick.github.io/post/neural_network_practice/</link>
       <pubDate>Mon, 16 Mar 2020 19:35:04 +0900</pubDate>
       
@@ -66,7 +66,7 @@
     </item>
     
     <item>
-      <title>Chapter3 3층 신경망 구현</title>
+      <title>Chapter2 3층 신경망 구현</title>
       <link>https://choosunsick.github.io/post/softmax_function/</link>
       <pubDate>Mon, 16 Mar 2020 19:34:26 +0900</pubDate>
       
@@ -75,7 +75,7 @@
     </item>
     
     <item>
-      <title>Chapter3 활성화 함수</title>
+      <title>Chapter2 활성화 함수</title>
       <link>https://choosunsick.github.io/post/activation_fuctions/</link>
       <pubDate>Mon, 16 Mar 2020 19:34:03 +0900</pubDate>
       
@@ -84,7 +84,7 @@
     </item>
     
     <item>
-      <title>Chapter3 신경망</title>
+      <title>Chapter2 신경망</title>
       <link>https://choosunsick.github.io/post/neural_network_intro/</link>
       <pubDate>Mon, 16 Mar 2020 19:32:28 +0900</pubDate>
       
@@ -93,7 +93,7 @@
     </item>
     
     <item>
-      <title>Chapter4 2층 신경망 구현</title>
+      <title>Chapter3 2층 신경망 구현</title>
       <link>https://choosunsick.github.io/post/neural_network_5/</link>
       <pubDate>Sat, 14 Mar 2020 22:14:14 +0900</pubDate>
       
@@ -102,7 +102,7 @@
     </item>
     
     <item>
-      <title>Chapter4 미분과 확률적 경사하강법</title>
+      <title>Chapter3 미분과 확률적 경사하강법</title>
       <link>https://choosunsick.github.io/post/neural_network_4/</link>
       <pubDate>Sat, 14 Mar 2020 22:14:08 +0900</pubDate>
       
@@ -111,7 +111,7 @@
     </item>
     
     <item>
-      <title>Chapter4 미니 배치 학습과 손실 함수 사용의 이유</title>
+      <title>Chapter3 미니 배치 학습과 손실 함수 사용의 이유</title>
       <link>https://choosunsick.github.io/post/neural_network_3/</link>
       <pubDate>Sat, 14 Mar 2020 22:14:04 +0900</pubDate>
       
@@ -120,7 +120,7 @@
     </item>
     
     <item>
-      <title>Chapter4 손실함수</title>
+      <title>Chapter3 손실함수</title>
       <link>https://choosunsick.github.io/post/neural_network_2/</link>
       <pubDate>Sat, 14 Mar 2020 22:13:44 +0900</pubDate>
       
@@ -129,7 +129,7 @@
     </item>
     
     <item>
-      <title>Chapter4 신경망 학습</title>
+      <title>Chapter3 신경망 학습</title>
       <link>https://choosunsick.github.io/post/neural_network_1/</link>
       <pubDate>Sat, 14 Mar 2020 22:09:52 +0900</pubDate>
       
@@ -138,7 +138,7 @@
     </item>
     
     <item>
-      <title>Chpater2 브로드캐스트 연산</title>
+      <title>Chpater1 브로드캐스트 연산</title>
       <link>https://choosunsick.github.io/post/broadcast_operation/</link>
       <pubDate>Sat, 08 Feb 2020 20:22:00 +0900</pubDate>
       
@@ -147,7 +147,7 @@
     </item>
     
     <item>
-      <title>Chpater2 행렬의 연산</title>
+      <title>Chpater1 행렬의 연산</title>
       <link>https://choosunsick.github.io/post/matrix_operation/</link>
       <pubDate>Sat, 08 Feb 2020 20:21:45 +0900</pubDate>
       
@@ -156,7 +156,7 @@
     </item>
     
     <item>
-      <title>Chpater2 벡터의 연산</title>
+      <title>Chpater1 벡터의 연산</title>
       <link>https://choosunsick.github.io/post/vector_operation/</link>
       <pubDate>Sat, 08 Feb 2020 20:21:30 +0900</pubDate>
       
