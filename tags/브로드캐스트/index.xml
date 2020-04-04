@@ -12,12 +12,12 @@
     
     
     <item>
-      <title>브로드캐스트</title>
+      <title>Chpater2 브로드캐스트 연산</title>
       <link>https://choosunsick.github.io/post/broadcast_operation/</link>
       <pubDate>Sat, 08 Feb 2020 20:22:00 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/broadcast_operation/</guid>
-      <description>브로드캐스트 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙을 사용하여 연산이 이루어진다고 언급한 적이 있습니다. 그러나 사실 다른 방법으로도 행렬과 벡터 간 연산이 가</description>
+      <description>브로드캐스트란? 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙을 사용하여 연산이 이루어진다고 언급한 적이 있습니다. 그러나 사실 다른 방법으로도 행렬과 벡터 간 연산</description>
     </item>
     
   </channel>

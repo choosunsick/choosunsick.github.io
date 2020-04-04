@@ -12,21 +12,21 @@
     
     
     <item>
-      <title>미니 배치 학습과 손실 함수 사용의 이유</title>
-      <link>https://choosunsick.github.io/post/nural_network_3/</link>
+      <title>Chapter4 미니 배치 학습과 손실 함수 사용의 이유</title>
+      <link>https://choosunsick.github.io/post/neural_network_3/</link>
       <pubDate>Sat, 14 Mar 2020 22:14:04 +0900</pubDate>
       
-      <guid>https://choosunsick.github.io/post/nural_network_3/</guid>
+      <guid>https://choosunsick.github.io/post/neural_network_3/</guid>
       <description>미니배치 학습 머신러닝에서 모델의 성능을 높이기 위해서는 훈련데이터를 사용합니다. 신경망 모델에서도 마찬가지로 훈련데이터를 이용해 손실 함수 값이 최소화가 되</description>
     </item>
     
     <item>
-      <title>손실 함수의 개념</title>
-      <link>https://choosunsick.github.io/post/nural_network_2/</link>
+      <title>Chapter4 손실함수</title>
+      <link>https://choosunsick.github.io/post/neural_network_2/</link>
       <pubDate>Sat, 14 Mar 2020 22:13:44 +0900</pubDate>
       
-      <guid>https://choosunsick.github.io/post/nural_network_2/</guid>
-      <description>손실 함수 이제 신경망에서 어떻게 학습이 이루어지는지 본격적으로 알아보겠습니다. 신경망에서는 학습을 통해 모델의 성능을 나아지게 합니다. 그렇다면 모델의 학습</description>
+      <guid>https://choosunsick.github.io/post/neural_network_2/</guid>
+      <description>손실 함수란 ? 이제 신경망에서 어떻게 학습이 이루어지는지 본격적으로 알아보겠습니다. 신경망에서는 학습을 통해 모델의 성능을 나아지게 합니다. 그렇다면 모델의</description>
     </item>
     
   </channel>

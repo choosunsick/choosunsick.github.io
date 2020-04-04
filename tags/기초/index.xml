@@ -12,16 +12,16 @@
     
     
     <item>
-      <title>브로드캐스트</title>
+      <title>Chpater2 브로드캐스트 연산</title>
       <link>https://choosunsick.github.io/post/broadcast_operation/</link>
       <pubDate>Sat, 08 Feb 2020 20:22:00 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/broadcast_operation/</guid>
-      <description>브로드캐스트 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙을 사용하여 연산이 이루어진다고 언급한 적이 있습니다. 그러나 사실 다른 방법으로도 행렬과 벡터 간 연산이 가</description>
+      <description>브로드캐스트란? 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙을 사용하여 연산이 이루어진다고 언급한 적이 있습니다. 그러나 사실 다른 방법으로도 행렬과 벡터 간 연산</description>
     </item>
     
     <item>
-      <title>행렬의 연산</title>
+      <title>Chpater2 행렬의 연산</title>
       <link>https://choosunsick.github.io/post/matrix_operation/</link>
       <pubDate>Sat, 08 Feb 2020 20:21:45 +0900</pubDate>
       
@@ -30,7 +30,7 @@
     </item>
     
     <item>
-      <title>벡터의 연산</title>
+      <title>Chpater2 벡터의 연산</title>
       <link>https://choosunsick.github.io/post/vector_operation/</link>
       <pubDate>Sat, 08 Feb 2020 20:21:30 +0900</pubDate>
       
@@ -39,7 +39,7 @@
     </item>
     
     <item>
-      <title>R 초심자를 위한 간단한 사용법 2</title>
+      <title>Chapter1 R 초심자를 위한 간단한 사용법 2</title>
       <link>https://choosunsick.github.io/post/r_programming_grammar/</link>
       <pubDate>Fri, 17 Jan 2020 17:43:41 +0900</pubDate>
       
@@ -48,7 +48,7 @@
     </item>
     
     <item>
-      <title>R 초심자를 위한 간단한 사용법 1</title>
+      <title>Chapter1 R 초심자를 위한 간단한 사용법 1</title>
       <link>https://choosunsick.github.io/post/r_structure/</link>
       <pubDate>Fri, 17 Jan 2020 17:42:53 +0900</pubDate>
       

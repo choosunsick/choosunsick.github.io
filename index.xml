@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>오차역전파법을 적용한 2층 신경망 구현하기</title>
+      <title>Chapter5 오차역전파법을 적용하기</title>
       <link>https://choosunsick.github.io/post/neural_network_backward_4/</link>
       <pubDate>Mon, 30 Mar 2020 22:07:37 +0900</pubDate>
       
@@ -21,7 +21,7 @@
     </item>
     
     <item>
-      <title>다양한 역전파 계층 구현하기</title>
+      <title>Chapter5 다양한 역전파 계층</title>
       <link>https://choosunsick.github.io/post/neural_network_backward_3/</link>
       <pubDate>Mon, 30 Mar 2020 22:07:35 +0900</pubDate>
       
@@ -30,7 +30,7 @@
     </item>
     
     <item>
-      <title>역전파와 간단한 계산문제</title>
+      <title>Chapter5 역전파와 간단한 계산문제</title>
       <link>https://choosunsick.github.io/post/neural_network_backward_2/</link>
       <pubDate>Mon, 30 Mar 2020 22:07:33 +0900</pubDate>
       
@@ -39,7 +39,7 @@
     </item>
     
     <item>
-      <title>계산 그래프와 연쇄법칙</title>
+      <title>Chapter5 계산 그래프와 연쇄법칙</title>
       <link>https://choosunsick.github.io/post/neural_network_backward_1/</link>
       <pubDate>Mon, 30 Mar 2020 22:07:30 +0900</pubDate>
       
@@ -48,7 +48,7 @@
     </item>
     
     <item>
-      <title>손글씨 인식하기</title>
+      <title>Chapter3 신경망 연습</title>
       <link>https://choosunsick.github.io/post/neural_network_practice/</link>
       <pubDate>Mon, 16 Mar 2020 19:35:04 +0900</pubDate>
       
@@ -57,7 +57,7 @@
     </item>
     
     <item>
-      <title>3층 신경망 구현</title>
+      <title>Chapter3 3층 신경망 구현</title>
       <link>https://choosunsick.github.io/post/softmax_function/</link>
       <pubDate>Mon, 16 Mar 2020 19:34:26 +0900</pubDate>
       
@@ -66,16 +66,16 @@
     </item>
     
     <item>
-      <title>활성화 함수 소개</title>
+      <title>Chapter3 활성화 함수</title>
       <link>https://choosunsick.github.io/post/activation_fuctions/</link>
       <pubDate>Mon, 16 Mar 2020 19:34:03 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/activation_fuctions/</guid>
-      <description>활성화 함수 활성화 함수는 이전층(layer)의 뉴런에서 다음 층의 뉴런으로 신호를 전달하는 역할을 합니다. 이때 활성화 함수의 값에 따라서 다음 층의 뉴런으로 출</description>
+      <description>활성화 함수란 ? 활성화 함수는 이전층(layer)의 뉴런에서 다음 층의 뉴런으로 신호를 전달하는 역할을 합니다. 이때 활성화 함수의 값에 따라서 다음 층의 뉴런으</description>
     </item>
     
     <item>
-      <title>신경망 소개</title>
+      <title>Chapter3 신경망</title>
       <link>https://choosunsick.github.io/post/neural_network_intro/</link>
       <pubDate>Mon, 16 Mar 2020 19:32:28 +0900</pubDate>
       
@@ -84,61 +84,61 @@
     </item>
     
     <item>
-      <title>2층 신경망 구현</title>
-      <link>https://choosunsick.github.io/post/nural_network_5/</link>
+      <title>Chapter4 2층 신경망 구현</title>
+      <link>https://choosunsick.github.io/post/neural_network_5/</link>
       <pubDate>Sat, 14 Mar 2020 22:14:14 +0900</pubDate>
       
-      <guid>https://choosunsick.github.io/post/nural_network_5/</guid>
+      <guid>https://choosunsick.github.io/post/neural_network_5/</guid>
       <description>신경망 모델에서 기울기 신경망 모델에서 기울기는 무엇을 의미할까요? 신경망 모델에서 기울기는 가중치 행렬의 원소들이 각각 조금 씩 변할 때 손실 함수의 변화정도를 의</description>
     </item>
     
     <item>
-      <title>미분과 확률적 경사하강법</title>
-      <link>https://choosunsick.github.io/post/nural_network_4/</link>
+      <title>Chapter4 미분과 확률적 경사하강법</title>
+      <link>https://choosunsick.github.io/post/neural_network_4/</link>
       <pubDate>Sat, 14 Mar 2020 22:14:08 +0900</pubDate>
       
-      <guid>https://choosunsick.github.io/post/nural_network_4/</guid>
+      <guid>https://choosunsick.github.io/post/neural_network_4/</guid>
       <description>수치미분과 기울기 미분을 사용하는 이유는 작은 변화에 따른 손실 함수의 변화 방향을 알기위해서 입니다. 신경망 모델에서 미분을 활용하는 방식을 경사하강법이라 말하</description>
     </item>
     
     <item>
-      <title>미니 배치 학습과 손실 함수 사용의 이유</title>
-      <link>https://choosunsick.github.io/post/nural_network_3/</link>
+      <title>Chapter4 미니 배치 학습과 손실 함수 사용의 이유</title>
+      <link>https://choosunsick.github.io/post/neural_network_3/</link>
       <pubDate>Sat, 14 Mar 2020 22:14:04 +0900</pubDate>
       
-      <guid>https://choosunsick.github.io/post/nural_network_3/</guid>
+      <guid>https://choosunsick.github.io/post/neural_network_3/</guid>
       <description>미니배치 학습 머신러닝에서 모델의 성능을 높이기 위해서는 훈련데이터를 사용합니다. 신경망 모델에서도 마찬가지로 훈련데이터를 이용해 손실 함수 값이 최소화가 되</description>
     </item>
     
     <item>
-      <title>손실 함수의 개념</title>
-      <link>https://choosunsick.github.io/post/nural_network_2/</link>
+      <title>Chapter4 손실함수</title>
+      <link>https://choosunsick.github.io/post/neural_network_2/</link>
       <pubDate>Sat, 14 Mar 2020 22:13:44 +0900</pubDate>
       
-      <guid>https://choosunsick.github.io/post/nural_network_2/</guid>
-      <description>손실 함수 이제 신경망에서 어떻게 학습이 이루어지는지 본격적으로 알아보겠습니다. 신경망에서는 학습을 통해 모델의 성능을 나아지게 합니다. 그렇다면 모델의 학습</description>
+      <guid>https://choosunsick.github.io/post/neural_network_2/</guid>
+      <description>손실 함수란 ? 이제 신경망에서 어떻게 학습이 이루어지는지 본격적으로 알아보겠습니다. 신경망에서는 학습을 통해 모델의 성능을 나아지게 합니다. 그렇다면 모델의</description>
     </item>
     
     <item>
-      <title>신경망 학습의 개념</title>
-      <link>https://choosunsick.github.io/post/nural_network_1/</link>
+      <title>Chapter4 신경망 학습</title>
+      <link>https://choosunsick.github.io/post/neural_network_1/</link>
       <pubDate>Sat, 14 Mar 2020 22:09:52 +0900</pubDate>
       
-      <guid>https://choosunsick.github.io/post/nural_network_1/</guid>
+      <guid>https://choosunsick.github.io/post/neural_network_1/</guid>
       <description>소개 이번 글에서는 신경망 분류 모델이 어떻게 학습하는지 그 과정에 대해서 알아보겠습니다. 여기서 학습이라는 것은 모델이 더 분류를 잘할 수 있게 만드는 것을 의미합니</description>
     </item>
     
     <item>
-      <title>브로드캐스트</title>
+      <title>Chpater2 브로드캐스트 연산</title>
       <link>https://choosunsick.github.io/post/broadcast_operation/</link>
       <pubDate>Sat, 08 Feb 2020 20:22:00 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/broadcast_operation/</guid>
-      <description>브로드캐스트 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙을 사용하여 연산이 이루어진다고 언급한 적이 있습니다. 그러나 사실 다른 방법으로도 행렬과 벡터 간 연산이 가</description>
+      <description>브로드캐스트란? 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙을 사용하여 연산이 이루어진다고 언급한 적이 있습니다. 그러나 사실 다른 방법으로도 행렬과 벡터 간 연산</description>
     </item>
     
     <item>
-      <title>행렬의 연산</title>
+      <title>Chpater2 행렬의 연산</title>
       <link>https://choosunsick.github.io/post/matrix_operation/</link>
       <pubDate>Sat, 08 Feb 2020 20:21:45 +0900</pubDate>
       
@@ -147,7 +147,7 @@
     </item>
     
     <item>
-      <title>벡터의 연산</title>
+      <title>Chpater2 벡터의 연산</title>
       <link>https://choosunsick.github.io/post/vector_operation/</link>
       <pubDate>Sat, 08 Feb 2020 20:21:30 +0900</pubDate>
       
@@ -165,7 +165,7 @@
     </item>
     
     <item>
-      <title>R 초심자를 위한 간단한 사용법 2</title>
+      <title>Chapter1 R 초심자를 위한 간단한 사용법 2</title>
       <link>https://choosunsick.github.io/post/r_programming_grammar/</link>
       <pubDate>Fri, 17 Jan 2020 17:43:41 +0900</pubDate>
       
@@ -174,7 +174,7 @@
     </item>
     
     <item>
-      <title>R 초심자를 위한 간단한 사용법 1</title>
+      <title>Chapter1 R 초심자를 위한 간단한 사용법 1</title>
       <link>https://choosunsick.github.io/post/r_structure/</link>
       <pubDate>Fri, 17 Jan 2020 17:42:53 +0900</pubDate>
       

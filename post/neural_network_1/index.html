@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Chpater2 벡터의 연산 - Sunsick&#39;s blog</title>
+  <title>Chapter4 신경망 학습 - Sunsick&#39;s blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Sunsick" /><meta name="description" content="소개 이번 글에서는 벡터, 행렬의 연산 방법에 대해 알아볼 것입니다. 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로" /><meta name="keywords" content="blog, R, Data Analysis" />
+<meta name="author" content="Sunsick" /><meta name="description" content="소개 이번 글에서는 신경망 분류 모델이 어떻게 학습하는지 그 과정에 대해서 알아보겠습니다. 여기서 학습이라는 것은 모델이 더 분류를 잘할 수 있게 만드는 것을 의미합니" /><meta name="keywords" content="blog, R, Data Analysis" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.53 with even 4.0.0" />
 
 
-<link rel="canonical" href="https://choosunsick.github.io/post/vector_operation/" />
+<link rel="canonical" href="https://choosunsick.github.io/post/neural_network_1/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,26 +38,26 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Chpater2 벡터의 연산" />
-<meta property="og:description" content="소개 이번 글에서는 벡터, 행렬의 연산 방법에 대해 알아볼 것입니다. 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로" />
+<meta property="og:title" content="Chapter4 신경망 학습" />
+<meta property="og:description" content="소개 이번 글에서는 신경망 분류 모델이 어떻게 학습하는지 그 과정에 대해서 알아보겠습니다. 여기서 학습이라는 것은 모델이 더 분류를 잘할 수 있게 만드는 것을 의미합니" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://choosunsick.github.io/post/vector_operation/" /><meta property="article:published_time" content="2020-02-08T20:21:30&#43;09:00"/>
-<meta property="article:modified_time" content="2020-02-08T20:21:30&#43;09:00"/>
+<meta property="og:url" content="https://choosunsick.github.io/post/neural_network_1/" /><meta property="article:published_time" content="2020-03-14T22:09:52&#43;09:00"/>
+<meta property="article:modified_time" content="2020-03-14T22:09:52&#43;09:00"/>
 
-<meta itemprop="name" content="Chpater2 벡터의 연산">
-<meta itemprop="description" content="소개 이번 글에서는 벡터, 행렬의 연산 방법에 대해 알아볼 것입니다. 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로">
-
-
-<meta itemprop="datePublished" content="2020-02-08T20:21:30&#43;09:00" />
-<meta itemprop="dateModified" content="2020-02-08T20:21:30&#43;09:00" />
-<meta itemprop="wordCount" content="953">
+<meta itemprop="name" content="Chapter4 신경망 학습">
+<meta itemprop="description" content="소개 이번 글에서는 신경망 분류 모델이 어떻게 학습하는지 그 과정에 대해서 알아보겠습니다. 여기서 학습이라는 것은 모델이 더 분류를 잘할 수 있게 만드는 것을 의미합니">
 
 
+<meta itemprop="datePublished" content="2020-03-14T22:09:52&#43;09:00" />
+<meta itemprop="dateModified" content="2020-03-14T22:09:52&#43;09:00" />
+<meta itemprop="wordCount" content="998">
 
-<meta itemprop="keywords" content="R로 딥러닝하기,기초,벡터,벡터연산," />
+
+
+<meta itemprop="keywords" content="R로 딥러닝하기,신경망,순전파," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Chpater2 벡터의 연산"/>
-<meta name="twitter:description" content="소개 이번 글에서는 벡터, 행렬의 연산 방법에 대해 알아볼 것입니다. 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로"/>
+<meta name="twitter:title" content="Chapter4 신경망 학습"/>
+<meta name="twitter:description" content="소개 이번 글에서는 신경망 분류 모델이 어떻게 학습하는지 그 과정에 대해서 알아보겠습니다. 여기서 학습이라는 것은 모델이 더 분류를 잘할 수 있게 만드는 것을 의미합니"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -120,10 +120,10 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Chpater2 벡터의 연산</h1>
+      <h1 class="post-title">Chapter4 신경망 학습</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2020-02-08 </span>
+        <span class="post-time"> 2020-03-14 </span>
         <div class="post-category">
             <a href="/categories/r/"> R </a>
             </div>
@@ -136,11 +136,10 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
 <ul>
-<li>
+<li><a href="#소개">소개</a>
 <ul>
-<li><a href="#소개">소개</a></li>
-<li><a href="#용어-정리">용어 정리</a></li>
-<li><a href="#벡터의-연산">벡터의 연산</a></li>
+<li><a href="#용어소개">용어소개</a></li>
+<li><a href="#데이터-주도-학습">데이터 주도 학습</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -149,48 +148,26 @@
     <div class="post-content">
       
 
-<h2 id="소개">소개</h2>
+<h1 id="소개">소개</h1>
 
-<p>이번 글에서는 벡터, 행렬의  연산 방법에 대해 알아볼 것입니다. 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로드캐스트 연산은 일반적으로 사용하지 않지만 딥러닝의 계산과정에서 그 시간을 단축시키는 기술입니다. 먼저 벡터의 연산에 대해 알아보고 이후 행렬의 연산에 대해 살펴본 다음 마지막으로 브로드캐스트 연산에 대해 알아보겠습니다.</p>
+<p>이번 글에서는 신경망 분류 모델이 어떻게 학습하는지 그 과정에 대해서 알아보겠습니다. 여기서 학습이라는 것은 모델이 더 분류를 잘할 수 있게 만드는 것을 의미합니다. 모델의 학습 과정은 각 층의 가중치값이 최적값을 찾는 계산을 하는 것을 의미합니다. 이 학습 과정에서 최적값을 찾는데 필요한 지표가 손실 함수입니다. 따라서 이번 글에서는 손실 함수의 결괏 값을 최소화하는 방법과 모델이 어떻게 학습을 진행해 나가는지 전체적인 과정을 살펴보고 직접학습과정을 구현해 볼 것입니다.</p>
 
-<h2 id="용어-정리">용어 정리</h2>
+<h2 id="용어소개">용어소개</h2>
 
-<p>연산이나 수학 관련 용어</p>
+<p>데이터 특징: 데이터에서 추출할 수 있는 기준입니다. 예를 들면 물품판매 데이터에서 고객 정보(나이, 성별 등)가 될 수 있습니다.</p>
 
-<p>브로드캐스트: 행렬의 연산에서 크기가 다른 행렬 간 원소별로 연산을 하게 끔 자동으로 행렬의 크기를 변경하여 연산하는 방법, 예를 들면 2행 2열 크기의 행렬에 1행 2열 크기의 행렬을 더 한다고 할 때 1행 2열의 행렬을 2행 2열 크기로 변경하여 더하는 경우가 브로드캐스트 연산 방법입니다.</p>
+<p>오버피팅: 어떤 모델이 하나의 데이터 셋에만 지나치게 최적화된 상태를 말합니다. 즉 최적화된 데이터 셋을 제외한 다른 데이터 셋에 대해서는 모델의 분류나 예측 능력이 떨어지는 상태를 의미합니다.</p>
 
-<p>내적: 벡터의 연산 방법 중 하나로 두 벡터 간 원소별 곱셈 이후 합으로 나타냅니다. 2개의 벡터가 있는 행렬의 경우 내적은 행렬의 곱으로 나타냅니다. 예를 들면 1,2,3과 4,5,6로 내적 값을 구해봅시다. 각 벡터의 원소를 순서대로 곱하면 4, 10, 18의 값을 얻는데 이 3개의 값을 다 더한 값인 32가 내적 값이 됩니다.</p>
+<p>손실 함수(비용함수): 신경망 모델에서 사용하는 학습의 지표로서, 모델이 훈련데이터를 잘 처리하지 못하는지(모델의 성능이 얼마나 나쁜지)를 값으로 판단합니다.</p>
 
-<h2 id="벡터의-연산">벡터의 연산</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">a &lt;- c(1,2,3)
-b &lt;- c(4,5,6)
-c &lt;- c(1,2)
-a
-b
-c
-a*b
-a*c
-a%*%b</pre></td></tr></table>
-</div>
-</div>
-<p>두 벡터의 연산은 원소의 순서에 따라 이루어집니다. 코드에서는 대표적으로 곱셈만 있지만 수학에서 사용하는 덧셈, 뺄셈, 나눗셈이 모두 가능하며 원소의 순서에 대응하여 연산이 이루어집니다. 즉 벡터는 원칙적으로는 두 벡터의 데이터 개수가 같은 경우에만 연산이 가능합니다. 그러나 R에서는 개수가 다른 벡터 간의 연산도 가능한데 재활용 규칙이라는 규칙이 있기 때문입니다.</p>
+<h2 id="데이터-주도-학습">데이터 주도 학습</h2>
 
-<p>R에서는 개수가 맞지 않는 경우 부족한 개수의 데이터에서 원소를 다시 사용하여 연산을 진행합니다. 이때 한번 연산에 사용한 원소를 다시 사용하기에 재활용 규칙이라고 부릅니다. 참고로 R에서 재활용 규칙이 사용되었을 경우 한쪽 데이터의 길이가 다른 쪽 보다 더 길다는 경고 문구를 맞이할 수 있습니다.</p>
+<p>신경망 모델의 학습 방법을 알기 전에 학습 과정에서 기존의 머신러닝 모델들과는 어떠한 차이가 있는지부터 알아보겠습니다.
+기존의 머신러닝 모델의 경우 모델이 분류를 하기 위해서는 사람이 데이터에서 특징을 추출해주는 작업이 필수적이였습니다. 예를 들어 고객 데이터에서 고객의 나이, 성별 등의 정보를 데이터에서 따로 추출해야 한다는 의미입니다. 물론 어느 특징의 고객들이 구분되는지는 모델이 자체적으로 수행하지만 이 작업을 위해서는 데이터 내에서 고객의 특징들을 따로 분리해야하는 작업이 필요합니다. 그렇기 때문에 사람의 개입이 필수적이라는 것입니다.</p>
 
-<p>기본적인 사칙연산 외 벡터의 연산에는 벡터의 내적이 있습니다. 벡터의 내적 연산은 원소별 곱셈의 합이라 부를 수 있습니다. 앞서 두 벡터 간 원소별 연산을 한 결과에서 모든 값을 다 더하면 그 값이 벡터의 내적 값이 됩니다. R에서 이 벡터의 내적 연산은 일반적인 곱셈 연산자를 사용하지 않고 <code>%*%</code> 라는 특별한 연산자를 통해 이루어 집니다. 또한, 벡터의 내적 연산은 벡터의 개수가 서로 대응되지 않을 경우 연산자체가 불가능합니다. 따라서 내적 연산에서는 재활용 규칙이 사용되지 않습니다.</p>
+<p>그러나 신경망 모델의 경우에는 사람의 개입이 필요하지 않습니다. 왜냐하면, 사람의 개입으로 데이터의 특징을 찾는 작업조차 모델이 스스로 학습하기 때문입니다. 이를 종단간 기계학습이라 말합니다. R의 기본데이터인 iris 데이터를 예로 들어보면, 기존의 머신러닝 모델은 꽃잎과 꽃받침의 높이와 넓이를 바탕으로 붓꽃의 종류를 구분하게 됩니다. 여기서 꽃잎과 꽃받침의 높이와 넓이가 특징이 되며, 이 부분은 사람의 개입으로 만들어집니다.</p>
+
+<p>신경망 모델에서 분류를 할 경우 우리는 각 숫자가 꽃잎의 높이인지 넓이인지 아니면 꽃받침의 높이인지 넓이 따위 등을 데이터에 명시할 필요가 없습니다. 단지 일련의 숫자들을 입력하면 신경망 모델은 그 숫자들 사이에서 스스로 특징을 찾고 패턴이나 규칙을 발견해 붓꽃의 종류를 분류해 낼 것입니다. 이런 점에서 신경망 모델은 사람의 개입이 필요없습니다.</p>
 
     </div>
 
@@ -201,25 +178,24 @@ a%*%b</pre></td></tr></table>
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2020-02-08</span>
+    <span class="item-content">2020-03-14</span>
   </p>
   
   
 </div><footer class="post-footer">
       <div class="post-tags">
           <a href="/tags/r%EB%A1%9C-%EB%94%A5%EB%9F%AC%EB%8B%9D%ED%95%98%EA%B8%B0/">R로 딥러닝하기</a>
-          <a href="/tags/%EA%B8%B0%EC%B4%88/">기초</a>
-          <a href="/tags/%EB%B2%A1%ED%84%B0/">벡터</a>
-          <a href="/tags/%EB%B2%A1%ED%84%B0%EC%97%B0%EC%82%B0/">벡터연산</a>
+          <a href="/tags/%EC%8B%A0%EA%B2%BD%EB%A7%9D/">신경망</a>
+          <a href="/tags/%EC%88%9C%EC%A0%84%ED%8C%8C/">순전파</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/matrix_operation/">
+        <a class="prev" href="/post/neural_network_2/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">Chpater2 행렬의 연산</span>
+            <span class="prev-text nav-default">Chapter4 손실함수</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
-        <a class="next" href="/post/mnist/">
-            <span class="next-text nav-default">Mnist 손글씨 데이터 읽어오는 패키지 소개</span>
+        <a class="next" href="/post/broadcast_operation/">
+            <span class="next-text nav-default">Chpater2 브로드캐스트 연산</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>

@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>오차역전파법을 적용한 2층 신경망 구현하기</title>
+      <title>Chapter5 오차역전파법을 적용하기</title>
       <link>https://choosunsick.github.io/post/neural_network_backward_4/</link>
       <pubDate>Mon, 30 Mar 2020 22:07:37 +0900</pubDate>
       
@@ -21,7 +21,7 @@
     </item>
     
     <item>
-      <title>다양한 역전파 계층 구현하기</title>
+      <title>Chapter5 다양한 역전파 계층</title>
       <link>https://choosunsick.github.io/post/neural_network_backward_3/</link>
       <pubDate>Mon, 30 Mar 2020 22:07:35 +0900</pubDate>
       
@@ -30,7 +30,7 @@
     </item>
     
     <item>
-      <title>역전파와 간단한 계산문제</title>
+      <title>Chapter5 역전파와 간단한 계산문제</title>
       <link>https://choosunsick.github.io/post/neural_network_backward_2/</link>
       <pubDate>Mon, 30 Mar 2020 22:07:33 +0900</pubDate>
       
@@ -39,7 +39,7 @@
     </item>
     
     <item>
-      <title>계산 그래프와 연쇄법칙</title>
+      <title>Chapter5 계산 그래프와 연쇄법칙</title>
       <link>https://choosunsick.github.io/post/neural_network_backward_1/</link>
       <pubDate>Mon, 30 Mar 2020 22:07:30 +0900</pubDate>
       

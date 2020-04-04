@@ -12,12 +12,12 @@
     
     
     <item>
-      <title>활성화 함수 소개</title>
+      <title>Chapter3 활성화 함수</title>
       <link>https://choosunsick.github.io/post/activation_fuctions/</link>
       <pubDate>Mon, 16 Mar 2020 19:34:03 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/activation_fuctions/</guid>
-      <description>활성화 함수 활성화 함수는 이전층(layer)의 뉴런에서 다음 층의 뉴런으로 신호를 전달하는 역할을 합니다. 이때 활성화 함수의 값에 따라서 다음 층의 뉴런으로 출</description>
+      <description>활성화 함수란 ? 활성화 함수는 이전층(layer)의 뉴런에서 다음 층의 뉴런으로 신호를 전달하는 역할을 합니다. 이때 활성화 함수의 값에 따라서 다음 층의 뉴런으</description>
     </item>
     
   </channel>

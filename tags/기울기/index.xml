@@ -12,11 +12,11 @@
     
     
     <item>
-      <title>2층 신경망 구현</title>
-      <link>https://choosunsick.github.io/post/nural_network_5/</link>
+      <title>Chapter4 2층 신경망 구현</title>
+      <link>https://choosunsick.github.io/post/neural_network_5/</link>
       <pubDate>Sat, 14 Mar 2020 22:14:14 +0900</pubDate>
       
-      <guid>https://choosunsick.github.io/post/nural_network_5/</guid>
+      <guid>https://choosunsick.github.io/post/neural_network_5/</guid>
       <description>신경망 모델에서 기울기 신경망 모델에서 기울기는 무엇을 의미할까요? 신경망 모델에서 기울기는 가중치 행렬의 원소들이 각각 조금 씩 변할 때 손실 함수의 변화정도를 의</description>
     </item>
     
