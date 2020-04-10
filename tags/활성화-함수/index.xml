@@ -17,7 +17,7 @@
       <pubDate>Mon, 16 Mar 2020 19:34:03 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/activation_fuctions/</guid>
-      <description>활성화 함수란 ? 활성화 함수는 이전층(layer)의 뉴런에서 다음 층의 뉴런으로 신호를 전달하는 역할을 합니다. 이때 활성화 함수의 값에 따라서 다음 층의 뉴런으</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 벡터와 행렬연산에 이어 2번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에</description>
     </item>
     
   </channel>

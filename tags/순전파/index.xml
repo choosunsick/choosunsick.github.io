@@ -17,7 +17,7 @@
       <pubDate>Sat, 14 Mar 2020 22:14:14 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_5/</guid>
-      <description>신경망 모델에서 기울기 신경망 모델에서 기울기는 무엇을 의미할까요? 신경망 모델에서 기울기는 가중치 행렬의 원소들이 각각 조금 씩 변할 때 손실 함수의 변화정도를 의</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -26,7 +26,7 @@
       <pubDate>Sat, 14 Mar 2020 22:14:08 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_4/</guid>
-      <description>수치미분과 기울기 미분을 사용하는 이유는 작은 변화에 따른 손실 함수의 변화 방향을 알기위해서 입니다. 신경망 모델에서 미분을 활용하는 방식을 경사하강법이라 말하</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -35,7 +35,7 @@
       <pubDate>Sat, 14 Mar 2020 22:14:04 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_3/</guid>
-      <description>미니배치 학습 머신러닝에서 모델의 성능을 높이기 위해서는 훈련데이터를 사용합니다. 신경망 모델에서도 마찬가지로 훈련데이터를 이용해 손실 함수 값이 최소화가 되</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -44,7 +44,7 @@
       <pubDate>Sat, 14 Mar 2020 22:13:44 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_2/</guid>
-      <description>손실 함수란 ? 이제 신경망에서 어떻게 학습이 이루어지는지 본격적으로 알아보겠습니다. 신경망에서는 학습을 통해 모델의 성능을 나아지게 합니다. 그렇다면 모델의</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -53,7 +53,7 @@
       <pubDate>Sat, 14 Mar 2020 22:09:52 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_1/</guid>
-      <description>소개 이번 글에서는 신경망 분류 모델이 어떻게 학습하는지 그 과정에 대해서 알아보겠습니다. 여기서 학습이라는 것은 모델이 더 분류를 잘할 수 있게 만드는 것을 의미합니</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
   </channel>

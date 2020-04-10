@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Sunsick" /><meta name="description" content="신경망 모델에서 기울기 신경망 모델에서 기울기는 무엇을 의미할까요? 신경망 모델에서 기울기는 가중치 행렬의 원소들이 각각 조금 씩 변할 때 손실 함수의 변화정도를 의" /><meta name="keywords" content="blog, R, Data Analysis" />
+<meta name="author" content="Sunsick" /><meta name="description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서" /><meta name="keywords" content="blog, R, Data Analysis" />
 
 
 
@@ -39,25 +39,25 @@
 
 
 <meta property="og:title" content="Chapter3 2층 신경망 구현" />
-<meta property="og:description" content="신경망 모델에서 기울기 신경망 모델에서 기울기는 무엇을 의미할까요? 신경망 모델에서 기울기는 가중치 행렬의 원소들이 각각 조금 씩 변할 때 손실 함수의 변화정도를 의" />
+<meta property="og:description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://choosunsick.github.io/post/neural_network_5/" /><meta property="article:published_time" content="2020-03-14T22:14:14&#43;09:00"/>
 <meta property="article:modified_time" content="2020-03-14T22:14:14&#43;09:00"/>
 
 <meta itemprop="name" content="Chapter3 2층 신경망 구현">
-<meta itemprop="description" content="신경망 모델에서 기울기 신경망 모델에서 기울기는 무엇을 의미할까요? 신경망 모델에서 기울기는 가중치 행렬의 원소들이 각각 조금 씩 변할 때 손실 함수의 변화정도를 의">
+<meta itemprop="description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서">
 
 
 <meta itemprop="datePublished" content="2020-03-14T22:14:14&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-14T22:14:14&#43;09:00" />
-<meta itemprop="wordCount" content="3424">
+<meta itemprop="wordCount" content="3504">
 
 
 
 <meta itemprop="keywords" content="R로 딥러닝하기,신경망,순전파,기울기,모델 구현," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Chapter3 2층 신경망 구현"/>
-<meta name="twitter:description" content="신경망 모델에서 기울기 신경망 모델에서 기울기는 무엇을 의미할까요? 신경망 모델에서 기울기는 가중치 행렬의 원소들이 각각 조금 씩 변할 때 손실 함수의 변화정도를 의"/>
+<meta name="twitter:description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -147,6 +147,8 @@
 </div>
     <div class="post-content">
       
+
+<p>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. <a href="https://choosunsick.github.io/post/neural_network_4/">이전 글</a>과 내용이 이어집니다. 이전 글들은 <a href="https://choosunsick.github.io/post/contents_list/">이곳</a>에서 찾아 보실 수 있습니다.</p>
 
 <h2 id="신경망-모델에서-기울기">신경망 모델에서 기울기</h2>
 

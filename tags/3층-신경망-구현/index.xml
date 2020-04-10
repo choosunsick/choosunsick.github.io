@@ -17,7 +17,7 @@
       <pubDate>Mon, 16 Mar 2020 19:35:04 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_practice/</guid>
-      <description>손글씨 데이터 인식하고 분류하기 모델을 만들었지만 이 모델을 사용하기에는 아직 제한이 있습니다. 왜냐하면, 이 모델은 훈련을 거치지 않았기 때문에 성능이 좋지 못합</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 벡터와 행렬연산에 이어 2번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에</description>
     </item>
     
     <item>
@@ -26,7 +26,7 @@
       <pubDate>Mon, 16 Mar 2020 19:34:26 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/softmax_function/</guid>
-      <description>소프트맥스 함수 출력층에서 사용하는 함수에는 항등함수와 소프트맥스 함수가 있습니다. 항등함수의 경우 이름 그대로 입력이 곧 출력이 되는 함수로 신경망 회귀 모델을</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 벡터와 행렬연산에 이어 2번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에</description>
     </item>
     
   </channel>

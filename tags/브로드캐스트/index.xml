@@ -17,7 +17,7 @@
       <pubDate>Sat, 08 Feb 2020 20:22:00 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/broadcast_operation/</guid>
-      <description>브로드캐스트란? 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙을 사용하여 연산이 이루어진다고 언급한 적이 있습니다. 그러나 사실 다른 방법으로도 행렬과 벡터 간 연산</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 이전 글에서 내용이 이어집니다. 브로드캐스트란? 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙</description>
     </item>
     
   </channel>

@@ -17,7 +17,7 @@
       <pubDate>Sat, 14 Mar 2020 22:14:14 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_5/</guid>
-      <description>신경망 모델에서 기울기 신경망 모델에서 기울기는 무엇을 의미할까요? 신경망 모델에서 기울기는 가중치 행렬의 원소들이 각각 조금 씩 변할 때 손실 함수의 변화정도를 의</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
   </channel>

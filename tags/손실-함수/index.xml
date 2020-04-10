@@ -17,7 +17,7 @@
       <pubDate>Sat, 14 Mar 2020 22:14:04 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_3/</guid>
-      <description>미니배치 학습 머신러닝에서 모델의 성능을 높이기 위해서는 훈련데이터를 사용합니다. 신경망 모델에서도 마찬가지로 훈련데이터를 이용해 손실 함수 값이 최소화가 되</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -26,7 +26,7 @@
       <pubDate>Sat, 14 Mar 2020 22:13:44 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_2/</guid>
-      <description>손실 함수란 ? 이제 신경망에서 어떻게 학습이 이루어지는지 본격적으로 알아보겠습니다. 신경망에서는 학습을 통해 모델의 성능을 나아지게 합니다. 그렇다면 모델의</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
   </channel>

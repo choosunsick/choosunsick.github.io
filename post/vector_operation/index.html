@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Sunsick" /><meta name="description" content="소개 이번 글에서는 벡터, 행렬의 연산 방법에 대해 알아볼 것입니다. 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로" /><meta name="keywords" content="blog, R, Data Analysis" />
+<meta name="author" content="Sunsick" /><meta name="description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 소개 이번 글에서는 R에서의 벡터, 행렬의 연산 방법 R에서 수학 법칙에 따른 연산뿐만 아니라 브" /><meta name="keywords" content="blog, R, Data Analysis" />
 
 
 
@@ -39,25 +39,25 @@
 
 
 <meta property="og:title" content="Chpater1 벡터의 연산" />
-<meta property="og:description" content="소개 이번 글에서는 벡터, 행렬의 연산 방법에 대해 알아볼 것입니다. 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로" />
+<meta property="og:description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 소개 이번 글에서는 R에서의 벡터, 행렬의 연산 방법 R에서 수학 법칙에 따른 연산뿐만 아니라 브" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://choosunsick.github.io/post/vector_operation/" /><meta property="article:published_time" content="2020-02-08T20:21:30&#43;09:00"/>
 <meta property="article:modified_time" content="2020-02-08T20:21:30&#43;09:00"/>
 
 <meta itemprop="name" content="Chpater1 벡터의 연산">
-<meta itemprop="description" content="소개 이번 글에서는 벡터, 행렬의 연산 방법에 대해 알아볼 것입니다. 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로">
+<meta itemprop="description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 소개 이번 글에서는 R에서의 벡터, 행렬의 연산 방법 R에서 수학 법칙에 따른 연산뿐만 아니라 브">
 
 
 <meta itemprop="datePublished" content="2020-02-08T20:21:30&#43;09:00" />
 <meta itemprop="dateModified" content="2020-02-08T20:21:30&#43;09:00" />
-<meta itemprop="wordCount" content="953">
+<meta itemprop="wordCount" content="979">
 
 
 
 <meta itemprop="keywords" content="R로 딥러닝하기,기초,벡터,벡터연산," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Chpater1 벡터의 연산"/>
-<meta name="twitter:description" content="소개 이번 글에서는 벡터, 행렬의 연산 방법에 대해 알아볼 것입니다. 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로"/>
+<meta name="twitter:description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 소개 이번 글에서는 R에서의 벡터, 행렬의 연산 방법 R에서 수학 법칙에 따른 연산뿐만 아니라 브"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -149,9 +149,11 @@
     <div class="post-content">
       
 
+<p>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다.</p>
+
 <h2 id="소개">소개</h2>
 
-<p>이번 글에서는 벡터, 행렬의  연산 방법에 대해 알아볼 것입니다. 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로드캐스트 연산은 일반적으로 사용하지 않지만 딥러닝의 계산과정에서 그 시간을 단축시키는 기술입니다. 먼저 벡터의 연산에 대해 알아보고 이후 행렬의 연산에 대해 살펴본 다음 마지막으로 브로드캐스트 연산에 대해 알아보겠습니다.</p>
+<p>이번 글에서는 R에서의 벡터, 행렬의  연산 방법 R에서 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로드캐스트 연산은 일반적으로 사용하지 않지만 딥러닝의 계산과정에서 그 시간을 단축시키는 기술입니다. 먼저 벡터의 연산에 대해 알아보고 이후 행렬의 연산에 대해 살펴본 다음 마지막으로 브로드캐스트 연산에 대해 알아보겠습니다.</p>
 
 <h2 id="용어-정리">용어 정리</h2>
 

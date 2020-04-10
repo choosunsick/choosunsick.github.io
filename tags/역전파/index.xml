@@ -17,7 +17,7 @@
       <pubDate>Mon, 30 Mar 2020 22:07:37 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_backward_4/</guid>
-      <description>오차역전파법을 적용한 2층 신경망 구현하기 이제 오차역전파법이 적용된 2층 신경망을 구현해보겠습니다. 역전파가 적용된 신경망 모델 역시 기존 순전파에서 진행한</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -26,7 +26,7 @@
       <pubDate>Mon, 30 Mar 2020 22:07:35 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_backward_3/</guid>
-      <description>각 계층 구현하기 이번에는 신경망 모델에서 역전파를 하기 위해 필요한 함수들 예를 들어 softmax()와 loss(), sigmoid(), ReLU() 기존 순전파 계산 model.forward(</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -35,7 +35,7 @@
       <pubDate>Mon, 30 Mar 2020 22:07:33 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_backward_2/</guid>
-      <description>역전파 계산그래프의 역전파는 부분적인 계산을 계속 출력하여 최종 계산을 이끌어내듯이 연쇄법칙과 같은 원리를 사용합니다. 즉 복잡한 미분을 작은 계산들의 곱으로 표</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -44,7 +44,7 @@
       <pubDate>Mon, 30 Mar 2020 22:07:30 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_backward_1/</guid>
-      <description>앞선 글에서는 손실 함수의 기울기를 계산해 각 가중치와 편향에 대해 수치미분으로 그 값을 갱신하였습니다. 그러나 이 방식은 너무 오래걸린다는 단점이 있습니다. 이번</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 학습과정 챕터에 이어서 5번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은</description>
     </item>
     
   </channel>

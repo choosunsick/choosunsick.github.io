@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Sunsick" /><meta name="description" content="소프트맥스 함수 출력층에서 사용하는 함수에는 항등함수와 소프트맥스 함수가 있습니다. 항등함수의 경우 이름 그대로 입력이 곧 출력이 되는 함수로 신경망 회귀 모델을" /><meta name="keywords" content="blog, R, Data Analysis" />
+<meta name="author" content="Sunsick" /><meta name="description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 벡터와 행렬연산에 이어 2번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에" /><meta name="keywords" content="blog, R, Data Analysis" />
 
 
 
@@ -39,25 +39,25 @@
 
 
 <meta property="og:title" content="Chapter2 3층 신경망 구현" />
-<meta property="og:description" content="소프트맥스 함수 출력층에서 사용하는 함수에는 항등함수와 소프트맥스 함수가 있습니다. 항등함수의 경우 이름 그대로 입력이 곧 출력이 되는 함수로 신경망 회귀 모델을" />
+<meta property="og:description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 벡터와 행렬연산에 이어 2번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://choosunsick.github.io/post/softmax_function/" /><meta property="article:published_time" content="2020-03-16T19:34:26&#43;09:00"/>
 <meta property="article:modified_time" content="2020-03-16T19:34:26&#43;09:00"/>
 
 <meta itemprop="name" content="Chapter2 3층 신경망 구현">
-<meta itemprop="description" content="소프트맥스 함수 출력층에서 사용하는 함수에는 항등함수와 소프트맥스 함수가 있습니다. 항등함수의 경우 이름 그대로 입력이 곧 출력이 되는 함수로 신경망 회귀 모델을">
+<meta itemprop="description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 벡터와 행렬연산에 이어 2번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에">
 
 
 <meta itemprop="datePublished" content="2020-03-16T19:34:26&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-16T19:34:26&#43;09:00" />
-<meta itemprop="wordCount" content="2362">
+<meta itemprop="wordCount" content="2443">
 
 
 
 <meta itemprop="keywords" content="R로 딥러닝하기,신경망,소프트맥스,3층 신경망 구현," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Chapter2 3층 신경망 구현"/>
-<meta name="twitter:description" content="소프트맥스 함수 출력층에서 사용하는 함수에는 항등함수와 소프트맥스 함수가 있습니다. 항등함수의 경우 이름 그대로 입력이 곧 출력이 되는 함수로 신경망 회귀 모델을"/>
+<meta name="twitter:description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 벡터와 행렬연산에 이어 2번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -147,6 +147,8 @@
 </div>
     <div class="post-content">
       
+
+<p>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 벡터와 행렬연산에 이어 2번째 순서입니다. <a href="https://choosunsick.github.io/post/activation_fuctions/">이전 글</a>과 내용이 이어집니다. 이전 글들은 <a href="https://choosunsick.github.io/post/contents_list/">이곳</a>에서 찾아 보실 수 있습니다.</p>
 
 <h2 id="소프트맥스-함수">소프트맥스 함수</h2>
 

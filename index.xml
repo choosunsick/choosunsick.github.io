@@ -26,7 +26,7 @@
       <pubDate>Mon, 30 Mar 2020 22:07:37 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_backward_4/</guid>
-      <description>오차역전파법을 적용한 2층 신경망 구현하기 이제 오차역전파법이 적용된 2층 신경망을 구현해보겠습니다. 역전파가 적용된 신경망 모델 역시 기존 순전파에서 진행한</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -35,7 +35,7 @@
       <pubDate>Mon, 30 Mar 2020 22:07:35 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_backward_3/</guid>
-      <description>각 계층 구현하기 이번에는 신경망 모델에서 역전파를 하기 위해 필요한 함수들 예를 들어 softmax()와 loss(), sigmoid(), ReLU() 기존 순전파 계산 model.forward(</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -44,7 +44,7 @@
       <pubDate>Mon, 30 Mar 2020 22:07:33 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_backward_2/</guid>
-      <description>역전파 계산그래프의 역전파는 부분적인 계산을 계속 출력하여 최종 계산을 이끌어내듯이 연쇄법칙과 같은 원리를 사용합니다. 즉 복잡한 미분을 작은 계산들의 곱으로 표</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -53,7 +53,7 @@
       <pubDate>Mon, 30 Mar 2020 22:07:30 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_backward_1/</guid>
-      <description>앞선 글에서는 손실 함수의 기울기를 계산해 각 가중치와 편향에 대해 수치미분으로 그 값을 갱신하였습니다. 그러나 이 방식은 너무 오래걸린다는 단점이 있습니다. 이번</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 학습과정 챕터에 이어서 5번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은</description>
     </item>
     
     <item>
@@ -62,7 +62,7 @@
       <pubDate>Mon, 16 Mar 2020 19:35:04 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_practice/</guid>
-      <description>손글씨 데이터 인식하고 분류하기 모델을 만들었지만 이 모델을 사용하기에는 아직 제한이 있습니다. 왜냐하면, 이 모델은 훈련을 거치지 않았기 때문에 성능이 좋지 못합</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 벡터와 행렬연산에 이어 2번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에</description>
     </item>
     
     <item>
@@ -71,7 +71,7 @@
       <pubDate>Mon, 16 Mar 2020 19:34:26 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/softmax_function/</guid>
-      <description>소프트맥스 함수 출력층에서 사용하는 함수에는 항등함수와 소프트맥스 함수가 있습니다. 항등함수의 경우 이름 그대로 입력이 곧 출력이 되는 함수로 신경망 회귀 모델을</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 벡터와 행렬연산에 이어 2번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에</description>
     </item>
     
     <item>
@@ -80,7 +80,7 @@
       <pubDate>Mon, 16 Mar 2020 19:34:03 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/activation_fuctions/</guid>
-      <description>활성화 함수란 ? 활성화 함수는 이전층(layer)의 뉴런에서 다음 층의 뉴런으로 신호를 전달하는 역할을 합니다. 이때 활성화 함수의 값에 따라서 다음 층의 뉴런으</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 벡터와 행렬연산에 이어 2번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에</description>
     </item>
     
     <item>
@@ -89,7 +89,7 @@
       <pubDate>Mon, 16 Mar 2020 19:32:28 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_intro/</guid>
-      <description>소개 이번 글에서는 인공지능 분야에서 가장 기초가 되는 신경망이 무엇인지 알아보고 그것에 요소들과 신경망을 R로 구현해 손글씨 인식 및 분류 모델을 만들어 보겠습니다</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 이전 글에서 벡터와 행렬연산, 브로드캐스트 연산 등에 이어서 2번째 순서입니다. 이전 글들은</description>
     </item>
     
     <item>
@@ -98,7 +98,7 @@
       <pubDate>Sat, 14 Mar 2020 22:14:14 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_5/</guid>
-      <description>신경망 모델에서 기울기 신경망 모델에서 기울기는 무엇을 의미할까요? 신경망 모델에서 기울기는 가중치 행렬의 원소들이 각각 조금 씩 변할 때 손실 함수의 변화정도를 의</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -107,7 +107,7 @@
       <pubDate>Sat, 14 Mar 2020 22:14:08 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_4/</guid>
-      <description>수치미분과 기울기 미분을 사용하는 이유는 작은 변화에 따른 손실 함수의 변화 방향을 알기위해서 입니다. 신경망 모델에서 미분을 활용하는 방식을 경사하강법이라 말하</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -116,7 +116,7 @@
       <pubDate>Sat, 14 Mar 2020 22:14:04 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_3/</guid>
-      <description>미니배치 학습 머신러닝에서 모델의 성능을 높이기 위해서는 훈련데이터를 사용합니다. 신경망 모델에서도 마찬가지로 훈련데이터를 이용해 손실 함수 값이 최소화가 되</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -125,7 +125,7 @@
       <pubDate>Sat, 14 Mar 2020 22:13:44 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_2/</guid>
-      <description>손실 함수란 ? 이제 신경망에서 어떻게 학습이 이루어지는지 본격적으로 알아보겠습니다. 신경망에서는 학습을 통해 모델의 성능을 나아지게 합니다. 그렇다면 모델의</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -134,7 +134,7 @@
       <pubDate>Sat, 14 Mar 2020 22:09:52 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_1/</guid>
-      <description>소개 이번 글에서는 신경망 분류 모델이 어떻게 학습하는지 그 과정에 대해서 알아보겠습니다. 여기서 학습이라는 것은 모델이 더 분류를 잘할 수 있게 만드는 것을 의미합니</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
     <item>
@@ -143,7 +143,7 @@
       <pubDate>Sat, 08 Feb 2020 20:22:00 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/broadcast_operation/</guid>
-      <description>브로드캐스트란? 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙을 사용하여 연산이 이루어진다고 언급한 적이 있습니다. 그러나 사실 다른 방법으로도 행렬과 벡터 간 연산</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 이전 글에서 내용이 이어집니다. 브로드캐스트란? 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙</description>
     </item>
     
     <item>
@@ -152,7 +152,7 @@
       <pubDate>Sat, 08 Feb 2020 20:21:45 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/matrix_operation/</guid>
-      <description>행렬의 연산 이제 벡터의 연산에 이어 행렬의 연산에 대해 알아보겠습니다. 행렬의 연산의 경우 행렬과 오브젝트 간 연산 행렬과 행렬 간 연산 두 가지 경우가 있습니다. 행렬</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 이전 글에서 내용이 이어집니다. 행렬의 연산 이제 벡터의 연산에 이어 행렬의 연산에 대해 알아보</description>
     </item>
     
     <item>
@@ -161,7 +161,7 @@
       <pubDate>Sat, 08 Feb 2020 20:21:30 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/vector_operation/</guid>
-      <description>소개 이번 글에서는 벡터, 행렬의 연산 방법에 대해 알아볼 것입니다. 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 소개 이번 글에서는 R에서의 벡터, 행렬의 연산 방법 R에서 수학 법칙에 따른 연산뿐만 아니라 브</description>
     </item>
     
     <item>

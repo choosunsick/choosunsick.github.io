@@ -17,7 +17,7 @@
       <pubDate>Sat, 14 Mar 2020 22:14:08 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/neural_network_4/</guid>
-      <description>수치미분과 기울기 미분을 사용하는 이유는 작은 변화에 따른 손실 함수의 변화 방향을 알기위해서 입니다. 신경망 모델에서 미분을 활용하는 방식을 경사하강법이라 말하</description>
+      <description>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서</description>
     </item>
     
   </channel>
