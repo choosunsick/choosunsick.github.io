@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2020-03-16T19:34:26&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-16T19:34:26&#43;09:00" />
-<meta itemprop="wordCount" content="2443">
+<meta itemprop="wordCount" content="2616">
 
 
 
@@ -155,20 +155,28 @@
 <p>출력층에서 사용하는 함수에는 항등함수와 소프트맥스 함수가 있습니다. 항등함수의 경우 이름 그대로 입력이 곧 출력이 되는 함수로 신경망 회귀 모델을 만들 때 사용합니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">identify_fun <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">){</span>
   <span class="kr">return</span><span class="p">(</span>x<span class="p">)</span>
 <span class="p">}</span>
 x <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0.3</span><span class="p">,</span><span class="m">2.9</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">)</span>
-x
-identify_fun<span class="p">(</span>x<span class="p">)</span></code></pre></td></tr></table>
+<span class="o">&gt;</span> x
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.3</span>  <span class="m">2.9</span>    <span class="m">4</span>
+<span class="o">&gt;</span> identify_fun<span class="p">(</span>x<span class="p">)</span>
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.3</span>  <span class="m">2.9</span>    <span class="m">4</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>항등함수는 보시는 바와 같이 입력 값을 그대로 출력합니다.</p>
@@ -187,19 +195,37 @@ identify_fun<span class="p">(</span>x<span class="p">)</span></code></pre></td><
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">softmax <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>a<span class="p">){</span>
   <span class="kr">return</span><span class="p">(</span><span class="kp">exp</span><span class="p">(</span>a<span class="p">)</span> <span class="o">/</span> <span class="kp">sum</span><span class="p">(</span><span class="kp">exp</span><span class="p">(</span>a<span class="p">)))</span>
 <span class="p">}</span>
 x <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0.3</span><span class="p">,</span><span class="m">2.9</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">)</span>
-x
+<span class="o">&gt;</span> x
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.3</span>  <span class="m">2.9</span>    <span class="m">4</span>
 
-softmax<span class="p">(</span>x<span class="p">)</span>
+<span class="o">&gt;</span> softmax<span class="p">(</span>x<span class="p">)</span>
+           <span class="p">[,</span><span class="m">1</span><span class="p">]</span>      <span class="p">[,</span><span class="m">2</span><span class="p">]</span>      <span class="p">[,</span><span class="m">3</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span> <span class="m">0.01821127</span> <span class="m">0.2451918</span> <span class="m">0.7365969</span>
 
-<span class="kp">sum</span><span class="p">(</span>softmax<span class="p">(</span>x<span class="p">))</span>
-<span class="kp">exp</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
-softmax<span class="p">(</span><span class="m">1000</span><span class="p">)</span></code></pre></td></tr></table>
+<span class="o">&gt;</span> <span class="kp">sum</span><span class="p">(</span>softmax<span class="p">(</span>x<span class="p">))</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">1</span>
+
+<span class="o">&gt;</span> <span class="kp">exp</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">2.688117e+43</span>
+
+<span class="o">&gt;</span> softmax<span class="p">(</span><span class="m">1000</span><span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="kc">NaN</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>소프트맥스 함수는 지수함수의 분수로 구성됩니다. 분수 형태를 취하기 때문에 그 출력 값은 0과 1 사이의 실수값이 나옵니다. 이 실수값이 곧 신경망 분류모델의 결과 값에 대한 확률로 나타납니다. 출력된 확률 값의 개수는 분류하려는 대상의 개수에 따라 결정됩니다. 또한, 확률 값이기 때문에 출력된 값들의 총합은 1이 되는 특징이 있습니다.</p>
@@ -219,6 +245,11 @@ softmax<span class="p">(</span><span class="m">1000</span><span class="p">)</spa
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">softmax <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>a<span class="p">){</span>
@@ -226,11 +257,16 @@ softmax<span class="p">(</span><span class="m">1000</span><span class="p">)</spa
   sum_exp_a <span class="o">&lt;-</span> <span class="kp">sum</span><span class="p">(</span>exp_a<span class="p">)</span>
   <span class="kr">return</span><span class="p">(</span>exp_a <span class="o">/</span> sum_exp_a<span class="p">)</span>
 <span class="p">}</span>
-x <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0.3</span><span class="p">,</span><span class="m">2.9</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">)</span>
-x
-softmax<span class="p">(</span>x<span class="p">)</span>
-<span class="kp">sum</span><span class="p">(</span>softmax<span class="p">(</span>x<span class="p">))</span>
-softmax<span class="p">(</span><span class="m">1000</span><span class="p">)</span></code></pre></td></tr></table>
+<span class="o">&gt;</span> x
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.3</span>  <span class="m">2.9</span>    <span class="m">4</span>
+<span class="o">&gt;</span> softmax<span class="p">(</span>x<span class="p">)</span>
+           <span class="p">[,</span><span class="m">1</span><span class="p">]</span>      <span class="p">[,</span><span class="m">2</span><span class="p">]</span>      <span class="p">[,</span><span class="m">3</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span> <span class="m">0.01821127</span> <span class="m">0.2451918</span> <span class="m">0.7365969</span>
+<span class="o">&gt;</span> <span class="kp">sum</span><span class="p">(</span>softmax<span class="p">(</span>x<span class="p">))</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">1</span>
+<span class="o">&gt;</span> softmax<span class="p">(</span><span class="m">1000</span><span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">1</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>이렇게 중간에 <code>max()</code> 함수를 통해 수식을 조정해주면, 100과 같이 큰 값이 들어가도 오버플로 문제가 발생하지 않습니다.</p>
@@ -305,22 +341,86 @@ model.forward <span class="o">&lt;-</span> <span class="kr">function</span><span
 <p>입력층에서 은닉층으로의 신호 전달 과정에서 활성화 값이 계산되면 이제 활성화 함수인 시그모이드 함수를 통해 출력 신호로 만들어 줍니다. 이 출력 신호는 다음층의 입력 신호로 역할하며 이 과정이 마지막 출력층에서 출력 신호가 확률로 변경되기 전까지 반복됩니다. 마지막 출력층에서는 활성화 함수 대신 항등 함수 또는 소프트맥스 함수를 사용하여 출력된 분류 결과를 확인할 수 있습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">model <span class="o">&lt;-</span> init<span class="p">()</span>
+
 model
+<span class="o">$</span>W1
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.1</span>  <span class="m">0.3</span>  <span class="m">0.5</span>
+<span class="p">[</span><span class="m">2</span><span class="p">,]</span>  <span class="m">0.2</span>  <span class="m">0.4</span>  <span class="m">0.6</span>
+
+<span class="o">$</span>b1
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.1</span>  <span class="m">0.2</span>  <span class="m">0.3</span>
+
+<span class="o">$</span>W2
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.1</span>  <span class="m">0.4</span>
+<span class="p">[</span><span class="m">2</span><span class="p">,]</span>  <span class="m">0.2</span>  <span class="m">0.5</span>
+<span class="p">[</span><span class="m">3</span><span class="p">,]</span>  <span class="m">0.3</span>  <span class="m">0.6</span>
+
+<span class="o">$</span>b2
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.1</span>  <span class="m">0.2</span>
+
+<span class="o">$</span>W3
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.1</span>  <span class="m">0.3</span>
+<span class="p">[</span><span class="m">2</span><span class="p">,]</span>  <span class="m">0.2</span>  <span class="m">0.4</span>
+
+<span class="o">$</span>b3
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.1</span>  <span class="m">0.2</span>
+
 
 x <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">)</span>
-x
+<span class="o">&gt;</span> x
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">1.0</span> <span class="m">0.5</span>
 y <span class="o">&lt;-</span> model.forward<span class="p">(</span>model<span class="p">,</span> x<span class="p">)</span>
-y</code></pre></td></tr></table>
+<span class="o">&gt;</span> y
+          <span class="p">[,</span><span class="m">1</span><span class="p">]</span>      <span class="p">[,</span><span class="m">2</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span> <span class="m">0.3168271</span> <span class="m">0.6962791</span></code></pre></td></tr></table>
 </div>
 </div>
 <p><code>init()</code>함수를 실행하여 초기값 행렬을 확인할 수 있고, 간단한 인풋값으로 model.forward 함수의 결과를 확인할 수 있습니다. 이렇게 구현한 3층 신경망 모델을 토대로 손글씨 데이터를 통해 신경망 분류 모델이 어떻게 분류를 할 수 있는지 알아볼 것입니다.</p>

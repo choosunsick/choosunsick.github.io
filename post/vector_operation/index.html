@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2020-02-08T20:21:30&#43;09:00" />
 <meta itemprop="dateModified" content="2020-02-08T20:21:30&#43;09:00" />
-<meta itemprop="wordCount" content="979">
+<meta itemprop="wordCount" content="1037">
 
 
 
@@ -166,15 +166,29 @@
 <h2 id="벡터의-연산">벡터의 연산</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">a &lt;- c(1,2,3)
@@ -185,7 +199,21 @@ b
 c
 a*b
 a*c
-a%*%b</pre></td></tr></table>
+a%*%b
+
+&gt; a
+[1] 1 2 3
+&gt; b
+[1] 4 5 6
+&gt; c
+[1] 1 2
+&gt; a*b
+[1]  4 10 18
+&gt; a*c
+longer object length is not a multiple of shorter object length[1] 1 4 3
+&gt; a%*%b
+     [,1]
+[1,]   32</pre></td></tr></table>
 </div>
 </div>
 <p>두 벡터의 연산은 원소의 순서에 따라 이루어집니다. 코드에서는 대표적으로 곱셈만 있지만 수학에서 사용하는 덧셈, 뺄셈, 나눗셈이 모두 가능하며 원소의 순서에 대응하여 연산이 이루어집니다. 즉 벡터는 원칙적으로는 두 벡터의 데이터 개수가 같은 경우에만 연산이 가능합니다. 그러나 R에서는 개수가 다른 벡터 간의 연산도 가능한데 재활용 규칙이라는 규칙이 있기 때문입니다.</p>

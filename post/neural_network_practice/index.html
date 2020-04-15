@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2020-03-16T19:35:04&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-16T19:35:04&#43;09:00" />
-<meta itemprop="wordCount" content="2076">
+<meta itemprop="wordCount" content="2272">
 
 
 
@@ -157,18 +157,32 @@
 <p>먼저 손글씨 데이터를 읽어와 보겠습니다. 손글씨 데이터는 0부터 9까지의 숫자를 손으로 쓴 데이터를 말합니다. 이 데이터는 해당 신경망 분류모델에서 자주 사용되는 예제입니다. R의 라이브러리 중 dslabs라는 패키지를 사용하면 데이터를 쉽게 불러올 수 있습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="c1">#install.packages(&#34;dslabs&#34;)</span>
 <span class="kn">library</span><span class="p">(</span>dslabs<span class="p">)</span>
 
 mnist <span class="o">&lt;-</span> read_mnist<span class="p">()</span>
-str<span class="p">(</span>mnist<span class="p">)</span></code></pre></td></tr></table>
+<span class="o">&gt;</span> str<span class="p">(</span>mnist<span class="p">)</span>
+List of <span class="m">2</span>
+ <span class="o">$</span> train<span class="o">:</span>List of <span class="m">2</span>
+  <span class="m">..</span><span class="o">$</span> images<span class="o">:</span> int <span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">60000</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">784</span><span class="p">]</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="kc">...</span>
+  <span class="m">..</span><span class="o">$</span> <span class="kp">labels</span><span class="o">:</span> int <span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">60000</span><span class="p">]</span> <span class="m">5</span> <span class="m">0</span> <span class="m">4</span> <span class="m">1</span> <span class="m">9</span> <span class="m">2</span> <span class="m">1</span> <span class="m">3</span> <span class="m">1</span> <span class="m">4</span> <span class="kc">...</span>
+ <span class="o">$</span> test <span class="o">:</span>List of <span class="m">2</span>
+  <span class="m">..</span><span class="o">$</span> images<span class="o">:</span> int <span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">10000</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">784</span><span class="p">]</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="kc">...</span>
+  <span class="m">..</span><span class="o">$</span> <span class="kp">labels</span><span class="o">:</span> int <span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">10000</span><span class="p">]</span> <span class="m">7</span> <span class="m">2</span> <span class="m">1</span> <span class="m">0</span> <span class="m">4</span> <span class="m">1</span> <span class="m">4</span> <span class="m">9</span> <span class="m">5</span> <span class="m">9</span> <span class="kc">...</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>데이터를 읽어오면 리스트 내에 훈련 데이터와 테스트 데이터를 확인할 수 있습니다. 훈련 데이터는 60000개의 이미지가 테스트 데이터에는 10000개의 이미지가 행렬로 담겨 있습니다. 이미지가 어떤 숫자인지를 알려주는 정답은 라벨이란 이름으로 있습니다.</p>
@@ -181,6 +195,8 @@ str<span class="p">(</span>mnist<span class="p">)</span></code></pre></td></tr><
 </span><span class="lnt">5
 </span><span class="lnt">6
 </span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">x_train <span class="o">&lt;-</span> mnist<span class="o">$</span>train<span class="o">$</span>images
@@ -188,8 +204,10 @@ t_train <span class="o">&lt;-</span> mnist<span class="o">$</span>train<span cla
 x_test <span class="o">&lt;-</span> mnist<span class="o">$</span>test<span class="o">$</span>images
 t_test <span class="o">&lt;-</span> mnist<span class="o">$</span>test<span class="o">$</span><span class="kp">labels</span>
 
-<span class="kp">dim</span><span class="p">(</span>x_train<span class="p">)</span>
-<span class="kp">dim</span><span class="p">(</span>x_test<span class="p">)</span></code></pre></td></tr></table>
+<span class="o">&gt;</span> <span class="kp">dim</span><span class="p">(</span>x_train<span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">60000</span>   <span class="m">784</span>
+<span class="o">&gt;</span> <span class="kp">dim</span><span class="p">(</span>x_test<span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">10000</span>   <span class="m">784</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>훈련데이터와 테스트 데이터를 리스트에서 분리해줍니다. 훈련데이터와 테스트 데이터의 크기를 확인해볼 수 있는데, 이미지의 장수가 행이 되고 이미지의 크기인 28x28=784가 열이 됩니다. 이제 이미지 데이터의 훈련데이터와 테스트 데이터에 대한 정규화를 해줍니다. 정답 라벨의 경우 원핫 인코딩의 형태로 변경해 줍니다. 원핫 인코딩이란 분류할 대상이 맞으면 1 아니면 0으로 체크하는 방식입니다. 손글씨의 경우 0부터 9까지의 10개의 숫자들 중 정답에 해당하는 숫자가 1 아닌 숫자를 0으로 표시하게 됩니다.</p>
@@ -243,13 +261,21 @@ t_test_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class=
 <p>이제 초기값을 불러와 보겠습니다. 초기값을 불러오는 방식은 hdf5 형식을 이용하거나 json 파일 형식을 이용하는 방식 등 여러가지가 있습니다. 이 글에서는 최근 자주 사용되는 hdf5 형식으로 저장된 데이터를 R로 읽어와 가중치와 편향 행렬을 객체로 저장해보겠습니다. 참고로 hdf5 형식은 데이터를 계층적으로 저장하는 형식입니다. 이 형식에 대해 더 자세히 알고 싶은 분들은 링크(<a href="https://www.hdfgroup.org/solutions/hdf5/)를">https://www.hdfgroup.org/solutions/hdf5/)를</a> 참조해주시기 바랍니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="c1">#install.packages(&#34;BiocManager&#34;)</span>
@@ -258,7 +284,15 @@ t_test_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class=
 init <span class="o">&lt;-</span> H5Fopen<span class="p">(</span><span class="s">&#34;./deep_learn_R/Data/sample_weights.h5&#34;</span><span class="p">)</span>
 model <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span><span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;W1&#34;</span><span class="p">,</span><span class="m">784</span><span class="p">,</span><span class="m">50</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;b1&#34;</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">50</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;W2&#34;</span><span class="p">,</span><span class="m">50</span><span class="p">,</span><span class="m">100</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;b2&#34;</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">100</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;W3&#34;</span><span class="p">,</span><span class="m">100</span><span class="p">,</span><span class="m">10</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;b3&#34;</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">10</span><span class="p">))</span>
 <span class="kp">names</span><span class="p">(</span>model<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;W1&#34;</span><span class="p">,</span> <span class="s">&#34;b1&#34;</span><span class="p">,</span> <span class="s">&#34;W2&#34;</span><span class="p">,</span> <span class="s">&#34;b2&#34;</span><span class="p">,</span> <span class="s">&#34;W3&#34;</span><span class="p">,</span> <span class="s">&#34;b3&#34;</span><span class="p">)</span>
-str<span class="p">(</span>model<span class="p">)</span></code></pre></td></tr></table>
+
+<span class="o">&gt;</span> str<span class="p">(</span>model<span class="p">)</span>
+List of <span class="m">6</span>
+ <span class="o">$</span> W1<span class="o">:</span> num <span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">784</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">50</span><span class="p">]</span> <span class="m">-0.00741</span> <span class="m">-0.0103</span> <span class="m">-0.01309</span> <span class="m">-0.01001</span> <span class="m">0.02207</span> <span class="kc">...</span>
+ <span class="o">$</span> b1<span class="o">:</span> num <span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">50</span><span class="p">]</span> <span class="m">-0.0675</span> <span class="m">0.0696</span> <span class="m">-0.0273</span> <span class="m">0.0226</span> <span class="m">-0.22</span> <span class="kc">...</span>
+ <span class="o">$</span> W2<span class="o">:</span> num <span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">50</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">100</span><span class="p">]</span> <span class="m">-0.1069</span> <span class="m">0.2991</span> <span class="m">0.0658</span> <span class="m">0.0939</span> <span class="m">0.048</span> <span class="kc">...</span>
+ <span class="o">$</span> b2<span class="o">:</span> num <span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">100</span><span class="p">]</span> <span class="m">-0.01471</span> <span class="m">-0.07215</span> <span class="m">-0.00156</span> <span class="m">0.122</span> <span class="m">0.11603</span> <span class="kc">...</span>
+ <span class="o">$</span> W3<span class="o">:</span> num <span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">100</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">]</span> <span class="m">-0.422</span> <span class="m">-0.524</span> <span class="m">0.683</span> <span class="m">0.155</span> <span class="m">0.505</span> <span class="kc">...</span>
+ <span class="o">$</span> b3<span class="o">:</span> num <span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">]</span> <span class="m">-0.06024</span> <span class="m">0.00933</span> <span class="m">-0.0136</span> <span class="m">0.02167</span> <span class="m">0.01074</span> <span class="kc">...</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>이제 남은 작업은 모델에 데이터를 입력하고 그 성능을 확인하는 일만 남았습니다. 물론 모델의 성능을 알기 위해서는 모델을 검사할 성능 검사기가 필요합니다. 따라서 모델의 분류 결과에 대한 정답과 비교해 정확도를 판단하는 함수가 필요합니다.</p>
@@ -272,6 +306,7 @@ str<span class="p">(</span>model<span class="p">)</span></code></pre></td></tr><
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span><span class="lnt">8
+</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">model.evaluate.single <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>model<span class="p">,</span>x<span class="p">,</span><span class="kp">t</span><span class="p">){</span>
@@ -281,7 +316,8 @@ str<span class="p">(</span>model<span class="p">)</span></code></pre></td></tr><
   <span class="kr">return</span><span class="p">(</span>accuracy<span class="p">)</span>
 <span class="p">}</span>
 
-model.evaluate.single<span class="p">(</span>model<span class="p">,</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">)</span></code></pre></td></tr></table>
+model.evaluate.single<span class="p">(</span>model<span class="p">,</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9352</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>모델을 검사하는 함수는 <code>model.evaluate.single</code> 이란 이름으로 정의하였는데, 함수의 이름에 single이 붙은 이유는 이미지 데이터가 1장씩 계산되어 쌓여나가기 때문입니다. 1장씩 총 10000 장의 이미지가 모델에 입력되어 1장씩 어떤 숫자인지 예측하고 그것을 쌓아 정답 라벨 값과 비교하여 모델의 정확도를 표시합니다. 그러나 이렇게 이미지를 1장씩 입력받아 쌓아나가는게 최선일까요?</p>
@@ -304,6 +340,12 @@ model.evaluate.single<span class="p">(</span>model<span class="p">,</span>x_test
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">model.evaluate <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>model<span class="p">,</span>x<span class="p">,</span><span class="kp">t</span><span class="p">){</span>
@@ -313,10 +355,16 @@ model.evaluate.single<span class="p">(</span>model<span class="p">,</span>x_test
   <span class="kr">return</span><span class="p">(</span>accuracy<span class="p">)</span>
 <span class="p">}</span>
 
-model.evaluate<span class="p">(</span>model<span class="p">,</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">)</span>
+<span class="o">&gt;</span> model.evaluate<span class="p">(</span>model<span class="p">,</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9352</span>
 
-<span class="kp">system.time</span><span class="p">(</span>model.evaluate.single<span class="p">(</span>model<span class="p">,</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">))</span>
-<span class="kp">system.time</span><span class="p">(</span>model.evaluate<span class="p">(</span>model<span class="p">,</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">))</span></code></pre></td></tr></table>
+<span class="o">&gt;</span> <span class="kp">system.time</span><span class="p">(</span>model.evaluate.single<span class="p">(</span>model<span class="p">,</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">))</span>
+   user  system elapsed
+  <span class="m">2.733</span>   <span class="m">0.024</span>   <span class="m">2.763</span>
+  
+<span class="o">&gt;</span> <span class="kp">system.time</span><span class="p">(</span>model.evaluate<span class="p">(</span>model<span class="p">,</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">))</span>
+   user  system elapsed
+  <span class="m">0.427</span>   <span class="m">0.014</span>   <span class="m">0.441</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>이번 글에서는 신경망 분류모델에 필요한 함수들에 대해 알아보았으며, 직접 3층 신경망을 구현하고, 저자가 준비한 학습된 가중치와 편향을 이용하여 실제로 손글씨 이미지 데이터를 인식하고 분류하여 약 93% 성능을 가진 모델을 만들어 보았습니다. 다음 글에서는 저자가 어떤 방식으로 모델의 성능을 93% 끌어올리는 가중치와 편향을 학습시켰는지 모델의 학습 방법에 대해 알아보겠습니다.</p>

@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2020-03-14T22:13:44&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-14T22:13:44&#43;09:00" />
-<meta itemprop="wordCount" content="1543">
+<meta itemprop="wordCount" content="1673">
 
 
 
@@ -166,18 +166,28 @@
 <p>예를 들어 모델이 2를 정답이라 (0부터 9까지이기 때문에 인덱스 값에서 -1한 숫자가 정답이다) 판단한 확률이 60%이고 0,5,7을 정답이라 판단한 확률이 10%이며, 1,4를 정답이라 판단한 확률이 5% 이고, 실제 정답이 2인 경우를 가정해보겠습니다. 이때 평균 제곱 오차 값을 계산하면 다음과 같습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">y  <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.6</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> nrow <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
 t  <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> nrow <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
-y
-<span class="kp">t</span>
-<span class="kp">sum</span><span class="p">((</span>y<span class="o">-</span><span class="kp">t</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span><span class="o">/</span><span class="m">2</span></code></pre></td></tr></table>
+<span class="o">&gt;</span> y
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span> <span class="p">[,</span><span class="m">4</span><span class="p">]</span> <span class="p">[,</span><span class="m">5</span><span class="p">]</span> <span class="p">[,</span><span class="m">6</span><span class="p">]</span> <span class="p">[,</span><span class="m">7</span><span class="p">]</span> <span class="p">[,</span><span class="m">8</span><span class="p">]</span> <span class="p">[,</span><span class="m">9</span><span class="p">]</span> <span class="p">[,</span><span class="m">10</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.1</span> <span class="m">0.05</span>  <span class="m">0.6</span>    <span class="m">0</span> <span class="m">0.05</span>  <span class="m">0.1</span>    <span class="m">0</span>  <span class="m">0.1</span>    <span class="m">0</span>     <span class="m">0</span>
+<span class="o">&gt;</span> <span class="kp">t</span>
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span> <span class="p">[,</span><span class="m">4</span><span class="p">]</span> <span class="p">[,</span><span class="m">5</span><span class="p">]</span> <span class="p">[,</span><span class="m">6</span><span class="p">]</span> <span class="p">[,</span><span class="m">7</span><span class="p">]</span> <span class="p">[,</span><span class="m">8</span><span class="p">]</span> <span class="p">[,</span><span class="m">9</span><span class="p">]</span> <span class="p">[,</span><span class="m">10</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">1</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>     <span class="m">0</span>
+<span class="o">&gt;</span> <span class="kp">sum</span><span class="p">((</span>y<span class="o">-</span><span class="kp">t</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span><span class="o">/</span><span class="m">2</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.0975</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>이제 평균 제곱 오차의 계산 과정을 함수화 해보겠습니다. 만들어진 평균 제곱 오차 함수에 모델이 정답을 맞춘 경우와 맞추지 못한 경우 두 가지를 가정해서 계산을 해보았습니다. y2는 모델이 7을 정답이라 판단한 것으로 정답을 맞추지 못한 경우입니다.</p>
@@ -196,21 +206,33 @@ y
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r">y1  <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.6</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> nrow <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
-y2  <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span>y <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.6</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> nrow <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<pre class="chroma"><code class="language-r" data-lang="r">y1 <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.6</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> nrow <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+y2 <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span>y <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.6</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> nrow <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
 t <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> nrow <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
-y1
-y2
-<span class="kp">t</span>
-
+<span class="o">&gt;</span> y1
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span> <span class="p">[,</span><span class="m">4</span><span class="p">]</span> <span class="p">[,</span><span class="m">5</span><span class="p">]</span> <span class="p">[,</span><span class="m">6</span><span class="p">]</span> <span class="p">[,</span><span class="m">7</span><span class="p">]</span> <span class="p">[,</span><span class="m">8</span><span class="p">]</span> <span class="p">[,</span><span class="m">9</span><span class="p">]</span> <span class="p">[,</span><span class="m">10</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.1</span> <span class="m">0.05</span>  <span class="m">0.6</span>    <span class="m">0</span> <span class="m">0.05</span>  <span class="m">0.1</span>    <span class="m">0</span>  <span class="m">0.1</span>    <span class="m">0</span>     <span class="m">0</span>
+<span class="o">&gt;</span> y2
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span> <span class="p">[,</span><span class="m">4</span><span class="p">]</span> <span class="p">[,</span><span class="m">5</span><span class="p">]</span> <span class="p">[,</span><span class="m">6</span><span class="p">]</span> <span class="p">[,</span><span class="m">7</span><span class="p">]</span> <span class="p">[,</span><span class="m">8</span><span class="p">]</span> <span class="p">[,</span><span class="m">9</span><span class="p">]</span> <span class="p">[,</span><span class="m">10</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.1</span> <span class="m">0.05</span>  <span class="m">0.1</span>    <span class="m">0</span> <span class="m">0.05</span>  <span class="m">0.1</span>    <span class="m">0</span>  <span class="m">0.6</span>    <span class="m">0</span>     <span class="m">0</span>
+<span class="o">&gt;</span> <span class="kp">t</span>
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span> <span class="p">[,</span><span class="m">4</span><span class="p">]</span> <span class="p">[,</span><span class="m">5</span><span class="p">]</span> <span class="p">[,</span><span class="m">6</span><span class="p">]</span> <span class="p">[,</span><span class="m">7</span><span class="p">]</span> <span class="p">[,</span><span class="m">8</span><span class="p">]</span> <span class="p">[,</span><span class="m">9</span><span class="p">]</span> <span class="p">[,</span><span class="m">10</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">1</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>     <span class="m">0</span>
 mean_squared_error <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>y<span class="p">,</span> <span class="kp">t</span><span class="p">){</span>
-  <span class="kr">return</span><span class="p">(</span><span class="m">0.5</span><span class="o">*</span><span class="kp">sum</span><span class="p">((</span>y<span class="o">-</span><span class="kp">t</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">))</span>
+    <span class="kr">return</span><span class="p">((</span><span class="m">1</span><span class="o">/</span><span class="kp">NROW</span><span class="p">(</span>y<span class="p">))</span><span class="o">*</span><span class="kp">sum</span><span class="p">((</span>y<span class="o">-</span><span class="kp">t</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">))</span>
 <span class="p">}</span>
-
-mean_squared_error<span class="p">(</span>y1<span class="p">,</span><span class="kp">t</span><span class="p">)</span>
-mean_squared_error<span class="p">(</span>y2<span class="p">,</span><span class="kp">t</span><span class="p">)</span></code></pre></td></tr></table>
+<span class="o">&gt;</span> mean_squared_error<span class="p">(</span>y1<span class="p">,</span><span class="kp">t</span><span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.0975</span>
+<span class="o">&gt;</span> mean_squared_error<span class="p">(</span>y2<span class="p">,</span><span class="kp">t</span><span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">1.195</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>계산 결과 모델이 정답을 맞추지 못한 경우가 정답을 맞춘 경우보다 평균 제곱 오차의 값이 크게 올라갑니다. 즉 평균 제곱 오차 함수의 값이 작으면, 모델의 추정 결과가 정답과 오차도 작다는 것을 알 수 있습니다.</p>
