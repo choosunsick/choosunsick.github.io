@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2020-03-30T22:07:37&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-30T22:07:37&#43;09:00" />
-<meta itemprop="wordCount" content="2855">
+<meta itemprop="wordCount" content="2857">
 
 
 
@@ -195,7 +195,7 @@
     <span class="kr">return</span><span class="p">(</span><span class="kt">list</span><span class="p">(</span>input_size<span class="p">,</span> hidden_size<span class="p">,</span> output_size<span class="p">,</span>weight_init_std<span class="p">))</span>
 <span class="p">}</span>
 
-TwoLayerNet<span class="p">(</span>input_size <span class="o">=</span> <span class="m">784</span><span class="p">,</span> hidden_size <span class="o">=</span> <span class="m">50</span><span class="p">,</span> output_size <span class="o">=</span> <span class="m">10</span><span class="p">)</span>
+<span class="o">&gt;</span> TwoLayerNet<span class="p">(</span>input_size <span class="o">=</span> <span class="m">784</span><span class="p">,</span> hidden_size <span class="o">=</span> <span class="m">50</span><span class="p">,</span> output_size <span class="o">=</span> <span class="m">10</span><span class="p">)</span>
 
 <span class="p">[[</span><span class="m">1</span><span class="p">]]</span>
 <span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">784</span>
@@ -428,7 +428,7 @@ W2_diff <span class="o">&lt;-</span> <span class="kp">mean</span><span class="p"
 b2_diff <span class="o">&lt;-</span> <span class="kp">mean</span><span class="p">(</span><span class="kp">abs</span><span class="p">(</span>grad_backprop<span class="o">$</span>b2<span class="o">-</span>grad_numerical<span class="o">$</span>b2<span class="p">))</span>
 
 temp <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span>W1 <span class="o">=</span> W1_diff<span class="p">,</span> b1 <span class="o">=</span> b1_diff<span class="p">,</span> W2 <span class="o">=</span> W2_diff<span class="p">,</span> b2 <span class="o">=</span> b2_diff<span class="p">)</span>
-temp
+<span class="o">&gt;</span> temp
 
 <span class="o">$</span>W1
 <span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">4.020843e-10</span>

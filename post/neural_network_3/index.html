@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2020-03-14T22:14:04&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-14T22:14:04&#43;09:00" />
-<meta itemprop="wordCount" content="1882">
+<meta itemprop="wordCount" content="2036">
 
 
 
@@ -156,7 +156,7 @@
 
 <p>그러나 MNIST 데이터 셋의 훈련데이터만 하더라도 6만개의 데이터가 있으며, 빅데이터 수준이 되면 이보다 더 큰 경우도 종종 있습니다. 이렇게 훈련 데이터가 클 경우 전부 사용하여 손실 함수를 계산하면 시간이 오래 걸립니다. 따라서 데이터 중 일부를 추출하여 학습을 진행하는데 이를 미니배치 학습이라 합니다. 이제 직접 MNIST 훈련 데이터에서 100개씩 데이터를 추출하여 미니배치 학습을 위한 교차 엔트로피 오차 함수를 구현해보겠습니다.</p>
 
-<p>먼저 <a href="https://github.com/LOPES-HUFS/DeepLearningFromForR/wiki/4.2">이전 글</a> 에서 다음과 같이 MNIST 데이터 셋을 불러와 데이터 정규화와 라벨의 원-핫 인코딩 과정을 진행해 줍니다.</p>
+<p>먼저 <a href="https://choosunsick.github.io/post/mnist/">링크</a> 에서 다음과 같이 MNIST 데이터 셋을 불러와 데이터 정규화와 라벨의 원-핫 인코딩 과정을 진행해 줍니다. 데이터 셋을 불러오는 과정을 <code>get_data()</code>라는 함수로 처리해 데잍터를 불러와 줍니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
@@ -181,26 +181,14 @@
 </span><span class="lnt">20
 </span><span class="lnt">21
 </span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>dslabs<span class="p">)</span>
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#34;./utils.R&#34;</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>dslabs<span class="p">)</span>
 
-mnist <span class="o">&lt;-</span> read_mnist<span class="p">()</span>
-str<span class="p">(</span>mnist<span class="p">)</span>
+mnist_data <span class="o">&lt;-</span> get_data<span class="p">()</span>
 
-x_train <span class="o">&lt;-</span> mnist<span class="o">$</span>train<span class="o">$</span>images
-t_train <span class="o">&lt;-</span> mnist<span class="o">$</span>train<span class="o">$</span><span class="kp">labels</span>
-x_test <span class="o">&lt;-</span> mnist<span class="o">$</span>test<span class="o">$</span>images
-t_test <span class="o">&lt;-</span> mnist<span class="o">$</span>test<span class="o">$</span><span class="kp">labels</span>
-
-x_train_normalize <span class="o">&lt;-</span> x_train<span class="o">/</span><span class="m">255</span>
-x_test_normalize <span class="o">&lt;-</span> x_test<span class="o">/</span><span class="m">255</span>
-
-making_one_hot_label <span class="o">&lt;-</span><span class="kr">function</span><span class="p">(</span>t_label<span class="p">,</span><span class="kp">nrow</span><span class="p">,</span><span class="kp">ncol</span><span class="p">){</span>
+making_one_hot_label <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>t_label<span class="p">,</span><span class="kp">nrow</span><span class="p">,</span><span class="kp">ncol</span><span class="p">){</span>
     data <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kc">FALSE</span><span class="p">,</span>nrow <span class="o">=</span> <span class="kp">nrow</span><span class="p">,</span>ncol <span class="o">=</span> <span class="kp">ncol</span><span class="p">)</span>
     t_index <span class="o">&lt;-</span> t_label<span class="m">+1</span>
     <span class="kr">for</span><span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span><span class="o">:</span><span class="kp">NROW</span><span class="p">(</span>data<span class="p">)){</span>
@@ -209,8 +197,12 @@ making_one_hot_label <span class="o">&lt;-</span><span class="kr">function</span
     <span class="kr">return</span><span class="p">(</span>data<span class="p">)</span>
 <span class="p">}</span>
 
+x_train_normalize <span class="o">&lt;-</span> x_train<span class="o">/</span><span class="m">255</span>
+x_test_normalize <span class="o">&lt;-</span> x_test<span class="o">/</span><span class="m">255</span>
+
 t_train_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class="p">(</span>t_train<span class="p">,</span><span class="m">60000</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
 t_test_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class="p">(</span>t_test<span class="p">,</span><span class="m">10000</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
+
 str<span class="p">(</span>x_train_normalize<span class="p">)</span>
 str<span class="p">(</span>t_train_onehotlabel<span class="p">)</span></code></pre></td></tr></table>
 </div>
@@ -228,18 +220,28 @@ str<span class="p">(</span>t_train_onehotlabel<span class="p">)</span></code></p
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">trainsize <span class="o">&lt;-</span> <span class="kp">dim</span><span class="p">(</span>x_train_normalize<span class="o">/</span><span class="m">255</span><span class="p">)[</span><span class="m">1</span><span class="p">]</span>
-trainsize
+<span class="o">&gt;</span> trainsize
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">60000</span>
 batch_size <span class="o">&lt;-</span> <span class="m">10</span>
-batch_size
+<span class="o">&gt;</span> batch_size
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">10</span>
 batch_mask <span class="o">&lt;-</span> <span class="kp">sample</span><span class="p">(</span>trainsize<span class="p">,</span>batch_size<span class="p">)</span>
-batch_mask
+<span class="o">&gt;</span> batch_mask
+ <span class="p">[</span><span class="m">1</span><span class="p">]</span>  <span class="m">8299</span> <span class="m">18763</span> <span class="m">28706</span> <span class="m">35366</span> <span class="m">29752</span> <span class="m">59755</span> <span class="m">42776</span> <span class="m">25722</span> <span class="m">45897</span> <span class="m">55425</span>
 x_batch <span class="o">&lt;-</span> x_train_normalize<span class="p">[</span>batch_mask<span class="p">,]</span>
-str<span class="p">(</span>x_batch<span class="p">)</span>
+<span class="o">&gt;</span> str<span class="p">(</span>x_batch<span class="p">)</span>
+ num <span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">784</span><span class="p">]</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="kc">...</span>
 t_batch <span class="o">&lt;-</span> t_train_onehotlabel<span class="p">[</span>batch_mask<span class="p">,]</span>
-str<span class="p">(</span>t_batch<span class="p">)</span></code></pre></td></tr></table>
+<span class="o">&gt;</span> str<span class="p">(</span>t_batch<span class="p">)</span>
+ logi <span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">]</span> <span class="kc">FALSE</span> <span class="kc">FALSE</span> <span class="kc">FALSE</span> <span class="kc">FALSE</span> <span class="kc">FALSE</span> <span class="kc">FALSE</span> <span class="kc">...</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>이제 교차 엔트로피 오차 함수에 평균 값 계산을 추가해봅시다. 기존의 계산과정에서 달라지는 것은 데이터의 개수로 나누는 과정 말고는 없습니다.</p>
@@ -259,6 +261,14 @@ str<span class="p">(</span>t_batch<span class="p">)</span></code></pre></td></tr
 </span><span class="lnt">12
 </span><span class="lnt">13
 </span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">y1  <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.6</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.05</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> nrow <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
@@ -266,15 +276,23 @@ y2  <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(
 t <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> nrow <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
 new_y <span class="o">&lt;-</span> <span class="kp">rbind</span><span class="p">(</span>y1<span class="p">,</span>y2<span class="p">)</span>
 new_t <span class="o">&lt;-</span> <span class="kp">rbind</span><span class="p">(</span><span class="kp">t</span><span class="p">,</span><span class="kp">t</span><span class="p">)</span>
-new_y
-new_t
+<span class="o">&gt;</span> new_y
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span> <span class="p">[,</span><span class="m">4</span><span class="p">]</span> <span class="p">[,</span><span class="m">5</span><span class="p">]</span> <span class="p">[,</span><span class="m">6</span><span class="p">]</span> <span class="p">[,</span><span class="m">7</span><span class="p">]</span> <span class="p">[,</span><span class="m">8</span><span class="p">]</span> <span class="p">[,</span><span class="m">9</span><span class="p">]</span> <span class="p">[,</span><span class="m">10</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.1</span> <span class="m">0.05</span>  <span class="m">0.6</span>    <span class="m">0</span> <span class="m">0.05</span>  <span class="m">0.1</span>    <span class="m">0</span>  <span class="m">0.1</span>    <span class="m">0</span>     <span class="m">0</span>
+<span class="p">[</span><span class="m">2</span><span class="p">,]</span>  <span class="m">0.1</span> <span class="m">0.05</span>  <span class="m">0.1</span>    <span class="m">0</span> <span class="m">0.05</span>  <span class="m">0.1</span>    <span class="m">0</span>  <span class="m">0.6</span>    <span class="m">0</span>     <span class="m">0</span>
+<span class="o">&gt;</span> new_t
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span> <span class="p">[,</span><span class="m">4</span><span class="p">]</span> <span class="p">[,</span><span class="m">5</span><span class="p">]</span> <span class="p">[,</span><span class="m">6</span><span class="p">]</span> <span class="p">[,</span><span class="m">7</span><span class="p">]</span> <span class="p">[,</span><span class="m">8</span><span class="p">]</span> <span class="p">[,</span><span class="m">9</span><span class="p">]</span> <span class="p">[,</span><span class="m">10</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">1</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>     <span class="m">0</span>
+<span class="p">[</span><span class="m">2</span><span class="p">,]</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">1</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">0</span>     <span class="m">0</span>
 
 cross_entropy_error <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>y<span class="p">,</span> <span class="kp">t</span><span class="p">){</span>
     batchsize <span class="o">&lt;-</span> <span class="kp">dim</span><span class="p">(</span>y<span class="p">)[</span><span class="m">1</span><span class="p">]</span>
     <span class="kr">return</span><span class="p">(</span><span class="o">-</span><span class="kp">sum</span><span class="p">(</span>t <span class="o">*</span> <span class="kp">log</span><span class="p">(</span>y <span class="o">+</span> <span class="m">1e-7</span><span class="p">))</span><span class="o">/</span>batchsize<span class="p">)</span>
 <span class="p">}</span>
-cross_entropy_error<span class="p">(</span>y1<span class="p">,</span><span class="kp">t</span><span class="p">)</span>
-cross_entropy_error<span class="p">(</span>new_y<span class="p">,</span>new_t<span class="p">)</span></code></pre></td></tr></table>
+<span class="o">&gt;</span> cross_entropy_error<span class="p">(</span>y1<span class="p">,</span><span class="kp">t</span><span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.5108255</span>
+<span class="o">&gt;</span> cross_entropy_error<span class="p">(</span>new_y<span class="p">,</span>new_t<span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">1.406705</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>평균 교차 엔트로피 오차 함수에 2개의 이미지 데이터를 넣어도 손실 함수의 값이 계산되는 것을 확인할 수 있습니다. 단 이 함수는 정답 라벨이 원-핫 인코딩으로 만들어진 경우만 교차 엔트로피 오차 값을 계산합니다.</p>

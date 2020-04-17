@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2020-03-14T22:14:14&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-14T22:14:14&#43;09:00" />
-<meta itemprop="wordCount" content="3504">
+<meta itemprop="wordCount" content="3626">
 
 
 
@@ -197,14 +197,30 @@
 </span><span class="lnt">38
 </span><span class="lnt">39
 </span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#34;./DeepLearningFromForR/functions.R&#34;</span><span class="p">)</span>
 simplemodel  <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(){</span>
    W <span class="o">&lt;&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0.47355232</span><span class="p">,</span> <span class="m">0.85557411</span><span class="p">,</span> <span class="m">0.9977393</span><span class="p">,</span> <span class="m">0.03563661</span><span class="p">,</span><span class="m">0.84668094</span><span class="p">,</span><span class="m">0.69422093</span><span class="p">),</span> nrow <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
 <span class="p">}</span>
-simplemodel<span class="p">()</span>
-W
+<span class="o">&gt;</span> simplemodel<span class="p">()</span>
+<span class="o">&gt;</span> W
+          <span class="p">[,</span><span class="m">1</span><span class="p">]</span>       <span class="p">[,</span><span class="m">2</span><span class="p">]</span>      <span class="p">[,</span><span class="m">3</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span> <span class="m">0.4735523</span> <span class="m">0.99773930</span> <span class="m">0.8466809</span>
+<span class="p">[</span><span class="m">2</span><span class="p">,]</span> <span class="m">0.8555741</span> <span class="m">0.03563661</span> <span class="m">0.6942209</span>
 
 simplemodel.forward <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> <span class="p">{</span>
   <span class="kr">return</span><span class="p">(</span>x <span class="o">%*%</span> W<span class="p">)</span>
@@ -226,19 +242,29 @@ numerical_gradient_simplemodel <span class="o">&lt;-</span> <span class="kr">fun
 <span class="p">}</span>
 
 x <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0.6</span><span class="p">,</span><span class="m">0.9</span><span class="p">),</span>nrow <span class="o">=</span> <span class="m">1</span><span class="p">,</span>ncol <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
-x
+<span class="o">&gt;</span> x
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>  <span class="m">0.6</span>  <span class="m">0.9</span>
 
 p <span class="o">&lt;-</span> simplemodel.forward<span class="p">(</span>x<span class="p">)</span>
-p   
+<span class="o">&gt;</span> p   
+         <span class="p">[,</span><span class="m">1</span><span class="p">]</span>      <span class="p">[,</span><span class="m">2</span><span class="p">]</span>     <span class="p">[,</span><span class="m">3</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span> <span class="m">1.054148</span> <span class="m">0.6307165</span> <span class="m">1.132807</span>   
 
 t <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">),</span>nrow <span class="o">=</span> <span class="m">1</span><span class="p">,</span>ncol <span class="o">=</span> <span class="m">3</span><span class="p">)</span>
-<span class="kp">t</span>
+<span class="o">&gt;</span> <span class="kp">t</span>
+     <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span>    <span class="m">0</span>    <span class="m">0</span>    <span class="m">1</span>
 
 loss <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">,</span><span class="kp">t</span><span class="p">){</span>cross_entropy_error<span class="p">(</span>softmax<span class="p">(</span>simplemodel.forward <span class="p">(</span>x<span class="p">)),</span><span class="kp">t</span><span class="p">)}</span>
-loss<span class="p">(</span>x<span class="p">,</span><span class="kp">t</span><span class="p">)</span>
+<span class="o">&gt;</span> loss<span class="p">(</span>x<span class="p">,</span><span class="kp">t</span><span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9280683</span>
 
 dw <span class="o">&lt;-</span> numerical_gradient_simplemodel<span class="p">(</span>loss<span class="p">,</span>x<span class="p">,</span><span class="kp">t</span><span class="p">)</span>
-dw</code></pre></td></tr></table>
+<span class="o">&gt;</span> dw
+          <span class="p">[,</span><span class="m">1</span><span class="p">]</span>      <span class="p">[,</span><span class="m">2</span><span class="p">]</span>      <span class="p">[,</span><span class="m">3</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,]</span> <span class="m">0.2192476</span> <span class="m">0.1435624</span> <span class="m">-0.362810</span>
+<span class="p">[</span><span class="m">2</span><span class="p">,]</span> <span class="m">0.3288714</span> <span class="m">0.2153436</span> <span class="m">-0.544215</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>먼저 <code>source()</code> 함수를 사용해 이전에 정의했던 <code>softmax()</code>와 <code>cross_entropy_error()</code>를 불러옵니다. 그리고, 초기값을 <code>simplemodel</code> 함수로 설정합니다. 간단한 신경망이므로 x와 W값의 곱 계산에 <code>softmax</code> 함수를 적용한 코드로 <code>simplemodel.forward</code> 함수로 정의합니다. 그 다음 가중치 행렬 W1의 기울기 값을 구하기 위해 기존 <code>numerical_gradient</code>를 <code>simplemodel</code>에 맞게 바꾸어 가중치 W1을 미분합니다. <code>source()</code> 함수로 불러온 <code>cross_entropy_error()</code>를 이용해 손실 함수의 값을 계산하는 loss(손실 함수)도 만듭니다.</p>
@@ -267,7 +293,7 @@ dw</code></pre></td></tr></table>
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r">TwoLayerNet  <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>input_size<span class="p">,</span> hidden_size<span class="p">,</span> output_size<span class="p">,</span> weight_init_std <span class="o">=</span> <span class="m">0.01</span><span class="p">)</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-r" data-lang="r">TwoLayerNet <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>input_size<span class="p">,</span> hidden_size<span class="p">,</span> output_size<span class="p">,</span> weight_init_std <span class="o">=</span> <span class="m">0.01</span><span class="p">)</span> <span class="p">{</span>
   W1 <span class="o">&lt;&lt;-</span> weight_init_std<span class="o">*</span><span class="kt">matrix</span><span class="p">(</span>rnorm<span class="p">(</span>n <span class="o">=</span> input_size<span class="o">*</span>hidden_size<span class="p">),</span> nrow <span class="o">=</span> input_size<span class="p">,</span> ncol <span class="o">=</span> hidden_size<span class="p">)</span>
   b1 <span class="o">&lt;&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kp">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span>hidden_size<span class="p">),</span>nrow<span class="o">=</span><span class="m">1</span><span class="p">,</span>ncol<span class="o">=</span>hidden_size<span class="p">)</span>
   W2 <span class="o">&lt;&lt;-</span> weight_init_std<span class="o">*</span><span class="kt">matrix</span><span class="p">(</span>rnorm<span class="p">(</span>n <span class="o">=</span> hidden_size<span class="o">*</span>output_size<span class="p">),</span> nrow <span class="o">=</span> hidden_size<span class="p">,</span> ncol <span class="o">=</span> output_size<span class="p">)</span>
@@ -282,7 +308,7 @@ init <span class="o">&lt;-</span> TwoLayerNet<span class="p">(</span>input_size<
 
 <p>마찬가지로 다음층의 행렬 계산을 위해 은닉층의 크기가 첫 번째 가중치 행렬의 열이 됩니다. 두 번째 가중치 행렬도 마찬가지로 만들어지는데 여기서는 2층 신경망이므로 은닉층의 크기와 출력의 개수로 구성됩니다. 이렇게 구성하는 이유 역시 행렬 곱셈을 위해 크기를 맞추어 주는 것입니다. 참고로 은닉층이 2개라면 첫 번째 은닉층의 크기와 두 번째 은닉층의 크기로 구성됩니다.</p>
 
-<p>가중치 행렬의 원소 값은 랜덤한 정규분포 난수로 설정합니다. 초기값의 설정은 이후 모델의 성능을 좌우할만큼 중요하지만 여기서는 난수를 초기값으로 설정한다는 것만 짚고 넘어가겠습니다. 모델 성능에 영향을 줄 수 있는 초기값 설정 방법들은 추후에 설명하겠습니다.</p>
+<p>가중치 행렬의 원소 값은 랜덤한 정규분포 난수로 설정합니다. 초기값의 설정은 이후 모델의 성능을 좌우할만큼 중요하지만 여기서는 난수를 초기값으로 설정한다는 것만 짚고 넘어가겠습니다. 초기값에 0.01이라는 수를 곱해주는 이유는 초기값을 최대한 작게 만들어 오버피팅을 방지하기 위해서 입니다. 모델 성능에 영향을 줄 수 있는 초기값 설정 방법들은 추후에 설명하겠습니다.</p>
 
 <p>첫 번째 편향 행렬 크기를 알아보기 전에, 편향은 모든 층에서 항상 1개의 노드만 가진다는 것을 기억해 봅시다. 즉 모든 편향 행렬의 행은 1이라는 말로 바꿀 수 있습니다. 편향 행렬은 가중치와 입력 신호가 곱해진 행렬에 더해지는데 계산을 위해 행렬의 행은 정해져 있으니 편향 행렬의 열을 맞추어 주어야 합니다.</p>
 
@@ -301,20 +327,12 @@ init <span class="o">&lt;-</span> TwoLayerNet<span class="p">(</span>input_size<
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#34;./DeepLearningFromForR/utils.R&#34;</span><span class="p">)</span>
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#34;./utils.R&#34;</span><span class="p">)</span>
 <span class="kn">library</span><span class="p">(</span>dslabs<span class="p">)</span>
 
-mnist<span class="o">&lt;-</span>read_mnist<span class="p">()</span>
-x_train<span class="o">&lt;-</span>mnist<span class="o">$</span>train<span class="o">$</span>images
-t_train<span class="o">&lt;-</span>mnist<span class="o">$</span>train<span class="o">$</span><span class="kp">labels</span>
-x_test<span class="o">&lt;-</span>mnist<span class="o">$</span>test<span class="o">$</span>images
-t_test<span class="o">&lt;-</span>mnist<span class="o">$</span>test<span class="o">$</span><span class="kp">labels</span>
+mnist_data <span class="o">&lt;-</span> get_data<span class="p">()</span>
 
 t_train_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class="p">(</span>t_train<span class="p">,</span><span class="m">60000</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
 t_test_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class="p">(</span>t_test<span class="p">,</span><span class="m">10000</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
@@ -375,8 +393,8 @@ cross_entropy_error</code></pre></td></tr></table>
 </span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#34;./DeepLearningFromForR/functions.R&#34;</span><span class="p">)</span>
-<span class="kn">source</span><span class="p">(</span><span class="s">&#34;./DeepLearningFromForR/numerical_gradient.R&#34;</span><span class="p">)</span>
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#34;./functions.R&#34;</span><span class="p">)</span>
+<span class="kn">source</span><span class="p">(</span><span class="s">&#34;./numerical_gradient.R&#34;</span><span class="p">)</span>
 
 model.forward <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">){</span>
     z1 <span class="o">&lt;-</span> sigmoid<span class="p">(</span><span class="kp">sweep</span><span class="p">((</span>x <span class="o">%*%</span> W1<span class="p">),</span><span class="m">2</span><span class="p">,</span> b1<span class="p">,</span><span class="s">&#39;+&#39;</span><span class="p">))</span>
@@ -455,7 +473,6 @@ vec<span class="p">[</span>i<span class="p">]</span> <span class="o">&lt;-</span
 </span><span class="lnt">16
 </span><span class="lnt">17
 </span><span class="lnt">18
-</span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">learning_rate <span class="o">&lt;-</span> <span class="m">0.1</span>
@@ -475,7 +492,6 @@ batch_size <span class="o">&lt;-</span> <span class="m">100</span>
   b2 <span class="o">&lt;-</span> b2 <span class="o">-</span> <span class="p">(</span>grads<span class="o">$</span>b2 <span class="o">*</span> learning_rate<span class="p">)</span>
   loss_value <span class="o">&lt;-</span> loss<span class="p">(</span>x<span class="p">,</span> <span class="kp">t</span><span class="p">)</span>
   train_loss_list<span class="p">[</span>i<span class="p">,</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> loss_value
-  <span class="kp">print</span><span class="p">(</span>i<span class="p">)</span>
 <span class="p">}</span></code></pre></td></tr></table>
 </div>
 </div>
@@ -484,35 +500,45 @@ batch_size <span class="o">&lt;-</span> <span class="m">100</span>
 <p>이 코드를 실행시키기 전에 주의할 점이 있습니다. 이 코드는 실행시간이 약 8시간 정도 걸립니다. 따라서 직접 학습을 진행할 경우 엄청난 시간이 소모됩니다. 참고로 600번 즉 1에폭의 학습을 한 가중치와 편향의 결과를 아래와 같이 읽어와 테스트 할 수 있습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>rhdf5<span class="p">)</span>
-init <span class="o">&lt;-</span> H5Fopen<span class="p">(</span><span class="s">&#34;./weights_600.h5&#34;</span><span class="p">)</span>
+init <span class="o">&lt;-</span> H5Fopen<span class="p">(</span><span class="s">&#34;./data/TwoLayerNet_forward_1_epoch.h5&#34;</span><span class="p">)</span>
 model <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span><span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;W1&#34;</span><span class="p">,</span><span class="m">784</span><span class="p">,</span><span class="m">50</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;b1&#34;</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">50</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;W2&#34;</span><span class="p">,</span><span class="m">50</span><span class="p">,</span><span class="m">10</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;b2&#34;</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">10</span><span class="p">))</span>
 <span class="kp">names</span><span class="p">(</span>model<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;W1&#34;</span><span class="p">,</span> <span class="s">&#34;b1&#34;</span><span class="p">,</span> <span class="s">&#34;W2&#34;</span><span class="p">,</span> <span class="s">&#34;b2&#34;</span><span class="p">)</span>
 W1 <span class="o">&lt;-</span> model<span class="o">$</span>W1
 W2 <span class="o">&lt;-</span> model<span class="o">$</span>W2
 b1 <span class="o">&lt;-</span> model<span class="o">$</span>b1
 b2 <span class="o">&lt;-</span> model<span class="o">$</span>b2
-init<span class="o">$</span>losslist</code></pre></td></tr></table>
+
+<span class="o">&gt;</span> str<span class="p">(</span>init<span class="o">$</span>losslist<span class="p">)</span>
+ num <span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">600</span><span class="p">,</span> <span class="m">1</span><span class="p">]</span> <span class="m">2.29</span> <span class="m">2.3</span> <span class="m">2.3</span> <span class="m">2.29</span> <span class="m">2.29</span> <span class="kc">...</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>1 에폭을 돌렸을 때 가중치와 편향 값을 불러오면, 정확도 성능이 약 78% 정도인 것을 확인할 수 있습니다. 또한 손실 함수 값이 점차적으로 하향하는 그래프를 다음과 같이 그려볼 수 있습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r">model.evaluate<span class="p">(</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">)</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-r" data-lang="r">model.evaluate<span class="p">(</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">)</span>
+
+<span class="o">&gt;</span> model.evaluate<span class="p">(</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.7886</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>다음은 역전파 알고리즘을 이용해 학습 과정을 약 1000배 정도 시간을 줄이고 성능도 더 많이 좋아지는 모델을 만들어 볼 것입니다.</p>
