@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2020-03-14T22:14:14&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-14T22:14:14&#43;09:00" />
-<meta itemprop="wordCount" content="3626">
+<meta itemprop="wordCount" content="3678">
 
 
 
@@ -344,14 +344,46 @@ x_test_normalize <span class="o">&lt;-</span> x_test<span class="o">/</span><spa
 <p>불러온 함수들을 확인합니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r">sigmoid
-softmax
-cross_entropy_error</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="o">&gt;</span> <span class="kp">print.function</span><span class="p">(</span>sigmoid<span class="p">)</span>
+<span class="kr">function</span><span class="p">(</span>x<span class="p">){</span>
+    <span class="kr">return</span><span class="p">(</span><span class="m">1</span> <span class="o">/</span> <span class="p">(</span><span class="m">1</span> <span class="o">+</span> <span class="kp">exp</span><span class="p">(</span><span class="o">-</span>x<span class="p">)))</span>
+<span class="p">}</span>
+
+<span class="o">&gt;</span> <span class="kp">print.function</span><span class="p">(</span>softmax<span class="p">)</span>
+<span class="kr">function</span><span class="p">(</span>a<span class="p">){</span>
+    exp_a <span class="o">&lt;-</span> <span class="kp">exp</span><span class="p">(</span>a <span class="o">-</span> <span class="kp">apply</span><span class="p">(</span>a<span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="kp">max</span><span class="p">))</span>
+    <span class="kr">return</span><span class="p">(</span><span class="kp">sweep</span><span class="p">(</span>exp_a<span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="kp">rowSums</span><span class="p">(</span>exp_a<span class="p">),</span><span class="s">&#34;/&#34;</span><span class="p">))</span>
+<span class="p">}</span>
+<span class="o">&lt;</span>bytecode<span class="o">:</span> <span class="mh">0x7fe1f2b15a00</span><span class="o">&gt;</span>
+
+<span class="o">&gt;</span> <span class="kp">print.function</span><span class="p">(</span>cross_entropy_error<span class="p">)</span>
+<span class="kr">function</span><span class="p">(</span>y<span class="p">,</span> <span class="kp">t</span><span class="p">){</span>
+    delta <span class="o">&lt;-</span> <span class="m">1e-7</span>
+    batchsize <span class="o">&lt;-</span> <span class="kp">dim</span><span class="p">(</span>y<span class="p">)[</span><span class="m">1</span><span class="p">]</span>
+    <span class="kr">return</span><span class="p">(</span><span class="o">-</span><span class="kp">sum</span><span class="p">(</span>t <span class="o">*</span> <span class="kp">log</span><span class="p">(</span>y <span class="o">+</span> delta<span class="p">))</span><span class="o">/</span>batchsize<span class="p">)</span>
+<span class="p">}</span>
+<span class="o">&lt;</span>bytecode<span class="o">:</span> <span class="mh">0x7fe1ef447a70</span><span class="o">&gt;</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>이제 신경망 모델의 계산을 담당하는 함수들을 구현해 봅시다.</p>
