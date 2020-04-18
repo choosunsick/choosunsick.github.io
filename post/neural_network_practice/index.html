@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2020-03-16T19:35:04&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-16T19:35:04&#43;09:00" />
-<meta itemprop="wordCount" content="2272">
+<meta itemprop="wordCount" content="2296">
 
 
 
@@ -282,7 +282,7 @@ t_test_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class=
 <span class="c1">#BiocManager::install(&#34;rhdf5&#34;)</span>
 <span class="kn">library</span><span class="p">(</span>rhdf5<span class="p">)</span>
 init <span class="o">&lt;-</span> H5Fopen<span class="p">(</span><span class="s">&#34;./deep_learn_R/Data/sample_weights.h5&#34;</span><span class="p">)</span>
-model <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span><span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;W1&#34;</span><span class="p">,</span><span class="m">784</span><span class="p">,</span><span class="m">50</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;b1&#34;</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">50</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;W2&#34;</span><span class="p">,</span><span class="m">50</span><span class="p">,</span><span class="m">100</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;b2&#34;</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">100</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;W3&#34;</span><span class="p">,</span><span class="m">100</span><span class="p">,</span><span class="m">10</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;b3&#34;</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">10</span><span class="p">))</span>
+model <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span><span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;W1&#34;</span><span class="p">,</span> <span class="m">784</span><span class="p">,</span> <span class="m">50</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;b1&#34;</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">50</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;W2&#34;</span><span class="p">,</span> <span class="m">50</span><span class="p">,</span> <span class="m">100</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;b2&#34;</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;W3&#34;</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">10</span><span class="p">),</span> <span class="kt">matrix</span><span class="p">(</span>init<span class="o">$</span><span class="s">&#34;b3&#34;</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">10</span><span class="p">))</span>
 <span class="kp">names</span><span class="p">(</span>model<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;W1&#34;</span><span class="p">,</span> <span class="s">&#34;b1&#34;</span><span class="p">,</span> <span class="s">&#34;W2&#34;</span><span class="p">,</span> <span class="s">&#34;b2&#34;</span><span class="p">,</span> <span class="s">&#34;W3&#34;</span><span class="p">,</span> <span class="s">&#34;b3&#34;</span><span class="p">)</span>
 
 <span class="o">&gt;</span> str<span class="p">(</span>model<span class="p">)</span>
@@ -310,9 +310,9 @@ List of <span class="m">6</span>
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">model.evaluate.single <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>model<span class="p">,</span>x<span class="p">,</span><span class="kp">t</span><span class="p">){</span>
-  y <span class="o">&lt;-</span> <span class="kp">do.call</span><span class="p">(</span><span class="kp">rbind</span><span class="p">,</span><span class="kp">lapply</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="kp">NROW</span><span class="p">(</span>x<span class="p">),</span><span class="kr">function</span><span class="p">(</span>i<span class="p">)</span><span class="kp">max.col</span><span class="p">(</span>model.forward<span class="p">(</span>model<span class="p">,</span>x<span class="p">[</span>i<span class="p">,]))))</span>
+  y <span class="o">&lt;-</span> <span class="kp">do.call</span><span class="p">(</span><span class="kp">rbind</span><span class="p">,</span> <span class="kp">lapply</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="kp">NROW</span><span class="p">(</span>x<span class="p">),</span> <span class="kr">function</span><span class="p">(</span>i<span class="p">)</span><span class="kp">max.col</span><span class="p">(</span>model.forward<span class="p">(</span>model<span class="p">,</span> x<span class="p">[</span>i<span class="p">,]))))</span>
   t <span class="o">&lt;-</span> <span class="kp">max.col</span><span class="p">(</span><span class="kp">t</span><span class="p">)</span>
-  accuracy <span class="o">&lt;-</span> <span class="p">(</span><span class="kp">sum</span><span class="p">(</span><span class="kp">ifelse</span><span class="p">(</span>y<span class="o">==</span><span class="kp">t</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">)))</span> <span class="o">/</span> <span class="kp">dim</span><span class="p">(</span>x<span class="p">)[</span><span class="m">1</span><span class="p">]</span>
+  accuracy <span class="o">&lt;-</span> <span class="p">(</span><span class="kp">sum</span><span class="p">(</span><span class="kp">ifelse</span><span class="p">(</span>y<span class="o">==</span><span class="kp">t</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">)))</span> <span class="o">/</span> <span class="kp">dim</span><span class="p">(</span>x<span class="p">)[</span><span class="m">1</span><span class="p">]</span>
   <span class="kr">return</span><span class="p">(</span>accuracy<span class="p">)</span>
 <span class="p">}</span>
 
@@ -349,20 +349,20 @@ model.evaluate.single<span class="p">(</span>model<span class="p">,</span>x_test
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">model.evaluate <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>model<span class="p">,</span>x<span class="p">,</span><span class="kp">t</span><span class="p">){</span>
-  y <span class="o">&lt;-</span> <span class="kp">max.col</span><span class="p">(</span>model.forward<span class="p">(</span>model<span class="p">,</span>x<span class="p">))</span>
+  y <span class="o">&lt;-</span> <span class="kp">max.col</span><span class="p">(</span>model.forward<span class="p">(</span>model<span class="p">,</span> x<span class="p">))</span>
   t <span class="o">&lt;-</span> <span class="kp">max.col</span><span class="p">(</span><span class="kp">t</span><span class="p">)</span>
   accuracy <span class="o">&lt;-</span> <span class="p">(</span><span class="kp">sum</span><span class="p">(</span><span class="kp">ifelse</span><span class="p">(</span>y<span class="o">==</span><span class="kp">t</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">)))</span> <span class="o">/</span> <span class="kp">dim</span><span class="p">(</span>x<span class="p">)[</span><span class="m">1</span><span class="p">]</span>
   <span class="kr">return</span><span class="p">(</span>accuracy<span class="p">)</span>
 <span class="p">}</span>
 
-<span class="o">&gt;</span> model.evaluate<span class="p">(</span>model<span class="p">,</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">)</span>
+<span class="o">&gt;</span> model.evaluate<span class="p">(</span>model<span class="p">,</span> x_test_normalize<span class="p">,</span> t_test_onehotlabel<span class="p">)</span>
 <span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9352</span>
 
-<span class="o">&gt;</span> <span class="kp">system.time</span><span class="p">(</span>model.evaluate.single<span class="p">(</span>model<span class="p">,</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">))</span>
+<span class="o">&gt;</span> <span class="kp">system.time</span><span class="p">(</span>model.evaluate.single<span class="p">(</span>model<span class="p">,</span> x_test_normalize<span class="p">,</span> t_test_onehotlabel<span class="p">))</span>
    user  system elapsed
   <span class="m">2.733</span>   <span class="m">0.024</span>   <span class="m">2.763</span>
-  
-<span class="o">&gt;</span> <span class="kp">system.time</span><span class="p">(</span>model.evaluate<span class="p">(</span>model<span class="p">,</span>x_test_normalize<span class="p">,</span>t_test_onehotlabel<span class="p">))</span>
+
+<span class="o">&gt;</span> <span class="kp">system.time</span><span class="p">(</span>model.evaluate<span class="p">(</span>model<span class="p">,</span> x_test_normalize<span class="p">,</span> t_test_onehotlabel<span class="p">))</span>
    user  system elapsed
   <span class="m">0.427</span>   <span class="m">0.014</span>   <span class="m">0.441</span></code></pre></td></tr></table>
 </div>

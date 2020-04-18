@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2020-01-17T17:42:53&#43;09:00" />
 <meta itemprop="dateModified" content="2020-01-17T17:42:53&#43;09:00" />
-<meta itemprop="wordCount" content="1977">
+<meta itemprop="wordCount" content="2181">
 
 
 
@@ -172,14 +172,20 @@
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">a &lt;- c(1,2,3)
 b &lt;- c(&#34;4&#34;,&#34;5&#34;,&#34;6&#34;)
 c &lt;- c(&#34;1&#34;,2,3)
-a
-b
-c</pre></td></tr></table>
+&gt; a
+[1] 1 2 3
+&gt; b
+[1] &#34;4&#34; &#34;5&#34; &#34;6&#34;
+&gt; c
+[1] &#34;1&#34; &#34;2&#34; &#34;3&#34;</pre></td></tr></table>
 </div>
 </div>
 <h3 id="1-2-2-행렬">1.2.2 행렬</h3>
@@ -187,24 +193,44 @@ c</pre></td></tr></table>
 <p>행렬은 2개 이상의 벡터가 모인 자료형입니다. 벡터가 두 개 이상이 결합되면서 벡터에 열이라는 차원이 생기게 됩니다. (열 벡터가 2개 이상이 결합하는 반대 경우도 마찬가지입니다.) 이렇게 만들어진 자료형을 행렬이라 부르고, 행과 열의 개수를 통해 자료형의 전체 크기가 정해지게 됩니다. 행렬은 벡터가 2개 이상이 결합된 형태이기 때문에 벡터의 특징 또한 공유합니다. 예를 들면 두 벡터가 숫자형이면 모두 숫자형으로 저장된 행렬이 만들어지고, 문자형이면 문자형으로 저장된 행렬이 만들어집니다. 행렬을 만드는 R코드는 아래와 같습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">m1 &lt;- matrix(data = 1:6, nrow = 2, ncol = 3)
 m2 &lt;- matrix(data = 1:6, nrow = 2, ncol = 3, byrow = TRUE)
-m1
-m2
 
-dim(m1)
+&gt; m1
+     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6
 
-str(m2)</pre></td></tr></table>
+&gt; m2
+     [,1] [,2] [,3]
+[1,]    1    2    3
+[2,]    4    5    6
+
+&gt; dim(m1)
+[1] 2 3
+
+&gt; str(m2)
+ int [1:2, 1:3] 1 4 2 5 3 6</pre></td></tr></table>
 </div>
 </div>
 <p>R에서는 두 벡터의 결합으로도 행렬을 만들 수 있지만, <code>matrix()</code>라는 기본 함수를 통해서 만들 수도 있습니다. <code>matrix()</code> 함수에서 data, nrow, ncol, byrow 4가지 인자가 있습니다. 이 4가지 중 행렬의 원소를 구성하는 data 인자는 필수로 행렬의 원소가 됩니다. nrow와 ncol 인자는 만들어질 행렬의 크기를 정할 수 있습니다.</p>
@@ -214,12 +240,34 @@ str(m2)</pre></td></tr></table>
 <p>R에서 행렬의 크기는 <code>dim()</code> 함수를 통해 확인할 수 있습니다. 이 함수에 행렬 데이터를 넣으면 행렬의 크기를 행,열 순서로 반환해 줍니다. 행렬의 행과 열의 크기를 각각 확인하는 방법도 있습니다. <code>NROW()</code>, <code>NCOL()</code> 함수를 사용하면 각각 행의 크기와 열의 크기를 알려줍니다. 이외에도 데이터 내역을 알려주는 <code>str()</code> 함수도 행렬의 행과 열의 크기를 아는 데 사용할 수 있습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">temp_array &lt;- array(c(m1,m2),dim = c(2,3,2))
-temp_array</pre></td></tr></table>
+&gt; temp_array
+, , 1
+
+     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6
+
+, , 2
+
+     [,1] [,2] [,3]
+[1,]    1    2    3
+[2,]    4    5    6</pre></td></tr></table>
 </div>
 </div>
 <p>그렇다면 행렬이 여러 개 있는 자료형은 무엇일까요? 여러 개의 행렬을 하나로 저장한 자료형은 Array(배열)라 부르고 흔히 3차원 이상의 자료형입니다. Array(배열) 역시 행렬이 벡터의 특징을 그대로 물려 받은 것처럼 같은 특징을 지닙니다. 즉 Array(배열)를 구성하는 행렬들의 원소들은 모두 같은 데이터 타입을 지닙니다.</p>
@@ -248,27 +296,63 @@ temp_array</pre></td></tr></table>
 </span><span class="lnt">17
 </span><span class="lnt">18
 </span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
 </span></pre></td>
 <td class="lntd">
-<pre class="chroma">a &lt;- c(1,2,3)
-a
-b &lt;- c(&#34;7&#34;,&#34;8&#34;,&#34;9&#34;)
-b
+<pre class="chroma">a &lt;- c(1, 2, 3)
+&gt; a
+[1] 1 2 3
+b &lt;- c(&#34;7&#34;, &#34;8&#34;, &#34;9&#34;)
+&gt; b
+[1] &#34;7&#34; &#34;8&#34; &#34;9&#34;
 
-temp_df &lt;- data.frame(num1=a,str1=b)
-temp_df
+temp_df &lt;- data.frame(num1 = a,str1 = b)
+&gt; temp_df
+  num1 str1
+1    1    7
+2    2    8
+3    3    9
 
-temp_df[1,]
-temp_df[,1]
-temp_df[1,1]
+&gt; temp_df[1,]
+  num1 str1
+1    1    7
+&gt; temp_df[,1]
+[1] 1 2 3
+&gt; temp_df[1, 1]
+[1] 1
 
-temp_df[,&#34;num1&#34;]
-temp_df$num1
+&gt; temp_df[,&#34;num1&#34;]
+[1] 1 2 3
+&gt; temp_df$num1
+[1] 1 2 3
 
-temp_list &lt;- list(num1=a,num2=b,str1=c)
-temp_list[1]
-temp_list[&#34;num1&#34;]
-temp_list[[1]]</pre></td></tr></table>
+temp_list &lt;- list(num1 = a, num2 = b, str1 = c)
+&gt; temp_list[1]
+$num1
+[1] 1 2 3
+&gt; temp_list[&#34;num1&#34;]
+$num1
+[1] 1 2 3
+
+&gt; temp_list[[1]]
+[1] 1 2 3</pre></td></tr></table>
 </div>
 </div>
 <p>데이터프레임과 리스트 형식은 R에서 데이터의 형태에 구애 받지 않고 저장할 수 있는 형식입니다. 데이터프레임은 행렬과 같이 행과 열을 가진 자료형으로 행렬과 달리 데이터 타입에 구애 받지 않은 자료형입니다. 데이터프레임을 만드는 방법은 <code>dataframe()</code> 함수를 사용하는 것입니다.</p>

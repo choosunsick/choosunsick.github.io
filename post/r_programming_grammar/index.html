@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2020-01-17T17:43:41&#43;09:00" />
 <meta itemprop="dateModified" content="2020-01-17T17:43:41&#43;09:00" />
-<meta itemprop="wordCount" content="2608">
+<meta itemprop="wordCount" content="2882">
 
 
 
@@ -160,24 +160,30 @@
 <p>함수는 특정 동작을 수행하는 블럭입니다. 다른 객체로 값을 전달하거나 계산을 하거나 등의 기능을 처리한 후 그 값을 반환합니다. 함수는 인자와 처리, 결과 3가지로 구성됩니다. 함수의 인자는 함수가 특정 동작을 수행하기 위해 정의에 따라서 반드시 필요한 경우도 있지만, 부분적으로 필요한 옵션들을 설정하는 경우도 있습니다. 처리는 함수가 수행하는 특정 동작에 대한 정의를 나타내는 부분입니다. 결과는 동작을 수행하여 도출된 것을 산출하는 부분입니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">a &lt;- c(1:10)
-a
+&gt; a
+ [1]  1  2  3  4  5  6  7  8  9 10
 
 plus &lt;- function(x,y){
   #단 x,y는 숫자형 변수나 숫자형 데이터 벡터
   return(x+y)
 }
-plus(a,a)</pre></td></tr></table>
+
+&gt; plus(a,a)
+ [1]  2  4  6  8 10 12 14 16 18 20</pre></td></tr></table>
 </div>
 </div>
 <p>다음으로는 함수의 사용법을 설명하겠습니다. R에서 함수를 만드는 방법은 <code>function()</code> 코드를 사용해, ()안에 인자를 정의하고 {} 안에 함수의 기능(처리)과 산출되는 결과(return)를 정의하여 만들고 이름을 할당해 사용할 수 있습니다. 인자는 보통 2~3개 정도로 설정하지만 여러 개도 설정할 수 있습니다. 이렇게 글로 표현하는 것보다 직접 함수를 만들어 사용해보는 것이 함수의 사용법에 대한 이해를 도울 수 있습니다. 예를 들면 두 개의 변수를 받아 두 변수를 서로 더하는 기능의 함수를 만들어 봅시다.</p>
@@ -189,18 +195,40 @@ plus(a,a)</pre></td></tr></table>
 <p>함수에 대해 알아보았으니 이번에는 반복문에 대해 알아봅시다. 반복문은 이름 그대로 계산이나 특정 처리를 반복적으로 하여 적용하기 위해 사용하는 방법입니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">square_vec &lt;- c()
 for(i in 1:10){
   square_vec&lt;-rbind(square_vec,i^2)
 }
-square_vec</pre></td></tr></table>
+&gt; square_vec
+      [,1]
+ [1,]    1
+ [2,]    4
+ [3,]    9
+ [4,]   16
+ [5,]   25
+ [6,]   36
+ [7,]   49
+ [8,]   64
+ [9,]   81
+[10,]  100</pre></td></tr></table>
 </div>
 </div>
 <p>자 이제 예를 들어봅시다. 우리가 1부터 10까지의 제곱값을 구해야 하는 문제를 받았다고 해봅시다. 우리는 그 값을 구하기 위해 1부터 10까지의 숫자에 모두에 ^2을 쳐서 계산하는 방법을 선택할 수 있습니다. 그러나 이 방법은 만약 숫자가 늘어 1부터 100까지 제곱 값을 구해야하는 경우에는 시간이 너무 오래걸리게 됩니다. 그러므로 각 숫자에 대해 자동으로 제곱 연산을 반복하면 그 값을 구하는 시간과 오류가 크게 줄어들 것입니다.</p>
@@ -228,6 +256,11 @@ square_vec</pre></td></tr></table>
 </span><span class="lnt">14
 </span><span class="lnt">15
 </span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">iffivetest &lt;- function(x){
@@ -241,11 +274,16 @@ square_vec</pre></td></tr></table>
     return(&#34;5다&#34;)
     }
 }
-iffivetest(2)
-iffivetest(5)
-iffivetest(7)
+&gt; iffivetest(2)
+[1] &#34;5보다 더 작다&#34;
+&gt; iffivetest(5)
+[1] &#34;5다&#34;
+&gt; iffivetest(7)
+[1] &#34;5보다 더 크다&#34;
 
-ifelse(1:10&gt;5,&#34;5보다 더 크다&#34;,ifelse(1:10&lt;5,&#34;5보다 더 작다&#34;,&#34;5다&#34;))</pre></td></tr></table>
+&gt; ifelse(1:10&gt;5,&#34;5보다 더 크다&#34;,ifelse(1:10&lt;5,&#34;5보다 더 작다&#34;,&#34;5다&#34;))
+ [1] &#34;5보다 더 작다&#34; &#34;5보다 더 작다&#34; &#34;5보다 더 작다&#34; &#34;5보다 더 작다&#34; &#34;5다&#34;           &#34;5보다 더 크다&#34; &#34;5보다 더 크다&#34;
+ [8] &#34;5보다 더 크다&#34; &#34;5보다 더 크다&#34; &#34;5보다 더 크다&#34;</pre></td></tr></table>
 </div>
 </div>
 <p>조건문은 데이터를 조건에 따라 분류하거나, 조건에 맞는 데이터를 추출하는 경우에 사용합니다. 일반적으로 조건문은 <code>if(), else</code> 블럭 2 가지로 구성됩니다. 즉 조건과 그 조건이 아닌 나머지로 구성됩니다. 물론 조건이 하나가 아닌 경우에는 <code>else if()</code>를 사용하여 추가합니다.</p>

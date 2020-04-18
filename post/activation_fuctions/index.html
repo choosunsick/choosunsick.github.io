@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2020-03-16T19:34:03&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-16T19:34:03&#43;09:00" />
-<meta itemprop="wordCount" content="2154">
+<meta itemprop="wordCount" content="2162">
 
 
 
@@ -179,7 +179,7 @@
   <span class="kr">return</span><span class="p">(</span><span class="kp">ifelse</span><span class="p">(</span>x <span class="o">&gt;</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">))</span>
 <span class="p">}</span>
 
-<span class="o">&gt;</span> step_fun<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<span class="o">&gt;</span> step_fun<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">))</span>
 <span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span></code></pre></td></tr></table>
 </div>
 </div>
@@ -206,7 +206,7 @@
 <pre class="chroma"><code class="language-r echo=TRUE" data-lang="r echo=TRUE">#install.packages(&#34;ggplot2&#34;)
 library(ggplot2)
 
-x &lt;- seq(from =  -5, to =  4.9, by =  0.1)
+x &lt;- seq(from = -5, to = 4.9, by = 0.1)
 y &lt;- step_fun(x)
 data &lt;- data.frame(x, y)
 
@@ -275,7 +275,7 @@ data &lt;- data.frame(x, y)
  $ x: num  -5 -4.9 -4.8 -4.7 -4.6 -4.5 -4.4 -4.3 -4.2 -4.1 ...
  $ y: num  0.00669 0.00739 0.00816 0.00901 0.00995 ...
 
-ggplot(data, aes(x, y))+geom_line()
+ggplot(data, aes(x, y)) + geom_line()
 
 ![Sigmoid 함수](https://user-images.githubusercontent.com/19144813/78967271-f2cd0c80-7b3c-11ea-9918-5300e40f5299.png)</code></pre></td></tr></table>
 </div>
@@ -306,7 +306,7 @@ ggplot(data, aes(x, y))+geom_line()
 <pre class="chroma"><code class="language-r" data-lang="r">relu <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">){</span>
   <span class="kr">return</span><span class="p">(</span><span class="kp">ifelse</span><span class="p">(</span>x <span class="o">&gt;</span> <span class="m">0</span><span class="p">,</span> x<span class="p">,</span> <span class="m">0</span><span class="p">))</span>
 <span class="p">}</span>
-x <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">)</span>
+x <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
 
 <span class="o">&gt;</span> x
      <span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="p">[,</span><span class="m">3</span><span class="p">]</span>
@@ -334,7 +334,7 @@ x <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r echo=TRUE" data-lang="r echo=TRUE">x &lt;- seq(from =  -5, to =  4.9, by = 0.1)
+<pre class="chroma"><code class="language-r echo=TRUE" data-lang="r echo=TRUE">x &lt;- seq(from = -5, to = 4.9, by = 0.1)
 y &lt;- relu(x)
 data &lt;- data.frame(x, y)
 
@@ -343,7 +343,7 @@ data &lt;- data.frame(x, y)
  $ x: num  -5 -4.9 -4.8 -4.7 -4.6 -4.5 -4.4 -4.3 -4.2 -4.1 ...
  $ y: num  0 0 0 0 0 0 0 0 0 0 ...
 
-ggplot(data, aes(x, y))+geom_line()
+ggplot(data, aes(x, y)) + geom_line()
 
 ![ReLU 함수](https://user-images.githubusercontent.com/19144813/78967414-6111cf00-7b3d-11ea-9b69-d3aafe8b7db6.png)</code></pre></td></tr></table>
 </div>
