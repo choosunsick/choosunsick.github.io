@@ -220,7 +220,7 @@
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#34;./DeepLearningFromForR/functions.R&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#34;./functions.R&#34;</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>역전파 계산에 앞서 순전파 계산에 필요한 것으로는 손실 함수 계산에 필요한 model.backward 함수가 있습니다. 이 함수에 대한 구현은 다음과 같습니다. 이 함수는 함수의 이름만 변경 되었을 뿐 사실상 계산 구조는 순전파에서와 같습니다.</p>
@@ -328,8 +328,8 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>dslabs<span class="p">)</span>
-<span class="kn">source</span><span class="p">(</span><span class="s">&#34;./DeepLearningFromForR/utils.R&#34;</span><span class="p">)</span>
-<span class="kn">source</span><span class="p">(</span><span class="s">&#34;./DeepLearningFromForR/numerical_gradient.R&#34;</span><span class="p">)</span>
+<span class="kn">source</span><span class="p">(</span><span class="s">&#34;./utils.R&#34;</span><span class="p">)</span>
+<span class="kn">source</span><span class="p">(</span><span class="s">&#34;./numerical_gradient.R&#34;</span><span class="p">)</span>
 
 mnist_data <span class="o">&lt;-</span> get_data<span class="p">()</span>
 
@@ -485,7 +485,7 @@ temp <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(<
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#34;./DeepLearningFromForR/utils.R&#34;</span><span class="p">)</span>
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#34;./utils.R&#34;</span><span class="p">)</span>
 <span class="kn">library</span><span class="p">(</span>dslabs<span class="p">)</span>
 
 mnist_data <span class="o">&lt;-</span> get_data<span class="p">()</span>
