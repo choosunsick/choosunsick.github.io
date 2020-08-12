@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.69.2 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://choosunsick.github.io/post/broadcast_operation/" />
@@ -41,21 +41,18 @@
 <meta property="og:title" content="Chpater1 브로드캐스트 연산" />
 <meta property="og:description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 이전 글에서 내용이 이어집니다. 브로드캐스트란? 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://choosunsick.github.io/post/broadcast_operation/" /><meta property="article:published_time" content="2020-02-08T20:22:00&#43;09:00"/>
-<meta property="article:modified_time" content="2020-02-08T20:22:00&#43;09:00"/>
-
+<meta property="og:url" content="https://choosunsick.github.io/post/broadcast_operation/" />
+<meta property="article:published_time" content="2020-02-08T20:22:00+09:00" />
+<meta property="article:modified_time" content="2020-02-08T20:22:00+09:00" />
 <meta itemprop="name" content="Chpater1 브로드캐스트 연산">
 <meta itemprop="description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 이전 글에서 내용이 이어집니다. 브로드캐스트란? 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙">
-
-
 <meta itemprop="datePublished" content="2020-02-08T20:22:00&#43;09:00" />
 <meta itemprop="dateModified" content="2020-02-08T20:22:00&#43;09:00" />
 <meta itemprop="wordCount" content="1969">
 
 
 
-<meta itemprop="keywords" content="R로 딥러닝하기,기초,브로드캐스트," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="R로 딥러닝하기,기초,브로드캐스트," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Chpater1 브로드캐스트 연산"/>
 <meta name="twitter:description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 이전 글에서 내용이 이어집니다. 브로드캐스트란? 앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙"/>
 
@@ -135,33 +132,26 @@
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#브로드캐스트란">브로드캐스트란?</a>
-<ul>
-<li><a href="#직접-행렬을-만들어-브로드캐스트-연산하기">직접 행렬을 만들어 브로드캐스트 연산하기</a></li>
-<li><a href="#rray-패키지-사용해-브로드캐스트-연산하기">rray 패키지 사용해 브로드캐스트 연산하기</a></li>
-<li><a href="#sweep-함수를-이용한-브로드캐스트-연산하기">sweep() 함수를 이용한 브로드캐스트 연산하기</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#브로드캐스트란">브로드캐스트란?</a>
+      <ul>
+        <li><a href="#직접-행렬을-만들어-브로드캐스트-연산하기">직접 행렬을 만들어 브로드캐스트 연산하기</a></li>
+        <li><a href="#rray-패키지-사용해-브로드캐스트-연산하기">rray 패키지 사용해 브로드캐스트 연산하기</a></li>
+        <li><a href="#sweep-함수를-이용한-브로드캐스트-연산하기">sweep() 함수를 이용한 브로드캐스트 연산하기</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. <a href="https://choosunsick.github.io/post/matrix_operation/">이전 글</a>에서 내용이 이어집니다.</p>
-
+      <p>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. <a href="https://choosunsick.github.io/post/matrix_operation/">이전 글</a>에서 내용이 이어집니다.</p>
 <h2 id="브로드캐스트란">브로드캐스트란?</h2>
-
 <p>앞서 행렬과 벡터 간 연산을 할 때 재활용 규칙을 사용하여 연산이 이루어진다고 언급한 적이 있습니다. 그러나 사실 다른 방법으로도 행렬과 벡터 간 연산이 가능합니다. 그 방법은 벡터를 같은 크기의 행렬로 변경하여 크기를 맞추어 연산하는 것입니다. 이 방법을 브로드캐스트라 부르는데 R에서는 해당 방식의 연산을 하기 위한 3가지 방법이 있습니다. 1 번째는 직접 같은 크기의 행렬을 만들어 사용하는 경우입니다. 2 번째는 rray 패키지를 사용하여 브로드캐스트 연산을 수행하는 것입니다. 마지막으로는 R의 sweep() 함수를 사용하는 것입니다.</p>
-
 <h3 id="직접-행렬을-만들어-브로드캐스트-연산하기">직접 행렬을 만들어 브로드캐스트 연산하기</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -183,9 +173,9 @@
 </span><span class="lnt">20
 </span><span class="lnt">21
 </span><span class="lnt">22
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">a &lt;- matrix(data = 1:6, nrow = 2, ncol = 3, byrow = FALSE)
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">a &lt;- matrix(data = 1:6, nrow = 2, ncol = 3, byrow = FALSE)
 b &lt;- c(1,2)
 
 &gt; a
@@ -206,30 +196,27 @@ b &lt;- c(1,2)
 [1,]    1    3    5
 [2,]    4    8   12
 &gt; all.equal(a*b, a*b_matrix)
-[1] TRUE</pre></td></tr></table>
+[1] TRUE
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>오브젝트 b는 1,2 원소를 가진 벡터입니다. 이 벡터를 a 행렬의 크기인 2행 3열로 만든다면, b_matrix와 같이 기본적으로 열방향으로 원소들이 나열되어 행렬이 만들어집니다. 이렇게 만들어진 행렬은 같은 크기의 a 행렬과 연산이 가능합니다. 실제로 기존의 벡터 연산과 결과가 같은 것 또한 확인할 수 있습니다.</p>
-
+</div><p>오브젝트 b는 1,2 원소를 가진 벡터입니다. 이 벡터를 a 행렬의 크기인 2행 3열로 만든다면, b_matrix와 같이 기본적으로 열방향으로 원소들이 나열되어 행렬이 만들어집니다. 이렇게 만들어진 행렬은 같은 크기의 a 행렬과 연산이 가능합니다. 실제로 기존의 벡터 연산과 결과가 같은 것 또한 확인할 수 있습니다.</p>
 <p>벡터를 직접 같은 크기의 행렬로 변경하여 연산하면 장점은 재활용 규칙을 사용했을 때보다 어떤 값 끼리 연산이 이루어지는지 명확하게 알 수 있습니다. 왜냐하면, 같은 크기의 행렬과 행렬 간 연산은 원소별 대응으로 연산이 이루어지기 때문입니다. 이 방식의 단점은 벡터의 원소가 클 경우 같은 크기의 행렬을 직접 구성하는데 어려움이 생긴다는 점입니다.</p>
-
 <h3 id="rray-패키지-사용해-브로드캐스트-연산하기">rray 패키지 사용해 브로드캐스트 연산하기</h3>
-
 <p>rray라는 외부 라이브러리를 사용하면 일반적인 연산과 같이 쉽게 행렬과 벡터 간 연산이 가능합니다. 먼저 패키지를 설치해 줍니다. 현재 R 3.6.3 버전에서 rray 패키지가 이용이 불가능한 상태입니다. 따라서 R 최신 버전을 사용하시는 분들은 rray 패키지를 사용하는 코드가 작동되지 않는다는 것을 알려드립니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">install.packages(&#34;rray&#34;)
-library(rray)</pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">install.packages(&#34;rray&#34;)
+library(rray)
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>패키지 설치가 끝 났으면, rray 오브젝트를 만들어 브로드캐스트 연산을 할 수 있습니다. 먼저 위의 원소가 1,2인 벡터 오브젝트 같이 rray 오브젝트를 만들어 줍니다.</p>
+</div><p>패키지 설치가 끝 났으면, rray 오브젝트를 만들어 브로드캐스트 연산을 할 수 있습니다. 먼저 위의 원소가 1,2인 벡터 오브젝트 같이 rray 오브젝트를 만들어 줍니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -241,9 +228,9 @@ library(rray)</pre></td></tr></table>
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">a &lt;- matrix(data = 1:6, nrow = 2, ncol = 3)
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">a &lt;- matrix(data = 1:6, nrow = 2, ncol = 3)
 b &lt;- c(1,2)
 c &lt;- c(1,2,3)
 a
@@ -254,19 +241,16 @@ b_ray
 c_ray
 a*b_ray
 a*b==a*b_ray
-a*b==a*c_ray</pre></td></tr></table>
+a*b==a*c_ray
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>rray 오브젝트를 만들 때 주의할 점은 연산 받는 행렬의 행이나 열과 값을 맞추어 만들어야 한다는 점이다. 만약 그렇지 않으면 연산이 이루어지지 않습니다. 또한, 위의 조건대로 rray 오브젝트를 만들어도 기존의 행렬과 벡터 연산과 다른 결과를 얻을 수 있는데 이는 재활용 규칙을 이용한 경우와 rray 오브젝트로 연산하는 경우에 연산 규칙이 다르기 때문입니다.</p>
-
+</div><p>rray 오브젝트를 만들 때 주의할 점은 연산 받는 행렬의 행이나 열과 값을 맞추어 만들어야 한다는 점이다. 만약 그렇지 않으면 연산이 이루어지지 않습니다. 또한, 위의 조건대로 rray 오브젝트를 만들어도 기존의 행렬과 벡터 연산과 다른 결과를 얻을 수 있는데 이는 재활용 규칙을 이용한 경우와 rray 오브젝트로 연산하는 경우에 연산 규칙이 다르기 때문입니다.</p>
 <p>rray 연산 규칙은 행이나 열에 맞추는 경우 해당 행 또는 열에 원소별 연산이 이루어집니다. 반면 재활용 규칙을 이용한 경우에는 1행1열, 2행 1열, 1행 2열&hellip; 같은 순서에 따라 연산이 이루어집니다. 따라서 두 경우의 값이 서로 달라질 수 있습니다.</p>
-
 <h3 id="sweep-함수를-이용한-브로드캐스트-연산하기">sweep() 함수를 이용한 브로드캐스트 연산하기</h3>
-
 <p>sweep() 함수는 R의 기본 함수로 연산을 행과 열에 적용시 킬 수 있는 함수입니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -284,9 +268,9 @@ a*b==a*c_ray</pre></td></tr></table>
 </span><span class="lnt">16
 </span><span class="lnt">17
 </span><span class="lnt">18
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">a &lt;- matrix(data = 1:6, nrow = 2, ncol = 3)
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">a &lt;- matrix(data = 1:6, nrow = 2, ncol = 3)
 b &lt;- c(1,2)
 c &lt;- c(1,2,3)
 b_mat &lt;- matrix(b,1,2)
@@ -303,11 +287,12 @@ sweep(x = a,MARGIN = 2,STATS = c,&#34;*&#34;)
 sweep(x = a,MARGIN = 2,STATS = c_mat,&#34;*&#34;)
 a*c==sweep(x = a,MARGIN = 2,STATS = c,&#34;*&#34;)
 sweep(x = a,MARGIN = 1,STATS = c,&#34;*&#34;)
-a*c==sweep(x = a,MARGIN = 1,STATS = c,&#34;*&#34;)</pre></td></tr></table>
+a*c==sweep(x = a,MARGIN = 1,STATS = c,&#34;*&#34;)
+</code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -357,9 +342,9 @@ a*c==sweep(x = a,MARGIN = 1,STATS = c,&#34;*&#34;)</pre></td></tr></table>
 </span><span class="lnt">48
 </span><span class="lnt">49
 </span><span class="lnt">50
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">&gt; a
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&gt; a
      [,1] [,2] [,3]
 [1,]    1    3    5
 [2,]    2    4    6
@@ -408,13 +393,11 @@ STATS is longer than the extent of &#39;dim(x)[MARGIN]&#39;     [,1] [,2] [,3]
 &gt; a*c==sweep(x = a,MARGIN = 1,STATS = c,&#34;*&#34;)
 STATS is longer than the extent of &#39;dim(x)[MARGIN]&#39;     [,1] [,2] [,3]
 [1,] TRUE TRUE TRUE
-[2,] TRUE TRUE TRUE</pre></td></tr></table>
+[2,] TRUE TRUE TRUE
+</code></pre></td></tr></table>
 </div>
-</div>
-<p><code>sweep()</code> 함수는 행렬과 행렬 혹은 벡터의 연산을 도웁니다. sweep 함수는 행과 열에 대한 원소별 연산과 함께 재활용 규칙도 적용되는 함수 입니다. 이에 따라서 재활용 규칙을 활용한 행렬과 벡터의 연산을 수행할 수 있으며, 행과 열에 대한 원소별 연산 역시 수행할 수 있습니다. 단 그 사용방법이 좀 복잡합니다.</p>
-
+</div><p><code>sweep()</code> 함수는 행렬과 행렬 혹은 벡터의 연산을 도웁니다. sweep 함수는 행과 열에 대한 원소별 연산과 함께 재활용 규칙도 적용되는 함수 입니다. 이에 따라서 재활용 규칙을 활용한 행렬과 벡터의 연산을 수행할 수 있으며, 행과 열에 대한 원소별 연산 역시 수행할 수 있습니다. 단 그 사용방법이 좀 복잡합니다.</p>
 <p>먼저 <code>sweep()</code> 함수는 4가지 인자를 가지고, 각각은 다음과 같습니다. 연산받는 데이터인 x와 연산의 방향을 정하는 MARGIN, 연산할 데이터인 STATS 마지막으로 연산자를 인자로 가집니다. 이 4가지 인자 중 연산할 방향인 MARGIN 인자는 행 방향 연산일 때 1 열 방향 연산일 때 2의 값을 가집니다. 이 방향 설정에 따라 연산의 결과가 달라질 수 있기에 중요합니다.</p>
-
 <p>이번 글에서는 딥러닝의 가중치와 편향에 대한 계산에서 사용되는 행렬과 벡터의 연산 방법들에 대해 알아보았습니다. 다음 글에서는 이제 본격적으로 딥러닝 모델에 사용되는 함수들을 직접 작성하고 알아볼 것입니다.</p>
 
     </div>

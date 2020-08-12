@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.69.2 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://choosunsick.github.io/post/neural_network_backward_4/" />
@@ -41,21 +41,18 @@
 <meta property="og:title" content="Chapter4 오차역전파법을 적용하기" />
 <meta property="og:description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://choosunsick.github.io/post/neural_network_backward_4/" /><meta property="article:published_time" content="2020-03-30T22:07:37&#43;09:00"/>
-<meta property="article:modified_time" content="2020-03-30T22:07:37&#43;09:00"/>
-
+<meta property="og:url" content="https://choosunsick.github.io/post/neural_network_backward_4/" />
+<meta property="article:published_time" content="2020-03-30T22:07:37+09:00" />
+<meta property="article:modified_time" content="2020-03-30T22:07:37+09:00" />
 <meta itemprop="name" content="Chapter4 오차역전파법을 적용하기">
 <meta itemprop="description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서">
-
-
 <meta itemprop="datePublished" content="2020-03-30T22:07:37&#43;09:00" />
 <meta itemprop="dateModified" content="2020-03-30T22:07:37&#43;09:00" />
-<meta itemprop="wordCount" content="2857">
+<meta itemprop="wordCount" content="2875">
 
 
 
-<meta itemprop="keywords" content="R로 딥러닝하기,신경망,역전파," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="R로 딥러닝하기,신경망,역전파," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Chapter4 오차역전파법을 적용하기"/>
 <meta name="twitter:description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. 이전 글과 내용이 이어집니다. 이전 글들은 이곳에서"/>
 
@@ -135,34 +132,26 @@
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#오차역전파법을-적용한-2층-신경망-구현하기">오차역전파법을 적용한 2층 신경망 구현하기</a>
-<ul>
-<li><a href="#오차역전파법으로-구한-기울기-검증하기">오차역전파법으로 구한 기울기 검증하기</a></li>
-<li><a href="#오차역전파법-사용한-학습-구현하기">오차역전파법 사용한 학습 구현하기</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#오차역전파법을-적용한-2층-신경망-구현하기">오차역전파법을 적용한 2층 신경망 구현하기</a>
+      <ul>
+        <li><a href="#오차역전파법으로-구한-기울기-검증하기">오차역전파법으로 구한 기울기 검증하기</a></li>
+        <li><a href="#오차역전파법-사용한-학습-구현하기">오차역전파법 사용한 학습 구현하기</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. <a href="https://choosunsick.github.io/post/neural_network_backward_3/">이전 글</a>과 내용이 이어집니다. 이전 글들은 <a href="https://choosunsick.github.io/post/contents_list/">이곳</a>에서 찾아 보실 수 있습니다.</p>
-
+      <p>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 신경망 챕터에 이어서 3번째 순서입니다. <a href="https://choosunsick.github.io/post/neural_network_backward_3/">이전 글</a>과 내용이 이어집니다. 이전 글들은 <a href="https://choosunsick.github.io/post/contents_list/">이곳</a>에서 찾아 보실 수 있습니다.</p>
 <h2 id="오차역전파법을-적용한-2층-신경망-구현하기">오차역전파법을 적용한 2층 신경망 구현하기</h2>
-
 <p>이제 오차역전파법이 적용된 2층 신경망을 구현해보겠습니다. 역전파가 적용된 신경망 모델 역시 기존 순전파에서 진행한 학습 과정은 같습니다. 그렇지만 다시한번 전체 학습 과정을 살펴보면 다음과 같습니다. 학습 목표는 순전파와 동일하게 손실 함수의 값을 줄이고 최적의 가중치와 편향 값을 찾는 것입니다.</p>
-
 <p>먼저 모델에 적용할 훈련데이터를 준비합니다. 훈련데이터 일부를 무작위로 가져와 학습에 사용하는 방법을 미니배치라고 하며, 이 방법을 사용할 것입니다. 다음으로 모델에서 무작위로 만들어진 가중치와 편향에 대한 기울기를 구합니다. 단 역전파에서는 수치미분이 아닌 오차역전파 방식으로 기울기를 구하게 됩니다. 다음으로는 가중치와 편향을 손실 함수 값이 작아지는 방향으로 갱신합니다. 이제 손실함수 값이 최소값이 되도록 이 과정을 반복해줍니다.</p>
-
 <p>오차역전파 법을 적용한 2층 신경망을 직접 구현해봅시다. 첫번째 구현은 가중치와 편향을 랜덤으로 만들어주는 함수입니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -184,51 +173,54 @@
 </span><span class="lnt">20
 </span><span class="lnt">21
 </span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r">TwoLayerNet <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>input_size<span class="p">,</span> hidden_size<span class="p">,</span> output_size<span class="p">,</span> weight_init_std <span class="o">=</span> <span class="m">0.01</span><span class="p">)</span> <span class="p">{</span>
-    W1 <span class="o">&lt;-</span> weight_init_std<span class="o">*</span><span class="kt">matrix</span><span class="p">(</span>rnorm<span class="p">(</span>n <span class="o">=</span> input_size<span class="o">*</span>hidden_size<span class="p">),</span> nrow <span class="o">=</span> input_size<span class="p">,</span> ncol <span class="o">=</span> hidden_size<span class="p">)</span>
-    b1 <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kp">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span>hidden_size<span class="p">),</span>nrow <span class="o">=</span> <span class="m">1</span><span class="p">,</span>ncol <span class="o">=</span> hidden_size<span class="p">)</span>
-    W2 <span class="o">&lt;-</span> weight_init_std<span class="o">*</span><span class="kt">matrix</span><span class="p">(</span>rnorm<span class="p">(</span>n <span class="o">=</span> hidden_size<span class="o">*</span>output_size<span class="p">),</span> nrow <span class="o">=</span> hidden_size<span class="p">,</span> ncol <span class="o">=</span> output_size<span class="p">)</span>
-    b2 <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kp">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span>output_size<span class="p">),</span>nrow <span class="o">=</span> <span class="m">1</span><span class="p">,</span>ncol <span class="o">=</span> output_size<span class="p">)</span>
-    params <span class="o">&lt;&lt;-</span> <span class="kt">list</span><span class="p">(</span>W1 <span class="o">=</span> W1<span class="p">,</span> b1 <span class="o">=</span> b1<span class="p">,</span> W2 <span class="o">=</span> W2<span class="p">,</span> b2 <span class="o">=</span> b2<span class="p">)</span>
-    <span class="kr">return</span><span class="p">(</span><span class="kt">list</span><span class="p">(</span>input_size<span class="p">,</span> hidden_size<span class="p">,</span> output_size<span class="p">,</span>weight_init_std<span class="p">))</span>
-<span class="p">}</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+TwoLayerNet &lt;- function(input_size, hidden_size, output_size, weight_init_std = 0.01) {
+    W1 &lt;- weight_init_std*matrix(rnorm(n = input_size*hidden_size), nrow = input_size, ncol = hidden_size)
+    b1 &lt;- matrix(rep(0,hidden_size),nrow = 1,ncol = hidden_size)
+    W2 &lt;- weight_init_std*matrix(rnorm(n = hidden_size*output_size), nrow = hidden_size, ncol = output_size)
+    b2 &lt;- matrix(rep(0,output_size),nrow = 1,ncol = output_size)
+    params &lt;&lt;- list(W1 = W1, b1 = b1, W2 = W2, b2 = b2)
+    return(list(input_size, hidden_size, output_size,weight_init_std))
+}
 
-<span class="o">&gt;</span> TwoLayerNet<span class="p">(</span>input_size <span class="o">=</span> <span class="m">784</span><span class="p">,</span> hidden_size <span class="o">=</span> <span class="m">50</span><span class="p">,</span> output_size <span class="o">=</span> <span class="m">10</span><span class="p">)</span>
+&gt; TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
 
-<span class="p">[[</span><span class="m">1</span><span class="p">]]</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">784</span>
+[[1]]
+[1] 784
 
-<span class="p">[[</span><span class="m">2</span><span class="p">]]</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">50</span>
+[[2]]
+[1] 50
 
-<span class="p">[[</span><span class="m">3</span><span class="p">]]</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">10</span>
+[[3]]
+[1] 10
 
-<span class="p">[[</span><span class="m">4</span><span class="p">]]</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.01</span></code></pre></td></tr></table>
+[[4]]
+[1] 0.01
+
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>이 함수는 구현하는 신경망의 층수에 따라 구현이 달라지는데 이 코드는 2층 신경망을 기준으로 구현했습니다. 2층 신경망은 2개의 가중치와 편향이 필요합니다. 기존 순전파의 초기값 설정과 다를바가 없습니다. 차이점은 각 층의 가중치와 편향 행렬을 리스트로 묶어 저장한다는 점 외에는 없습니다.</p>
-
+</div><p>이 함수는 구현하는 신경망의 층수에 따라 구현이 달라지는데 이 코드는 2층 신경망을 기준으로 구현했습니다. 2층 신경망은 2개의 가중치와 편향이 필요합니다. 기존 순전파의 초기값 설정과 다를바가 없습니다. 차이점은 각 층의 가중치와 편향 행렬을 리스트로 묶어 저장한다는 점 외에는 없습니다.</p>
 <p>다음으로는 순전파 계산 과정에 필요한 함수들의 구현을 알아보겠습니다. 역전파는 먼저 순전파 계산이 진행된 후에 계산이 진행됩니다.</p>
-
 <p>순전파와 역전파 계산에 필요한 함수는 활성화 함수인 <code>ReLU()</code>와 순전파에서 가중치 행렬와 편향 행렬의 계산을 하는 <code>affine()</code> 계층,  <code>softmax</code>와 <code>loss</code> 함수를 같이 묶은 <code>softmaxwithloss()</code>입니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#34;./functions.R&#34;</span><span class="p">)</span></code></pre></td></tr></table>
-</div>
-</div>
-<p>역전파 계산에 앞서 순전파 계산에 필요한 것으로는 손실 함수 계산에 필요한 model.backward 함수가 있습니다. 이 함수에 대한 구현은 다음과 같습니다. 이 함수는 함수의 이름만 변경 되었을 뿐 사실상 계산 구조는 순전파에서와 같습니다.</p>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">source(&#34;./functions.R&#34;)
 
+</code></pre></td></tr></table>
+</div>
+</div><p>역전파 계산에 앞서 순전파 계산에 필요한 것으로는 손실 함수 계산에 필요한 model.backward 함수가 있습니다. 이 함수에 대한 구현은 다음과 같습니다. 이 함수는 함수의 이름만 변경 되었을 뿐 사실상 계산 구조는 순전파에서와 같습니다.</p>
 <p>입력 신호와 첫 번째 가중치 및 편향을 계산하고, 이후 활성화 함수인 Relu 함수를 사용하여 다음 층의 입력 신호로 전달합니다. 다음층에서 마찬가지로 입력 신호와 두 번째 가중치와 편향 행렬을 계산합니다. 본래 순전파에서는 이 값에 softmax 함수도 사용했었지만 여기서는 softmax 함수의 적용은 softmaxwithloss 함수로 빠져있습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -236,18 +228,18 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r">model.backward <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">){</span>
-    Affine_1_layer <span class="o">&lt;-</span> Affine.forward<span class="p">(</span>params<span class="o">$</span>W1<span class="p">,</span> params<span class="o">$</span>b1<span class="p">,</span> x<span class="p">)</span>
-    Relu_1_layer <span class="o">&lt;-</span> Relu.forward<span class="p">(</span>Affine_1_layer<span class="o">$</span>out<span class="p">)</span>
-    Affine_2_layer <span class="o">&lt;-</span> Affine.forward<span class="p">(</span>params<span class="o">$</span>W2<span class="p">,</span> params<span class="o">$</span>b2<span class="p">,</span> Relu_1_layer<span class="o">$</span>out<span class="p">)</span>
-    <span class="kr">return</span><span class="p">(</span><span class="kt">list</span><span class="p">(</span>x <span class="o">=</span> Affine_2_layer<span class="o">$</span>out<span class="p">,</span> Affine_1.forward <span class="o">=</span> Affine_1_layer<span class="p">,</span> Affine_2.forward <span class="o">=</span> Affine_2_layer<span class="p">,</span> Relu_1.forward <span class="o">=</span> Relu_1_layer<span class="p">))</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">model.backward &lt;- function(x){
+    Affine_1_layer &lt;- Affine.forward(params$W1, params$b1, x)
+    Relu_1_layer &lt;- Relu.forward(Affine_1_layer$out)
+    Affine_2_layer &lt;- Affine.forward(params$W2, params$b2, Relu_1_layer$out)
+    return(list(x = Affine_2_layer$out, Affine_1.forward = Affine_1_layer, Affine_2.forward = Affine_2_layer, Relu_1.forward = Relu_1_layer))
+}
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>손실 함수 계산 역시 순전파 때랑 크게 달라진게 없습니다. 단지 backward_loss 함수에서 softmax와 cross_entropy_error 함수를 적용하는 코드가 생겼을 뿐입니다.</p>
+</div><p>손실 함수 계산 역시 순전파 때랑 크게 달라진게 없습니다. 단지 backward_loss 함수에서 softmax와 cross_entropy_error 함수를 적용하는 코드가 생겼을 뿐입니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -255,18 +247,18 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r">backward_loss <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">,</span> <span class="kp">t</span><span class="p">){</span>
-    temp <span class="o">&lt;-</span> model.backward<span class="p">(</span>x<span class="p">)</span>
-    y <span class="o">&lt;-</span> temp<span class="o">$</span>x
-    last_layer.forward <span class="o">&lt;-</span> SoftmaxWithLoss.forward<span class="p">(</span>y<span class="p">,</span> <span class="kp">t</span><span class="p">)</span>
-    <span class="kr">return</span><span class="p">(</span><span class="kt">list</span><span class="p">(</span>loss <span class="o">=</span> last_layer.forward<span class="o">$</span>loss<span class="p">,</span> softmax <span class="o">=</span> last_layer.forward<span class="p">,</span> predict <span class="o">=</span>  temp<span class="p">))</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">backward_loss &lt;- function(x, t){
+    temp &lt;- model.backward(x)
+    y &lt;- temp$x
+    last_layer.forward &lt;- SoftmaxWithLoss.forward(y, t)
+    return(list(loss = last_layer.forward$loss, softmax = last_layer.forward, predict =  temp))
+}
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>다음으로는 순전파 계산과 가장 큰 차이가 있는 gradient 함수입니다. 기존의 순전파 계산은 backward_loss 함수를 사용하는 반면 역전파 계산은 마지막층에서부터 첫 번째 층으로 역순으로 올라갑니다.</p>
+</div><p>다음으로는 순전파 계산과 가장 큰 차이가 있는 gradient 함수입니다. 기존의 순전파 계산은 backward_loss 함수를 사용하는 반면 역전파 계산은 마지막층에서부터 첫 번째 층으로 역순으로 올라갑니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -281,31 +273,77 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r">gradient <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">,</span> <span class="kp">t</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1"># 순전파</span>
-    temp_loss <span class="o">&lt;-</span> backward_loss<span class="p">(</span>x<span class="p">,</span> <span class="kp">t</span><span class="p">)</span>
-    <span class="c1">#역전파</span>
-    dout <span class="o">&lt;-</span> <span class="m">1</span>
-    last_layer.backward <span class="o">&lt;-</span> SoftmaxWithLoss.backward<span class="p">(</span>temp_loss<span class="o">$</span>softmax<span class="p">,</span> dout<span class="p">)</span>
-    Affine_2_layer.backward <span class="o">&lt;-</span> Affine.backward<span class="p">(</span>temp_loss<span class="o">$</span>predict<span class="o">$</span>Affine_2.forward<span class="p">,</span> dout <span class="o">=</span> last_layer.backward<span class="o">$</span>dx<span class="p">)</span>
-    Relu_1_layer.backward <span class="o">&lt;-</span> Relu.backward<span class="p">(</span>temp_loss<span class="o">$</span>predict<span class="o">$</span>Relu_1.forward<span class="p">,</span> dout <span class="o">=</span> Affine_2_layer.backward<span class="o">$</span>dx<span class="p">)</span>
-    Affine_1_layer.backward <span class="o">&lt;-</span> Affine.backward<span class="p">(</span>temp_loss<span class="o">$</span>predict<span class="o">$</span>Affine_1.forward<span class="p">,</span> dout <span class="o">=</span> Relu_1_layer.backward<span class="o">$</span>dx<span class="p">)</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">gradient &lt;- function(x, t) {
+    # 순전파
+    temp_loss &lt;- backward_loss(x, t)
+    #역전파
+    dout &lt;- 1
+    last_layer.backward &lt;- SoftmaxWithLoss.backward(temp_loss$softmax, dout)
+    Affine_2_layer.backward &lt;- Affine.backward(temp_loss$predict$Affine_2.forward, dout = last_layer.backward$dx)
+    Relu_1_layer.backward &lt;- Relu.backward(temp_loss$predict$Relu_1.forward, dout = Affine_2_layer.backward$dx)
+    Affine_1_layer.backward &lt;- Affine.backward(temp_loss$predict$Affine_1.forward, dout = Relu_1_layer.backward$dx)
 
-    grads  <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span>W1 <span class="o">=</span> Affine_1_layer.backward<span class="o">$</span>dW<span class="p">,</span> b1 <span class="o">=</span> Affine_1_layer.backward<span class="o">$</span>db<span class="p">,</span> W2 <span class="o">=</span> Affine_2_layer.backward<span class="o">$</span>dW<span class="p">,</span> b2 <span class="o">=</span> Affine_2_layer.backward<span class="o">$</span>db<span class="p">)</span>
-    <span class="kr">return</span><span class="p">(</span>grads<span class="p">)</span>
-<span class="p">}</span></code></pre></td></tr></table>
+    grads  &lt;- list(W1 = Affine_1_layer.backward$dW, b1 = Affine_1_layer.backward$db, W2 = Affine_2_layer.backward$dW, b2 = Affine_2_layer.backward$db)
+    return(grads)
+}
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>이제 구현이 끝났으니 코드의 작동과 기능을 확인할 차례입니다.</p>
-
+</div><p>이제 구현이 끝났으니 코드의 작동과 기능을 확인할 차례입니다.</p>
 <h3 id="오차역전파법으로-구한-기울기-검증하기">오차역전파법으로 구한 기울기 검증하기</h3>
-
 <p>오차역전파법으로 기울기를 구하는 방식을 구현했습니다. 이제 오차역전파법으로 구한 기울기가 정확한 값을 보이는지 기존의 수치미분 방식으로 구한 기울기 값과 비교해볼 차례입니다. 두 방식의 결과를 서로 비교하여 오차역전파법이 제대로 구현되었는지 확인하는 과정을 기울기 검증이라고 합니다. 기울기 검증 방법은 다음과 같습니다.</p>
-
 <p>먼저 데이터를 불러옵니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">library(dslabs)
+source(&#34;./functions.R&#34;)
+source(&#34;./utils.R&#34;)
+source(&#34;./numerical_gradient.R&#34;)
+
+mnist_data &lt;- get_data()
+
+making_one_hot_label &lt;- function(t_label,nrow,ncol){
+  data &lt;- matrix(FALSE,nrow = nrow,ncol = ncol)
+  t_index &lt;- t_label+1
+  for(i in 1:NROW(data)){
+    data[i, t_index[i]] &lt;- TRUE
+  }
+  return(data)
+}
+t_train_onehotlabel &lt;- making_one_hot_label(mnist_data$t_train,60000,10)
+t_test_onehotlabel &lt;- making_one_hot_label(mnist_data$t_test,10000,10)
+
+x_batch &lt;- mnist_data$x_train[1:3,]
+
+t_batch &lt;- t_train_onehotlabel[1:3,]
+</code></pre></td></tr></table>
+</div>
+</div><p>기울기를 비교할 데이터는 훈련데이터를 3개씩 뽑아 비교에 사용합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -327,75 +365,32 @@
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>dslabs<span class="p">)</span>
-<span class="kn">source</span><span class="p">(</span><span class="s">&#34;./utils.R&#34;</span><span class="p">)</span>
-<span class="kn">source</span><span class="p">(</span><span class="s">&#34;./numerical_gradient.R&#34;</span><span class="p">)</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
 
-mnist_data <span class="o">&lt;-</span> get_data<span class="p">()</span>
+W1 &lt;- params$W1
+b1 &lt;- params$b1
+W2 &lt;- params$W2
+b2 &lt;- params$b2
 
-making_one_hot_label <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>t_label<span class="p">,</span><span class="kp">nrow</span><span class="p">,</span><span class="kp">ncol</span><span class="p">){</span>
-  data <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span><span class="kc">FALSE</span><span class="p">,</span>nrow <span class="o">=</span> <span class="kp">nrow</span><span class="p">,</span>ncol <span class="o">=</span> <span class="kp">ncol</span><span class="p">)</span>
-  t_index <span class="o">&lt;-</span> t_label<span class="m">+1</span>
-  <span class="kr">for</span><span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span><span class="o">:</span><span class="kp">NROW</span><span class="p">(</span>data<span class="p">)){</span>
-    data<span class="p">[</span>i<span class="p">,</span> t_index<span class="p">[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> <span class="kc">TRUE</span>
-  <span class="p">}</span>
-  <span class="kr">return</span><span class="p">(</span>data<span class="p">)</span>
-<span class="p">}</span>
-t_train_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class="p">(</span>mnist_data<span class="o">$</span>t_train<span class="p">,</span><span class="m">60000</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
-t_test_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class="p">(</span>mnist_data<span class="o">$</span>t_test<span class="p">,</span><span class="m">10000</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
+model.backward.test &lt;- function(x){
+  Affine_1_layer &lt;- Affine.forward(W1, b1, x)
+  Relu_1_layer &lt;- Relu.forward(Affine_1_layer$out)
+  Affine_2_layer &lt;- Affine.forward(W2, b2, Relu_1_layer$out)
+  return(list(x  =  Affine_2_layer$out, Affine_1.forward  =  Affine_1_layer, Affine_2.forward  =  Affine_2_layer, Relu_1.forward  =  Relu_1_layer))
+}
 
-x_batch <span class="o">&lt;-</span> mnist_data<span class="o">$</span>x_train<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,]</span>
-
-t_batch <span class="o">&lt;-</span> t_train_onehotlabel<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,]</span></code></pre></td></tr></table>
+loss.test &lt;- function(x,t){
+  temp  &lt;- model.backward.test(x)
+  y &lt;- temp$x
+  last_layer.forward &lt;- SoftmaxWithLoss.forward(y, t)
+  return(last_layer.forward$loss)
+}
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>기울기를 비교할 데이터는 훈련데이터를 3개씩 뽑아 비교에 사용합니다.</p>
+</div><p>순전파의 수치미분 값을 비교할 함수를 test란 이름으로 만들어줍니다. 이 함수들은  순전파에 사용하는 함수에 params 리스트 대신 객체 W1~b2로 변경한 것입니다. 이제 두 가지를 과정을 서로 비교해보겠습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r">W1 <span class="o">&lt;-</span> params<span class="o">$</span>W1
-b1 <span class="o">&lt;-</span> params<span class="o">$</span>b1
-W2 <span class="o">&lt;-</span> params<span class="o">$</span>W2
-b2 <span class="o">&lt;-</span> params<span class="o">$</span>b2
-
-model.backward.test <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">){</span>
-  Affine_1_layer <span class="o">&lt;-</span> Affine.forward<span class="p">(</span>W1<span class="p">,</span> b1<span class="p">,</span> x<span class="p">)</span>
-  Relu_1_layer <span class="o">&lt;-</span> Relu.forward<span class="p">(</span>Affine_1_layer<span class="o">$</span>out<span class="p">)</span>
-  Affine_2_layer <span class="o">&lt;-</span> Affine.forward<span class="p">(</span>W2<span class="p">,</span> b2<span class="p">,</span> Relu_1_layer<span class="o">$</span>out<span class="p">)</span>
-  <span class="kr">return</span><span class="p">(</span><span class="kt">list</span><span class="p">(</span>x  <span class="o">=</span>  Affine_2_layer<span class="o">$</span>out<span class="p">,</span> Affine_1.forward  <span class="o">=</span>  Affine_1_layer<span class="p">,</span> Affine_2.forward  <span class="o">=</span>  Affine_2_layer<span class="p">,</span> Relu_1.forward  <span class="o">=</span>  Relu_1_layer<span class="p">))</span>
-<span class="p">}</span>
-
-loss.test <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">,</span><span class="kp">t</span><span class="p">){</span>
-  temp  <span class="o">&lt;-</span> model.backward.test<span class="p">(</span>x<span class="p">)</span>
-  y <span class="o">&lt;-</span> temp<span class="o">$</span>x
-  last_layer.forward <span class="o">&lt;-</span> SoftmaxWithLoss.forward<span class="p">(</span>y<span class="p">,</span> <span class="kp">t</span><span class="p">)</span>
-  <span class="kr">return</span><span class="p">(</span>last_layer.forward<span class="o">$</span>loss<span class="p">)</span>
-<span class="p">}</span></code></pre></td></tr></table>
-</div>
-</div>
-<p>순전파의 수치미분 값을 비교할 함수를 test란 이름으로 만들어줍니다. 이 함수들은  순전파에 사용하는 함수에 params 리스트 대신 객체 W1~b2로 변경한 것입니다. 이제 두 가지를 과정을 서로 비교해보겠습니다.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -417,44 +412,42 @@ loss.test <span class="o">&lt;-</span> <span class="kr">function</span><span cla
 </span><span class="lnt">20
 </span><span class="lnt">21
 </span><span class="lnt">22
+</span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r">grad_numerical <span class="o">&lt;-</span> numerical_gradient<span class="p">(</span>loss.test<span class="p">,</span>x_batch<span class="p">,</span> t_batch<span class="p">)</span>
-grad_backprop <span class="o">&lt;-</span> gradient<span class="p">(</span>x_batch<span class="p">,</span> t_batch<span class="p">)</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">grad_numerical &lt;- numerical_gradient(loss.test,x_batch, t_batch)
+grad_backprop &lt;- gradient(x_batch, t_batch)
 
-W1_diff <span class="o">&lt;-</span> <span class="kp">mean</span><span class="p">(</span><span class="kp">abs</span><span class="p">(</span>grad_backprop<span class="o">$</span>W1<span class="o">-</span>grad_numerical<span class="o">$</span>W1<span class="p">))</span>
-b1_diff <span class="o">&lt;-</span> <span class="kp">mean</span><span class="p">(</span><span class="kp">abs</span><span class="p">(</span>grad_backprop<span class="o">$</span>b1<span class="o">-</span>grad_numerical<span class="o">$</span>b1<span class="p">))</span>
-W2_diff <span class="o">&lt;-</span> <span class="kp">mean</span><span class="p">(</span><span class="kp">abs</span><span class="p">(</span>grad_backprop<span class="o">$</span>W2<span class="o">-</span>grad_numerical<span class="o">$</span>W2<span class="p">))</span>
-b2_diff <span class="o">&lt;-</span> <span class="kp">mean</span><span class="p">(</span><span class="kp">abs</span><span class="p">(</span>grad_backprop<span class="o">$</span>b2<span class="o">-</span>grad_numerical<span class="o">$</span>b2<span class="p">))</span>
+W1_diff &lt;- mean(abs(grad_backprop$W1-grad_numerical$W1))
+b1_diff &lt;- mean(abs(grad_backprop$b1-grad_numerical$b1))
+W2_diff &lt;- mean(abs(grad_backprop$W2-grad_numerical$W2))
+b2_diff &lt;- mean(abs(grad_backprop$b2-grad_numerical$b2))
 
-temp <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span>W1 <span class="o">=</span> W1_diff<span class="p">,</span> b1 <span class="o">=</span> b1_diff<span class="p">,</span> W2 <span class="o">=</span> W2_diff<span class="p">,</span> b2 <span class="o">=</span> b2_diff<span class="p">)</span>
-<span class="o">&gt;</span> temp
+temp &lt;- list(W1 = W1_diff, b1 = b1_diff, W2 = W2_diff, b2 = b2_diff)
+&gt; temp
 
-<span class="o">$</span>W1
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">4.020843e-10</span>
+$W1
+[1] 4.020843e-10
 
-<span class="o">$</span>b1
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">2.226819e-09</span>
+$b1
+[1] 2.226819e-09
 
-<span class="o">$</span>W2
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">5.757658e-09</span>
+$W2
+[1] 5.757658e-09
 
-<span class="o">$</span>b2
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">1.400857e-07</span></code></pre></td></tr></table>
+$b2
+[1] 1.400857e-07
+
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>먼저 수치미분 방식으로 기울기를 구해줍니다. 단 위에서 사용한 수치미분 방식에는 <code>sigmoid</code> 함수를 활성화 함수로 사용하지 않고 <code>Relu</code> 함수를 활성화 함수로 사용합니다. 또한, <code>softmax</code> 함수를 <code>cross_entropy_error</code> 함수와 함께 적용하는 순서의 차이 정도만 있습니다.</p>
-
+</div><p>먼저 수치미분 방식으로 기울기를 구해줍니다. 단 위에서 사용한 수치미분 방식에는 <code>sigmoid</code> 함수를 활성화 함수로 사용하지 않고 <code>Relu</code> 함수를 활성화 함수로 사용합니다. 또한, <code>softmax</code> 함수를 <code>cross_entropy_error</code> 함수와 함께 적용하는 순서의 차이 정도만 있습니다.</p>
 <p>위의 코드를 통해 구한 기울기를 비교하면 0에 가까운 값이 도출됩니다. 곧 아주 미미한 차이가 나타남을 확인할 수 있습니다. 만약 기존의 시그모이드 함수를 사용한 순전파 과정으로 기울기를 구한다면 이러한 미미한 차이가 아닌 상당한 차이를 확인할 수 있기 때문에 주의해야합니다. 또한, 이 차이는 가중치의 랜덤값에 영향을 받기 때문에 비교 수치가 약간의 차이가 있을 수 있습니다.</p>
-
 <p>수치 미분 방식과 오차역전파법을 통해 구한 기울기의 차이가 0이되는 일은 드물게 발생합니다. 왜냐하면 컴퓨터의 계산의 정밀도에 한계가 있기 때문입니다. 두 방식의 기울기의 차가 크면 오차역전파법을 잘못 구현했다고 볼 수 있습니다. 이제 오차역전파법과 수치미분 방식의 기울기가 서로 큰 차이가 없음을 확인했기 때문에 오차역전파법 기능 구현에 문제가 없음을 확인했다고 할 수 있습니다.</p>
-
 <h3 id="오차역전파법-사용한-학습-구현하기">오차역전파법 사용한 학습 구현하기</h3>
-
 <p>이제 오차역전파법을 통한 학습 과정을 알아보겠습니다. 학습과정은 순전파와 크게 다른 바가 없습니다. 차이점은 단지 역전파를 통해 기울기를 찾고 그 값으로 갱신한다는 점입니다. 먼저 필요한 객체들과, 훈련데이터 및 테스트셋을 준비합니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -485,41 +478,41 @@ temp <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(<
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#34;./utils.R&#34;</span><span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>dslabs<span class="p">)</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">source(&#34;./utils.R&#34;)
+library(dslabs)
 
-mnist_data <span class="o">&lt;-</span> get_data<span class="p">()</span>
+mnist_data &lt;- get_data()
 
-model.evaluate.backward <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">,</span><span class="kp">t</span><span class="p">){</span>
-    y <span class="o">&lt;-</span> <span class="kp">max.col</span><span class="p">(</span>model.backward<span class="p">(</span>x<span class="p">)</span><span class="o">$</span>x<span class="p">)</span>
-    t <span class="o">&lt;-</span> <span class="kp">max.col</span><span class="p">(</span><span class="kp">t</span><span class="p">)</span>
-    accuracy <span class="o">&lt;-</span> <span class="p">(</span><span class="kp">sum</span><span class="p">(</span><span class="kp">ifelse</span><span class="p">(</span>y <span class="o">==</span> <span class="kp">t</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">)))</span> <span class="o">/</span> <span class="kp">dim</span><span class="p">(</span>x<span class="p">)[</span><span class="m">1</span><span class="p">]</span>
-    <span class="kr">return</span><span class="p">(</span>accuracy<span class="p">)</span>
-<span class="p">}</span>
+model.evaluate.backward &lt;- function(x,t){
+    y &lt;- max.col(model.backward(x)$x)
+    t &lt;- max.col(t)
+    accuracy &lt;- (sum(ifelse(y == t,1,0))) / dim(x)[1]
+    return(accuracy)
+}
 
-x_train_normalize <span class="o">&lt;-</span> mnist_data<span class="o">$</span>x_train
-x_test_normalize <span class="o">&lt;-</span> mnist_data<span class="o">$</span>x_test
+x_train_normalize &lt;- mnist_data$x_train
+x_test_normalize &lt;- mnist_data$x_test
 
-t_train_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class="p">(</span>mnist_data<span class="o">$</span>t_train<span class="p">,</span><span class="m">60000</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
-t_test_onehotlabel <span class="o">&lt;-</span> making_one_hot_label<span class="p">(</span>mnist_data<span class="o">$</span>t_test<span class="p">,</span><span class="m">10000</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
+t_train_onehotlabel &lt;- making_one_hot_label(mnist_data$t_train,60000,10)
+t_test_onehotlabel &lt;- making_one_hot_label(mnist_data$t_test,10000,10)
 
 
-iters_num <span class="o">&lt;-</span> <span class="m">10000</span>
-train_size <span class="o">&lt;-</span> <span class="kp">dim</span><span class="p">(</span>x_train_normalize<span class="p">)[</span><span class="m">1</span><span class="p">]</span>
-batch_size <span class="o">&lt;-</span> <span class="m">100</span>
-learning_rate <span class="o">&lt;-</span> <span class="m">0.1</span>
+iters_num &lt;- 10000
+train_size &lt;- dim(x_train_normalize)[1]
+batch_size &lt;- 100
+learning_rate &lt;- 0.1
 
-train_loss_list <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>lossvalue  <span class="o">=</span>  <span class="kp">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span>iters_num<span class="p">))</span>
-train_acc_list <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>train_acc  <span class="o">=</span>  <span class="m">0</span><span class="p">)</span>
-test_acc_list <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>test_acc  <span class="o">=</span>  <span class="m">0</span><span class="p">)</span>
+train_loss_list &lt;- data.frame(lossvalue  =  rep(0,iters_num))
+train_acc_list &lt;- data.frame(train_acc  =  0)
+test_acc_list &lt;- data.frame(test_acc  =  0)
 
-iter_per_epoch <span class="o">&lt;-</span> <span class="kp">max</span><span class="p">(</span>train_size <span class="o">/</span> batch_size<span class="p">)</span></code></pre></td></tr></table>
+iter_per_epoch &lt;- max(train_size / batch_size)
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>필요한 데이터가 준비되면 이제 모델의 학습을 시작할 수 있습니다. 모델 학습은 순전파 때와 다르게 시간이 적게걸립니다.</p>
+</div><p>필요한 데이터가 준비되면 이제 모델의 학습을 시작할 수 있습니다. 모델 학습은 순전파 때와 다르게 시간이 적게걸립니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -561,54 +554,55 @@ iter_per_epoch <span class="o">&lt;-</span> <span class="kp">max</span><span cla
 </span><span class="lnt">40
 </span><span class="lnt">41
 </span><span class="lnt">42
+</span><span class="lnt">43
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="kr">for</span><span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span><span class="o">:</span>iters_num<span class="p">){</span>
-  batch_mask <span class="o">&lt;-</span> <span class="kp">sample</span><span class="p">(</span>train_size <span class="p">,</span>batch_size<span class="p">)</span>
-  x_batch <span class="o">&lt;-</span> x_train_normalize<span class="p">[</span>batch_mask<span class="p">,]</span>
-  t_batch <span class="o">&lt;-</span> t_train_onehotlabel<span class="p">[</span>batch_mask<span class="p">,]</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+for(i in 1:iters_num){
+  batch_mask &lt;- sample(train_size ,batch_size)
+  x_batch &lt;- x_train_normalize[batch_mask,]
+  t_batch &lt;- t_train_onehotlabel[batch_mask,]
 
-  grad <span class="o">&lt;-</span> gradient<span class="p">(</span>x_batch<span class="p">,</span> t_batch<span class="p">)</span>
+  grad &lt;- gradient(x_batch, t_batch)
 
-  params<span class="o">$</span>W1 <span class="o">&lt;-</span> params<span class="o">$</span>W1 <span class="o">-</span> <span class="p">(</span>grad<span class="o">$</span>W1 <span class="o">*</span> learning_rate<span class="p">)</span>
-  params<span class="o">$</span>W2 <span class="o">&lt;-</span> params<span class="o">$</span>W2 <span class="o">-</span> <span class="p">(</span>grad<span class="o">$</span>W2 <span class="o">*</span> learning_rate<span class="p">)</span>
-  params<span class="o">$</span>b1 <span class="o">&lt;-</span> params<span class="o">$</span>b1 <span class="o">-</span> <span class="p">(</span>grad<span class="o">$</span>b1 <span class="o">*</span> learning_rate<span class="p">)</span>
-  params<span class="o">$</span>b2 <span class="o">&lt;-</span> params<span class="o">$</span>b2 <span class="o">-</span> <span class="p">(</span>grad<span class="o">$</span>b2 <span class="o">*</span> learning_rate<span class="p">)</span>
+  params$W1 &lt;- params$W1 - (grad$W1 * learning_rate)
+  params$W2 &lt;- params$W2 - (grad$W2 * learning_rate)
+  params$b1 &lt;- params$b1 - (grad$b1 * learning_rate)
+  params$b2 &lt;- params$b2 - (grad$b2 * learning_rate)
 
-  loss_value <span class="o">&lt;-</span> backward_loss<span class="p">(</span>x_batch<span class="p">,</span> t_batch<span class="p">)</span><span class="o">$</span>loss
-  train_loss_list <span class="o">&lt;-</span> <span class="kp">rbind</span><span class="p">(</span>train_loss_list<span class="p">,</span>loss_value<span class="p">)</span>
+  loss_value &lt;- backward_loss(x_batch, t_batch)$loss
+  train_loss_list &lt;- rbind(train_loss_list,loss_value)
 
-  <span class="kr">if</span><span class="p">(</span>i <span class="o">%%</span> iter_per_epoch <span class="o">==</span> <span class="m">0</span><span class="p">){</span>
-    train_acc <span class="o">&lt;-</span> model.evaluate.backward<span class="p">(</span>x_train_normalize<span class="p">,</span> t_train_onehotlabel<span class="p">)</span>
-    test_acc <span class="o">&lt;-</span> model.evaluate.backward<span class="p">(</span>x_test_normalize<span class="p">,</span> t_test_onehotlabel<span class="p">)</span>
-    train_acc_list <span class="o">&lt;-</span> <span class="kp">rbind</span><span class="p">(</span>train_acc_list<span class="p">,</span>train_acc<span class="p">)</span>
-    test_acc_list <span class="o">&lt;-</span> <span class="kp">rbind</span><span class="p">(</span>test_acc_list<span class="p">,</span>test_acc<span class="p">)</span>
-    <span class="kp">print</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span>train_acc<span class="p">,</span> test_acc<span class="p">))</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.90545</span> <span class="m">0.91020</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9216667</span> <span class="m">0.9218000</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9349667</span> <span class="m">0.9357000</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9445167</span> <span class="m">0.9444000</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9505333</span> <span class="m">0.9468000</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9557333</span> <span class="m">0.9523000</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9605</span> <span class="m">0.9570</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9639167</span> <span class="m">0.9603000</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9664167</span> <span class="m">0.9630000</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9696667</span> <span class="m">0.9635000</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9710667</span> <span class="m">0.9655000</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9725667</span> <span class="m">0.9671000</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9736</span> <span class="m">0.9670</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9752</span> <span class="m">0.9689</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9767833</span> <span class="m">0.9689000</span>
-<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.97675</span> <span class="m">0.96910</span>
+  if(i %% iter_per_epoch == 0){
+    train_acc &lt;- model.evaluate.backward(x_train_normalize, t_train_onehotlabel)
+    test_acc &lt;- model.evaluate.backward(x_test_normalize, t_test_onehotlabel)
+    train_acc_list &lt;- rbind(train_acc_list,train_acc)
+    test_acc_list &lt;- rbind(test_acc_list,test_acc)
+    print(c(train_acc, test_acc))
+  }
+}
+[1] 0.90545 0.91020
+[1] 0.9216667 0.9218000
+[1] 0.9349667 0.9357000
+[1] 0.9445167 0.9444000
+[1] 0.9505333 0.9468000
+[1] 0.9557333 0.9523000
+[1] 0.9605 0.9570
+[1] 0.9639167 0.9603000
+[1] 0.9664167 0.9630000
+[1] 0.9696667 0.9635000
+[1] 0.9710667 0.9655000
+[1] 0.9725667 0.9671000
+[1] 0.9736 0.9670
+[1] 0.9752 0.9689
+[1] 0.9767833 0.9689000
+[1] 0.97675 0.96910
 
-plot<span class="p">(</span>x <span class="o">=</span> <span class="m">1</span><span class="o">:</span><span class="m">17</span><span class="p">,</span>y <span class="o">=</span> train_acc_list<span class="o">$</span>train_acc<span class="p">,</span><span class="s">&#34;l&#34;</span><span class="p">)</span>
-lines<span class="p">(</span>x <span class="o">=</span> <span class="m">1</span><span class="o">:</span><span class="m">17</span><span class="p">,</span>y <span class="o">=</span> test_acc_list<span class="o">$</span>test_acc<span class="p">,</span>col <span class="o">=</span> <span class="s">&#34;red&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+plot(x = 1:17,y = train_acc_list$train_acc,&#34;l&#34;)
+lines(x = 1:17,y = test_acc_list$test_acc,col = &#34;red&#34;)
+</code></pre></td></tr></table>
 </div>
-</div>
-<p><img src="https://user-images.githubusercontent.com/19144813/78006588-2b6c2980-7378-11ea-9496-e1dc7a1501c7.png" alt="정확도 곡선" /></p>
-
+</div><p><img src="https://user-images.githubusercontent.com/19144813/78006588-2b6c2980-7378-11ea-9496-e1dc7a1501c7.png" alt="정확도 곡선"></p>
 <p>이 값들은 가중치의 랜덤 값에 따라 달라지기에 실제로 실행시 약간의 차이가 있을 수 있습니다. 그러나. 퍼센트를 확인해보면 약 97%정도 정확도를 확인할 수 있습니다. 그래프를 통해서도 정확도가 0에서 97%까지 올라간 것을 확인할 수 있습니다. 이상으로 딥러닝 역전파 모델에 대한 구현을 마칩니다.</p>
 
     </div>

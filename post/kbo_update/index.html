@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.69.2 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://choosunsick.github.io/post/kbo_update/" />
@@ -41,21 +41,18 @@
 <meta property="og:title" content="KBO_update" />
 <meta property="og:description" content="KBO_data 안녕하세요. 외대 철학과 스터디 그룹 LOPES의 추선식 입니다. 데이터 분석을 공부하면서 느낀 점은 학습에 맞게 구성된 데이터가 적고 이런 형태의 자료를 현실적" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://choosunsick.github.io/post/kbo_update/" /><meta property="article:published_time" content="2018-07-04T18:05:38&#43;09:00"/>
-<meta property="article:modified_time" content="2018-07-04T18:05:38&#43;09:00"/>
-
+<meta property="og:url" content="https://choosunsick.github.io/post/kbo_update/" />
+<meta property="article:published_time" content="2018-07-04T18:05:38+09:00" />
+<meta property="article:modified_time" content="2018-07-04T18:05:38+09:00" />
 <meta itemprop="name" content="KBO_update">
 <meta itemprop="description" content="KBO_data 안녕하세요. 외대 철학과 스터디 그룹 LOPES의 추선식 입니다. 데이터 분석을 공부하면서 느낀 점은 학습에 맞게 구성된 데이터가 적고 이런 형태의 자료를 현실적">
-
-
 <meta itemprop="datePublished" content="2018-07-04T18:05:38&#43;09:00" />
 <meta itemprop="dateModified" content="2018-07-04T18:05:38&#43;09:00" />
-<meta itemprop="wordCount" content="1313">
+<meta itemprop="wordCount" content="1314">
 
 
 
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="KBO_update"/>
 <meta name="twitter:description" content="KBO_data 안녕하세요. 외대 철학과 스터디 그룹 LOPES의 추선식 입니다. 데이터 분석을 공부하면서 느낀 점은 학습에 맞게 구성된 데이터가 적고 이런 형태의 자료를 현실적"/>
 
@@ -136,81 +133,67 @@
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#kbo-data">KBO_data</a>
-<ul>
-<li><a href="#참고">참고</a></li>
-<li><a href="#변경사항">변경사항</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#참고">참고</a></li>
+    <li><a href="#변경사항">변경사항</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="kbo-data">KBO_data</h1>
-
+      <h1 id="kbo_data">KBO_data</h1>
 <p>안녕하세요. 외대 철학과 스터디 그룹 LOPES의 추선식 입니다.</p>
-
 <p>데이터 분석을 공부하면서 느낀 점은 학습에 맞게 구성된 데이터가 적고 이런 형태의 자료를 현실적으로 찾아보기 어렵다는 점입니다. 그래서 대중적으로도 인기가 있는 한국의 프로야구 자료로 데이터 분석을 공부해보기로 했습니다.</p>
-
 <p>자료를 모으기 위해 KBO 홈페이지<a href="http://www.koreabaseball.com">http://www.koreabaseball.com</a>에 등록된 야구 자료를 모으고 보기 좋게 정리하기 시작했습니다.
 저희가 수집하고 가공한 데이터는 점수와 홈 &amp; 원정팀, 시즌정보 등을 구분하여 경기정보를 쉽게 확인해 볼 수 있습니다. 또한, 다양한 기록들을 시각화해볼 수 있습니다.</p>
-
 <h2 id="참고">참고</h2>
-
 <p>혹시 자료를 공개하는데 문제가 있을 경우에는 연락을 주시면 즉시 삭제하도록 하겠습니다. 또한 자료에 틀린 곳이 있으면 issues로 올려주시면, 확인한 다음 고치도록 하겠습니다.</p>
-
 <h2 id="변경사항">변경사항</h2>
-
 <p>2017년도와 2018년 6월까지의 데이터를 새로 업데이트 했습니다. 예전의 R코드에 설명을 추가하였으며 코드를 좀 더 매끄럽게 수정하였습니다.</p>
-
 <p>##데이터 사용 예시</p>
-
 <p>원하는 팀의 상대전적을 확인하거나 시즌 별 경기기록 등을 확인해 볼 수 있습니다.
 밑의 코드는 상대전적을 확인하는 R코드입니다.</p>
-
 <p>##예시코드</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">#파일을 읽어옵니다.
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">#파일을 읽어옵니다.
 kbo_total&lt;-read.csv(&#34;KBO_light.csv&#34;,header = TRUE,stringsAsFactors = FALSE)
 
 #읽어온 파일을 확인합니다.
-head(kbo_total)</pre></td></tr></table>
+head(kbo_total)
+</code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
 </span><span class="lnt">7
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">Date               구장   원정팀   원정팀점수   홈팀점수  홈팀  비고
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Date               구장   원정팀   원정팀점수   홈팀점수  홈팀  비고
 1 2010-03-06 13:00 목동     LG          3        2 넥센 시범경기
 2 2010-03-06 13:00 문학   두산          5        0   SK 시범경기
 3 2010-03-06 13:00 대전   롯데         12        1 한화 시범경기
 4 2010-03-06 13:00 무등   삼성          4        1 기아 시범경기
 5 2010-03-07 13:00 목동     LG          1        2 넥센 시범경기
-6 2010-03-07 13:00 문학   두산          3        4   SK 시범경기</pre></td></tr></table>
+6 2010-03-07 13:00 문학   두산          3        4   SK 시범경기
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>##정규시즌만 뽑아 경기 결과열(col) 생성하기</p>
+</div><p>##정규시즌만 뽑아 경기 결과열(col) 생성하기</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -222,9 +205,9 @@ head(kbo_total)</pre></td></tr></table>
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">#데이터 내 시범경기와 포스트 시즌 경기 등이 있기에 그것을 제외한 정규시즌 경기만 추출합니다.
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">#데이터 내 시범경기와 포스트 시즌 경기 등이 있기에 그것을 제외한 정규시즌 경기만 추출합니다.
 normal_season_data&lt;- kbo_total[kbo_total$비고==&#34;정규시즌&#34;,]
 
 #정규시즌 밖에 없는 것을 확인 가능합니다.
@@ -235,11 +218,12 @@ head(normal_season_data)
 normal_season_data$경기결과  &lt;- ifelse(normal_season_data$홈팀점수&gt;normal_season_data$원정팀점수,&#34;홈승&#34;,ifelse(normal_season_data$홈팀점수&lt;normal_season_data$원정팀점수,&#34;원정승&#34;,&#34;무&#34;))
 
 #만들어진 결과를 확인합니다.
-head(normal_season_data)</pre></td></tr></table>
+head(normal_season_data)
+</code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -257,9 +241,10 @@ head(normal_season_data)</pre></td></tr></table>
 </span><span class="lnt">16
 </span><span class="lnt">17
 </span><span class="lnt">18
-</span></pre></td>
+</span><span class="lnt">19
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">[1] &#34;정규시즌&#34;
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[1] &#34;정규시즌&#34;
 
                 Date 구장 원정팀 원정팀점수 홈팀점수 홈팀     비고
 48 2010-03-27 14:00 잠실   기아          3        8 두산 정규시즌
@@ -276,10 +261,11 @@ head(normal_season_data)</pre></td></tr></table>
 50 2010-03-27 14:00 대구     LG          7        5 삼성 정규시즌   원정승
 51 2010-03-27 14:00 사직   넥센          3        2 롯데 정규시즌   원정승
 52 2010-03-28 14:00 문학   한화          3        6   SK 정규시즌     홈승
-53 2010-03-28 14:00 대구     LG          4        9 삼성 정규시즌     홈승</pre></td></tr></table>
+53 2010-03-28 14:00 대구     LG          4        9 삼성 정규시즌     홈승
+
+</code></pre></td></tr></table>
 </div>
-</div>
-<p><img src="/images/doosangraph.png" alt="시각화 결과" /></p>
+</div><p><img src="/images/doosangraph.png" alt="시각화 결과"></p>
 
     </div>
 

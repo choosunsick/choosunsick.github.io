@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.69.2 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://choosunsick.github.io/post/r_structure/" />
@@ -41,21 +41,18 @@
 <meta property="og:title" content="R 자료형 살펴보기" />
 <meta property="og:description" content="소개 이 글은 딥러닝 패키지 라이브러리를 사용하지 않고 R로 딥러닝의 원리를 파악하고 구현해나가는 과정을 소개할 것 입니다. 이 글은 기본적인 수학적 지식을 가지고 있" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://choosunsick.github.io/post/r_structure/" /><meta property="article:published_time" content="2020-01-17T17:42:53&#43;09:00"/>
-<meta property="article:modified_time" content="2020-01-17T17:42:53&#43;09:00"/>
-
+<meta property="og:url" content="https://choosunsick.github.io/post/r_structure/" />
+<meta property="article:published_time" content="2020-01-17T17:42:53+09:00" />
+<meta property="article:modified_time" content="2020-01-17T17:42:53+09:00" />
 <meta itemprop="name" content="R 자료형 살펴보기">
 <meta itemprop="description" content="소개 이 글은 딥러닝 패키지 라이브러리를 사용하지 않고 R로 딥러닝의 원리를 파악하고 구현해나가는 과정을 소개할 것 입니다. 이 글은 기본적인 수학적 지식을 가지고 있">
-
-
 <meta itemprop="datePublished" content="2020-01-17T17:42:53&#43;09:00" />
 <meta itemprop="dateModified" content="2020-01-17T17:42:53&#43;09:00" />
-<meta itemprop="wordCount" content="2181">
+<meta itemprop="wordCount" content="2182">
 
 
 
-<meta itemprop="keywords" content="R로 딥러닝하기,기초,R 자료형," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="R로 딥러닝하기,기초,R 자료형," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="R 자료형 살펴보기"/>
 <meta name="twitter:description" content="소개 이 글은 딥러닝 패키지 라이브러리를 사용하지 않고 R로 딥러닝의 원리를 파악하고 구현해나가는 과정을 소개할 것 입니다. 이 글은 기본적인 수학적 지식을 가지고 있"/>
 
@@ -136,37 +133,28 @@
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#소개">소개</a>
-<ul>
-<li><a href="#1-1-r의-자료형에-대해서-알아보자">1.1 R의 자료형에 대해서 알아보자 !</a>
-<ul>
-<li><a href="#1-1-1-벡터">1.1.1 벡터</a></li>
-<li><a href="#1-2-2-행렬">1.2.2 행렬</a></li>
-<li><a href="#1-2-3-그외-기타-자료형">1.2.3 그외 기타 자료형</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#11-r의-자료형에-대해서-알아보자-">1.1 R의 자료형에 대해서 알아보자 !</a>
+      <ul>
+        <li><a href="#111-벡터">1.1.1 벡터</a></li>
+        <li><a href="#122-행렬">1.2.2 행렬</a></li>
+        <li><a href="#123-그외-기타-자료형">1.2.3 그외 기타 자료형</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="소개">소개</h1>
-
+      <h1 id="소개">소개</h1>
 <p>이 글은 딥러닝 패키지 라이브러리를 사용하지 않고 R로 딥러닝의 원리를 파악하고 구현해나가는 과정을 소개할 것 입니다. 이 글은 기본적인 수학적 지식을 가지고 있고, R 사용법을 어느정도 익힌 사람들을 대상으로 합니다. 그러나 첫 번째 글에서는 R 사용에 익숙하지 않은 분들을 위하여 자료형과 함수, 반복문, 조건문 등의 기본적인 배경지식을 간략하게 소개하고 넘어갈 예정입니다. R을 처음 접하시는 분들은 <a href="https://choosunsick.github.io/post/r_install/">이전 글</a>의 R설치와 기초 사용법을 참조해주시기 바랍니다. R 사용에 익숙하신 분들은 1번 태그의 글들을 넘어가셔도 좋습니다.</p>
-
-<h2 id="1-1-r의-자료형에-대해서-알아보자">1.1 R의 자료형에 대해서 알아보자 !</h2>
-
-<h3 id="1-1-1-벡터">1.1.1 벡터</h3>
-
+<h2 id="11-r의-자료형에-대해서-알아보자-">1.1 R의 자료형에 대해서 알아보자 !</h2>
+<h3 id="111-벡터">1.1.1 벡터</h3>
 <p>R의 자료형의 가장 기본은 앞서 설명한 객체(objects)이며 모든 자료형은 객체로 만들어 질 수 있습니다. 그 다음 자료형은 벡터(vector)입니다. R에서 벡터는 <code>c()</code>를 통해 만듭니다. 벡터의 가장 큰 특징은 입력되는 데이터 타입이 모두 같다는 것입니다. 예를 들면 아래의 a는 숫자형 벡터이고, b는 문자형 벡터입니다. c는 문자형과 숫자형 데이터가 같이 있지만, 벡터의 특징상 자동으로 문자형 타입 하나로 맞춰집니다.</p>
-
 <p>벡터에는 데이터가 가로로 나열되는 경우를 행 벡터라 부르고, 데이터가 세로로 나열되는 경우를 열 벡터라 부릅니다. 그러나, R에서는 행 벡터로만 표기되며 열 벡터의 경우 행렬로 나타낼 수 있습니다. 따라서 구분을 위해 앞으로 벡터는 행 벡터를 의미한다고 보시면 됩니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -175,9 +163,9 @@
 </span><span class="lnt">7
 </span><span class="lnt">8
 </span><span class="lnt">9
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">a &lt;- c(1,2,3)
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">a &lt;- c(1,2,3)
 b &lt;- c(&#34;4&#34;,&#34;5&#34;,&#34;6&#34;)
 c &lt;- c(&#34;1&#34;,2,3)
 &gt; a
@@ -185,15 +173,14 @@ c &lt;- c(&#34;1&#34;,2,3)
 &gt; b
 [1] &#34;4&#34; &#34;5&#34; &#34;6&#34;
 &gt; c
-[1] &#34;1&#34; &#34;2&#34; &#34;3&#34;</pre></td></tr></table>
+[1] &#34;1&#34; &#34;2&#34; &#34;3&#34;
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="1-2-2-행렬">1.2.2 행렬</h3>
-
+</div><h3 id="122-행렬">1.2.2 행렬</h3>
 <p>행렬은 2개 이상의 벡터가 모인 자료형입니다. 벡터가 두 개 이상이 결합되면서 벡터에 열이라는 차원이 생기게 됩니다. (열 벡터가 2개 이상이 결합하는 반대 경우도 마찬가지입니다.) 이렇게 만들어진 자료형을 행렬이라 부르고, 행과 열의 개수를 통해 자료형의 전체 크기가 정해지게 됩니다. 행렬은 벡터가 2개 이상이 결합된 형태이기 때문에 벡터의 특징 또한 공유합니다. 예를 들면 두 벡터가 숫자형이면 모두 숫자형으로 저장된 행렬이 만들어지고, 문자형이면 문자형으로 저장된 행렬이 만들어집니다. 행렬을 만드는 R코드는 아래와 같습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -211,9 +198,9 @@ c &lt;- c(&#34;1&#34;,2,3)
 </span><span class="lnt">16
 </span><span class="lnt">17
 </span><span class="lnt">18
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">m1 &lt;- matrix(data = 1:6, nrow = 2, ncol = 3)
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">m1 &lt;- matrix(data = 1:6, nrow = 2, ncol = 3)
 m2 &lt;- matrix(data = 1:6, nrow = 2, ncol = 3, byrow = TRUE)
 
 &gt; m1
@@ -230,17 +217,15 @@ m2 &lt;- matrix(data = 1:6, nrow = 2, ncol = 3, byrow = TRUE)
 [1] 2 3
 
 &gt; str(m2)
- int [1:2, 1:3] 1 4 2 5 3 6</pre></td></tr></table>
+ int [1:2, 1:3] 1 4 2 5 3 6
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>R에서는 두 벡터의 결합으로도 행렬을 만들 수 있지만, <code>matrix()</code>라는 기본 함수를 통해서 만들 수도 있습니다. <code>matrix()</code> 함수에서 data, nrow, ncol, byrow 4가지 인자가 있습니다. 이 4가지 중 행렬의 원소를 구성하는 data 인자는 필수로 행렬의 원소가 됩니다. nrow와 ncol 인자는 만들어질 행렬의 크기를 정할 수 있습니다.</p>
-
+</div><p>R에서는 두 벡터의 결합으로도 행렬을 만들 수 있지만, <code>matrix()</code>라는 기본 함수를 통해서 만들 수도 있습니다. <code>matrix()</code> 함수에서 data, nrow, ncol, byrow 4가지 인자가 있습니다. 이 4가지 중 행렬의 원소를 구성하는 data 인자는 필수로 행렬의 원소가 됩니다. nrow와 ncol 인자는 만들어질 행렬의 크기를 정할 수 있습니다.</p>
 <p>행렬의 크기는 그 연산과 직결되기 때문에 그 설정은 중요합니다. byrow 인자는 행렬을 만들 때 원소를 채워넣는 방식을 말합니다. 행렬은 보통 열부터 원소를 채워나가는데 byrow 인자의 값을 TRUE로 조정하면, 행부터 채워나가게 만들 수 있습니다. 코드 결과를 비교해보면 서로 데이터 나열 방식이 명확하게 다른 것을 확인할 수 있습니다.</p>
-
 <p>R에서 행렬의 크기는 <code>dim()</code> 함수를 통해 확인할 수 있습니다. 이 함수에 행렬 데이터를 넣으면 행렬의 크기를 행,열 순서로 반환해 줍니다. 행렬의 행과 열의 크기를 각각 확인하는 방법도 있습니다. <code>NROW()</code>, <code>NCOL()</code> 함수를 사용하면 각각 행의 크기와 열의 크기를 알려줍니다. 이외에도 데이터 내역을 알려주는 <code>str()</code> 함수도 행렬의 행과 열의 크기를 아는 데 사용할 수 있습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -253,9 +238,10 @@ m2 &lt;- matrix(data = 1:6, nrow = 2, ncol = 3, byrow = TRUE)
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
-</span></pre></td>
+</span><span class="lnt">14
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">temp_array &lt;- array(c(m1,m2),dim = c(2,3,2))
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">temp_array &lt;- array(c(m1,m2),dim = c(2,3,2))
 &gt; temp_array
 , , 1
 
@@ -267,17 +253,16 @@ m2 &lt;- matrix(data = 1:6, nrow = 2, ncol = 3, byrow = TRUE)
 
      [,1] [,2] [,3]
 [1,]    1    2    3
-[2,]    4    5    6</pre></td></tr></table>
-</div>
-</div>
-<p>그렇다면 행렬이 여러 개 있는 자료형은 무엇일까요? 여러 개의 행렬을 하나로 저장한 자료형은 Array(배열)라 부르고 흔히 3차원 이상의 자료형입니다. Array(배열) 역시 행렬이 벡터의 특징을 그대로 물려 받은 것처럼 같은 특징을 지닙니다. 즉 Array(배열)를 구성하는 행렬들의 원소들은 모두 같은 데이터 타입을 지닙니다.</p>
+[2,]    4    5    6
 
-<h3 id="1-2-3-그외-기타-자료형">1.2.3 그외 기타 자료형</h3>
-
+</code></pre></td></tr></table>
+</div>
+</div><p>그렇다면 행렬이 여러 개 있는 자료형은 무엇일까요? 여러 개의 행렬을 하나로 저장한 자료형은 Array(배열)라 부르고 흔히 3차원 이상의 자료형입니다. Array(배열) 역시 행렬이 벡터의 특징을 그대로 물려 받은 것처럼 같은 특징을 지닙니다. 즉 Array(배열)를 구성하는 행렬들의 원소들은 모두 같은 데이터 타입을 지닙니다.</p>
+<h3 id="123-그외-기타-자료형">1.2.3 그외 기타 자료형</h3>
 <p>그외에 자료형으로는 데이터프레임, 리스트가 있습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -314,9 +299,9 @@ m2 &lt;- matrix(data = 1:6, nrow = 2, ncol = 3, byrow = TRUE)
 </span><span class="lnt">35
 </span><span class="lnt">36
 </span><span class="lnt">37
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">a &lt;- c(1, 2, 3)
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">a &lt;- c(1, 2, 3)
 &gt; a
 [1] 1 2 3
 b &lt;- c(&#34;7&#34;, &#34;8&#34;, &#34;9&#34;)
@@ -352,15 +337,12 @@ $num1
 [1] 1 2 3
 
 &gt; temp_list[[1]]
-[1] 1 2 3</pre></td></tr></table>
+[1] 1 2 3
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>데이터프레임과 리스트 형식은 R에서 데이터의 형태에 구애 받지 않고 저장할 수 있는 형식입니다. 데이터프레임은 행렬과 같이 행과 열을 가진 자료형으로 행렬과 달리 데이터 타입에 구애 받지 않은 자료형입니다. 데이터프레임을 만드는 방법은 <code>dataframe()</code> 함수를 사용하는 것입니다.</p>
-
+</div><p>데이터프레임과 리스트 형식은 R에서 데이터의 형태에 구애 받지 않고 저장할 수 있는 형식입니다. 데이터프레임은 행렬과 같이 행과 열을 가진 자료형으로 행렬과 달리 데이터 타입에 구애 받지 않은 자료형입니다. 데이터프레임을 만드는 방법은 <code>dataframe()</code> 함수를 사용하는 것입니다.</p>
 <p>데이터프레임에서 데이터를 확인하는 방법에는 숫자를 이용한 방법과 이름을 이용한 방법 두 가지가 있습니다. 숫자를 이용한 방법은 데이터프레임을 저장한 변수에 []를 사용하여 원하는 열이나 행 혹은 행,열의 숫자를 넣어 확인하는 것입니다. 이름을 이용한 방법 역시 [] 안에 열이름 이나 행이름을 넣어 데이터를 확인할 수 있습니다.</p>
-
 <p>데이터프레임에 저장할 때 주의할 점은 여러 개의 열을 가진 데이터프레임을 만들 때 각 벡터의 데이터 개수가 같아야 한다는 점입니다. 만약 개수가 서로 다른 벡터들을 하나의 데이터프레임으로 만들려고 하면 행의 개수가 다르다는 에러 메세지를 받게 되고 데이터프레임 생성에 실패하게 됩니다.</p>
-
 <p>데이터의 개수가 서로 다른 벡터들을 하나의 자료형으로 저장하는 방법은 리스트 자료형을 사용하는 것입니다. 리스트 형식은 데이터 형태에 구애 받지 않고 데이터를 저장할 수 있는 방식입니다. 리스트에서도 데이터프레임과 마찬가지로 []와 행과 열의 숫자, 이름을 이용해 데이터를 확인할 수 있습니다.</p>
 
     </div>

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Optimizer_compare - Sunsick&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Sunsick" /><meta name="description" content="옵티마이저(optimizer)란 ? 이번 글에서는 가중치와 편향을 갱신하는 방법을 소개합니다. 기존의 방식과 다른 방식으로 가중치와 편향을 갱신할 수 있으며" /><meta name="keywords" content="blog, R, Data Analysis" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.69.2 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://choosunsick.github.io/post/optimizer_compare/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Optimizer_compare" />
+<meta property="og:description" content="옵티마이저(optimizer)란 ? 이번 글에서는 가중치와 편향을 갱신하는 방법을 소개합니다. 기존의 방식과 다른 방식으로 가중치와 편향을 갱신할 수 있으며" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://choosunsick.github.io/post/optimizer_compare/" />
+<meta property="article:published_time" content="2020-08-12T18:26:14+09:00" />
+<meta property="article:modified_time" content="2020-08-12T18:26:14+09:00" />
+<meta itemprop="name" content="Optimizer_compare">
+<meta itemprop="description" content="옵티마이저(optimizer)란 ? 이번 글에서는 가중치와 편향을 갱신하는 방법을 소개합니다. 기존의 방식과 다른 방식으로 가중치와 편향을 갱신할 수 있으며">
+<meta itemprop="datePublished" content="2020-08-12T18:26:14&#43;09:00" />
+<meta itemprop="dateModified" content="2020-08-12T18:26:14&#43;09:00" />
+<meta itemprop="wordCount" content="4271">
+
+
+
+<meta itemprop="keywords" content="R로 딥러닝하기,신경망,옵티마이저," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Optimizer_compare"/>
+<meta name="twitter:description" content="옵티마이저(optimizer)란 ? 이번 글에서는 가중치와 편향을 갱신하는 방법을 소개합니다. 기존의 방식과 다른 방식으로 가중치와 편향을 갱신할 수 있으며"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Choo&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Choo&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Optimizer_compare</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-08-12 </span>
+        <div class="post-category">
+            <a href="/categories/r/"> R </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#옵티마이저optimizer란-">옵티마이저(optimizer)란 ?</a>
+      <ul>
+        <li><a href="#momentum-방식-소개">momentum 방식 소개</a></li>
+        <li><a href="#adagrad-방식">Adagrad 방식</a></li>
+        <li><a href="#adam">Adam</a></li>
+      </ul>
+    </li>
+    <li><a href="#옵티마이저optimizer-비교">옵티마이저(optimizer) 비교</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="옵티마이저optimizer란-">옵티마이저(optimizer)란 ?</h2>
+<p>이번 글에서는 가중치와 편향을 갱신하는 방법을 소개합니다. 기존의 방식과 다른 방식으로 가중치와 편향을 갱신할 수 있으며 이 방법들은 더 나은 성능의 신경망 모델을 만드는데 도움이 됩니다. 이에 따라 momentum, adagrad, Rmsprop, Adam 이라는 4가지의 새로운 방식의 가중치와 편향의 갱신 방법을 소개합니다.</p>
+<p>옵티마이저란 가중치와 편향을 갱신하는 방법을 말합니다. 신경망 모델의 목표는 손실 함수의 최소화 입니다. 손실함수를 최소화시키는 방향으로 가중치와 편향을 갱신해 나가는 것이 신경망 모델이 학습하는 과정에서 발생됩니다. 다시 말해 옵티마이저는 신경망 모델에서 가중치와 편향 변수를 최적화 시키는 과정이라 생각할 수 있습니다.</p>
+<p>이 글에서 소개할 옵티마이저의 종류는 5개로 SGD, Momentum, Adagrad, Rmsprop, Adam 입니다.</p>
+<p>앞서 가중치와 편향을 갱신할 때 기존에는 단순한 확률적 경사하강법(SGD)을 이용했습니다. 확률적 경사하강법은 앞서 순전파의 작동에서 설명한 적이 있습니다. 그에 대한 설명은 <a href="https://choosunsick.github.io/post/neural_network_4/">다음 링크</a>에서 찾아 보실 수 있습니다. 기존의 갱신 과정을 함수화하면 다음과 같습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-R" data-lang="R"><span class="n">sgd.update</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">grads</span><span class="p">,</span> <span class="n">lr</span> <span class="o">=</span> <span class="m">0.01</span><span class="p">){</span>
+  <span class="nf">for</span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="nf">names</span><span class="p">(</span><span class="n">network</span><span class="p">)){</span><span class="n">network[[i]]</span> <span class="o">&lt;-</span> <span class="n">network[[i]]</span> <span class="o">-</span> <span class="p">(</span><span class="n">grads[[i]]</span><span class="o">*</span><span class="n">lr</span><span class="p">)}</span>
+  <span class="nf">return</span><span class="p">(</span><span class="n">network</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>SGD를 사용했을 때 단점은 무엇일까요? SGD는 손실함수의 기울기가 무작정 낮아지는 방향으로 진행되기 때문에 손실함수의 기울기가 최저값이 되는 값을 찾는데 비효율적인 탐색경로를 지니게 됩니다. 즉 손실함수의 기울기 값을 찾아가는 과정에서 손실함수의 값이 커졋다 작아졌다를 반복하는 지그재그 모양의 탐색경로를 지니게 됩니다. 이에 따라 탐색 경로가 비효율적이라는 것입니다.</p>
+<p><img src="https://user-images.githubusercontent.com/19144813/81788907-3355e680-953e-11ea-8f06-365f4e9e7785.png" alt="SGD 탐색 경로"></p>
+<h3 id="momentum-방식-소개">momentum 방식 소개</h3>
+<p>이제 SGD 보다 효율적인 갱신 방식들을 소개합니다. 먼저 momentum입니다. 모멘텀은 운동량을 뜻하는 단어로 물리와 관련됩니다. 식으로 보면 $$v = av - 학습률*손실함수의 기울기  $$ 와 $$W = W+v $$입니다. 단순히 말하면 속도라는 변수를 추가해 가중치와 편향에 더해 주는 것입니다. 위의 식은 기울기 방향으로 물체가 가속한다는 의미를 지닙니다. 위 식에서 W는 가중치와 편향 변수를 지칭하며, a의 값은 0.9 정도로 설정되며, av는 가속도에 대한 저항으로 생각할 수 있습니다. 기울기 방향으로 가속하기에 기존의 SGD보다 효율적인 탐색경로를 보이게 됩니다. 즉 탐색경로가 SGD보다 덜 지그재그모양으로 나타나게 됩니다.</p>
+<p>momentum의 R 구현은 다음과 같습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">optimizer &lt;- list(Momentum=NULL, AdaGrad=NULL, Rmsprop=NULL, Adam=list(&#34;iter&#34;=0,&#34;m&#34;=NULL,&#34;v&#34;=NULL))
+
+momentum.update &lt;- function(network, grad,v, lr = 0.01, momentum=0.9){
+  if (is.null(v) == TRUE) {
+    v &lt;- rep(list(NA),NROW(network))
+    names(v) &lt;- names(network)
+    for(i in 1:NROW(network)){
+      v[[i]] &lt;- matrix(0,dim(network[[i]])[1],dim(network[[i]])[2])
+    }
+  }
+  for(i in 1:NROW(network)){
+    optimizer$Momentum[[i]] &lt;&lt;- v[[i]]*momentum - (lr*grad[[i]])
+
+    network[[i]] &lt;- network[[i]]+optimizer$Momentum[[i]]}
+  names(optimizer$Momentum) &lt;- names(network)
+  return(network)
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>먼저 v 값을 계속 갱신해야하기에 저장할 저장소 역할의 리스트를 만들어 줍니다. 이 리스트는 차후 다른 갱신 방법들에서도 사용됩니다. 여기서 조심해야할 점은 v는 값이 아니라는 점입니다. v는 리스트로 가중치와 편향의 변수의 수 만큼 만들어 집니다. 예를 들면 2층 신경망일 경우 2개의 가중치와 2개의 편향이 있으므로 v는 총 4개의 행렬로 이루어진 리스트가 됩니다. v는 가중치와 편향의 개수가 더 많은 심층 신경망의 경우 가중치와 편향의 개수와 같은 개수를 지닌 리스트가 됩니다. v의 초기값은 0으로 이루어진 행렬 주어집니다. 물론 그 행렬의 크기는 가중치나 편향 행렬의 크기와 같은 행렬이 됩니다. 이후 v값을 순서대로 갱신하고 나면 가중치와 편향 값의 갱신이 공식에서와 같이 이루어집니다.</p>
+<h3 id="adagrad-방식">Adagrad 방식</h3>
+<p>신경망 학습에서 학습률은 중요합니다. 학습률이 너무 높거나 너무 낮으면 학습이 원활하게 진행되지 않는데 이를 앞서 확인할 수 있었습니다. 학습률과 관련된 내용은 <a href="https://choosunsick.github.io/post/neural_network_4/">다음 링크</a> 에서 다시 확인하실 수 있습니다.
+Adagrad 방식은 학습률 감소 기법과 관련됩니다. 학습률 감소란 학습을 진행하면서 학습률을 점차 줄여나가는 기법입니다. 학습 처음에는 크게 학습하다가 나중에는 적게 학습한다는 것으로 이 기법은 신경망 학습에 자주 사용되는 기법입니다.</p>
+<p>학습률을 서서히 낮추는 방법 중 가장 간단한 방법은 가중치와 편향 변수 전체의 학습률 값을 일괄적으로 낮추는 것입니다. adagrad는 일괄적으로 낮추는 대신 좀 더 발전시켜서 각각의 가중치와 편향 변수에 맞추어 학습률 값을 만들어줍니다. adagrad의 갱신 방법을 수식으로 살펴보면 다음과 같습니다.</p>
+<p>$$h = h + 손실함수의 기울기^2 $$ 와 $$ W = W - (학습률*손실함수의 기울기 / √h+1e-7$$ 입니다. 여기서 분모에 1e-7을 더하는 이유는 0으로 나누는 사태를 방지하기 위해서 입니다. 위 식에서 √h로 나누는 것은 가중치와 편향 변수의 원소 중에 값이 크게 갱신된 경우 학습률이 낮아지게 만들기 위해서입니다. 즉 가중치와 편향의 원소 별로 학습률 감소의 원리가 적용된다는 것입니다. adagrad의 R 구현은 다음과 같습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">AdaGrad.update &lt;- function(network,grad,h,lr=0.01){
+  if (is.null(h) == TRUE) {
+    h &lt;- rep(list(NA),NROW(network))
+    names(h) &lt;- names(network)
+    for(i in 1:NROW(network)){
+      h[[i]] &lt;- matrix(0,dim(network[[i]])[1],dim(network[[i]])[2])
+    }
+  }
+
+  for(i in 1:NROW(network)){
+    optimizer$AdaGrad[[i]]  &lt;&lt;- h[[i]] + grad[[i]]^2
+    network[[i]] &lt;- network[[i]] - (lr*grad[[i]] / (sqrt(optimizer$AdaGrad[[i]])+1e-7))
+  }
+  names(optimizer$AdaGrad) &lt;- names(network)
+  return(network)
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>위 코드를 보면 <code>momentum.update()</code>의 v의 초기값을 만드는 과정이 h 초기값을 만드는 과정이 똑같다는 것을 알 수 있습니다. 같은 방식으로 h 값을 설정해주고 나면 이제 위 식을 코드로 구현한 과정이 있습니다. 단 Adagrad의 경우 주의해야할 점이 있는데 손실함수의 기울기 값을 계속 제곱하기에 무한히 계속 학습을 반복할 경우 갱신강도가 약해져 갱신량이 0에 수렴하게 됩니다. 이런 문제점을 해결한 것이 Rmsprop 방식입니다.</p>
+<p>Rmsprop은 기존의 adagrad 공식에서 베타란 값을 추가하고 지수이동평균 방법을 사용하여 adagrad 방식의 한계점을 극복합니다. 참고로 Rmsprop 방식의 R 코드 구현은 다음과 같습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Rmsprop.update &lt;- function(network, grad, h, lr=0.01, beta=0.9){
+  if (is.null(h) == TRUE) {
+    h &lt;- rep(list(NA),NROW(network))
+    names(h) &lt;- names(network)
+    for(i in 1:NROW(network)){
+      h[[i]] &lt;- matrix(0,dim(network[[i]])[1],dim(network[[i]])[2])
+    }
+  }
+  for(i in 1:NROW(network)){
+    optimizer$Rmsprop[[i]]  &lt;&lt;- (beta * h[[i]]) + (1.0 - beta)*(grads[[i]] * grads[[i]])
+    network[[i]] &lt;- network[[i]] - (lr * grads[[i]]) / (sqrt(optimizer$Rmsprop[[i]])+ 1e-7)
+  }
+  names(optimizer$Rmsprop) &lt;- names(network)
+  return(network)
+}
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="adam">Adam</h3>
+<p>Adam 기법은 momentum 기법과 Rmsprop 기법을 혼합한 기법입니다. 이에 따라 Adam에서는 속도 파라미터 m (momentum에서는 v로 표시한 것)과 속도 감소 파라미터 v(adagrad에서는 h로 표시)를 필요로 합니다. 다른 기법들과 다르게 두 가지의 인자가 필요해서 코드와 수식이 조금 더 복잡해집니다. Adam과 관련된 내용은 관련된 원논문을 <a href="https://arxiv.org/pdf/1412.6980.pdf">다음 링크</a>에서 확인하실 수 있습니다. Adam을 R로 구현하면 다음과 같습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Adam.update &lt;- function(network,grads,iter,m,v,lr=0.001,beta1=0.9,beta2=0.999){
+  if(is.null(m) == TRUE){
+    m &lt;- rep(list(NA),NROW(network))
+    v &lt;- rep(list(NA),NROW(network))
+    names(m) &lt;- names(network)
+    names(v) &lt;- names(network)
+    for(i in 1:NROW(network)){
+      m[[i]] &lt;- matrix(0,dim(network[[i]])[1],dim(network[[i]])[2])
+      v[[i]] &lt;- matrix(0,dim(network[[i]])[1],dim(network[[i]])[2])
+    }
+  }
+  optimizer$Adam$iter &lt;&lt;- iter+1
+  lr_t &lt;- (lr*sqrt(1.0 - beta2^optimizer$Adam$iter))/ (1.0 - beta1^optimizer$Adam$iter)
+  temp_m_list &lt;- rep(list(NA),NROW(network))
+  temp_v_list &lt;- rep(list(NA),NROW(network))
+  for(i in 1:NROW(network)){
+    temp_m_list[[i]] &lt;- m[[i]] + (1 - beta1) * (grads[[i]] - m[[i]])
+    temp_v_list[[i]] &lt;- v[[i]] + (1 - beta2) * (grads[[i]]^2 - v[[i]])
+    network[[i]] &lt;- network[[i]] - (lr_t * temp_m_list[[i]]/ (sqrt(temp_v_list[[i]]) + 1e-7))
+  }
+  optimizer$Adam$m &lt;&lt;- temp_m_list
+  optimizer$Adam$v &lt;&lt;- temp_v_list
+  return(network)
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="옵티마이저optimizer-비교">옵티마이저(optimizer) 비교</h2>
+<p>이제 각 옵티마이저 간 학습을 통해 성능을 비교해봅시다.</p>
+<p>먼저 역전파를 작동시키는 데 필요한 함수를 불러옵니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># install.packages(&#34;dslabs&#34;) 이미 설치한 적이 있으면 생략합니다.
+library(dslabs)
+source(&#34;./layers.R&#34;)
+source(&#34;./utils.R&#34;)
+source(&#34;./optimizer.R&#34;)
+</code></pre></td></tr></table>
+</div>
+</div><p>MNIST 자료를 가져오는 방법에 대한 내용은 <a href="https://choosunsick.github.io/post/mnist/">Mnist 손글씨 데이터 읽어오는 패키지 소개</a>을 참고한다. 자료를 가져오는 코드는 아래와 같다. 아래 코드에 대한 소개는 다음을 참고한다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+mnist_data &lt;- get_data()
+
+x_train_normalize &lt;- mnist_data$x_train
+x_test_normalize &lt;- mnist_data$x_test
+
+t_train_onehotlabel &lt;- making_one_hot_label(mnist_data$t_train,60000, 10)
+t_test_onehotlabel &lt;- making_one_hot_label(mnist_data$t_test,10000, 10)
+</code></pre></td></tr></table>
+</div>
+</div><p>학습할 네트워크를 만들어줍니다. 사용하는 활성화 함수에 따라 적절한 초기값을 선택합니다. 기존에는 초기값을 임의의 정규분포 난수 값에 0.01을 곱한 것을 사용했습니다. 이것을 사용했던 이유는 가능한 초기값을 작은 값에서 시작하기 위해서 였습니다. 그러나 가장 작은 값으로 하기위해 초기값을 0으로 설정한다면 문제가 발생합니다. 가중치가 0 혹은 균일한 값이 된다면, 모든 가중치가 똑같이 갱신되는 일이 발생합니다. 이렇게 될 경우 층을 여러개로 하는 의미가 사라집니다. 이에 따라 가중치 초기값은 무작위 값이 필요하며 활성화 함수에 따라 적절한 초기값을 사용하는게 좋습니다.</p>
+<p>적절한 초기값에는 S자 활성화 함수의 경우 xavier 초기값을 ReLU 함수의 경우 he 초기값을 선택합니다. xavier 초기값이란 사비에르 글로로트와 요슈아 벤지오가 논문에서 권장하는 가중치 초깃값으로 가중치 초기값을 고르게 분포하게 만드는 방법입니다. 데이터가 치우치지 않게 하기 때문에 학습이 효율적으로 이루어지게 됩니다. he 초기값이란 카이밍 히라는 사람이 찾아낸 ReLU 함수에 특화된 초기값입니다. 마찬가지로 ReLU 활성화 함수를 사용할 때 초기값을 넓게 분포 시키기 위한 방법입니다.</p>
+<p>각 방법에 대한 R 구현은 <code>make_weight_init()</code> 함수가 담당합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">TwoLayerNet &lt;- function(input_size, hidden_size, output_size, weight_init_std  =  0.01) {
+  W1 &lt;- weight_init_std * matrix(rnorm(n  =  input_size*hidden_size), nrow  =  input_size, ncol  =  hidden_size)
+  b1 &lt;- matrix(rep(0,hidden_size), nrow = 1, ncol = hidden_size)
+  W2 &lt;- weight_init_std * matrix(rnorm(n  =  hidden_size*output_size), nrow  =  hidden_size, ncol  =  output_size)
+  b2 &lt;- matrix(rep(0,output_size),nrow = 1, ncol = output_size)
+  network &lt;- list(W1 = W1, b1 = b1, W2 = W2, b2 = b2)
+
+  return(network)
+}
+
+make_weight_init  &lt;- function(input_size, hidden_size, weight_init_std=0.01){
+  if (weight_init_std == &#34;xavier&#34;){
+    return(sqrt(1.0 / input_size) * matrix(rnorm(n = input_size * hidden_size), nrow = input_size, ncol =  hidden_size))
+  }
+  else if (weight_init_std == &#34;he&#34;) {
+    return(sqrt(2.0 / input_size) * matrix(rnorm(n = input_size * hidden_size), nrow = input_size, ncol  =  hidden_size))
+  }
+  else {
+    return(weight_init_std * matrix(rnorm(n  =  input_size*hidden_size), nrow  =  input_size, ncol  =  hidden_size))
+  }
+}
+
+network &lt;- TwoLayerNet(input_size = 784, hidden_size = 50, output_size = 10)
+network$W1 &lt;- make_weight_init(784,50,&#34;he&#34;)
+network$W2 &lt;- make_weight_init(50,10,&#34;he&#34;)
+</code></pre></td></tr></table>
+</div>
+</div><p><code>make_weight_init()</code> 함수를 사용하여 ReLU 활성화 함수에 맞는 he 초기값을 가진 가중치 변수를 새로 만들어 줍니다.</p>
+<p>이제 옵티마이저를 변경해가면서 학습할 차례입니다. 학습에 필요한 변수들을 만들어줍니다.
+학습을 위해 필요한 함수를 새롭게 작성합니다. 기존에 사용하던 함수와 차이점은 인자에 forward 함수를 넣어서 사용한다는 점 외에는 없습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">forward &lt;- function(x){
+  Affine_1 &lt;- Affine.forward(network$W1, network$b1, x)
+  Relu_1 &lt;- Relu.forward(Affine_1$out)
+  Affine_2 &lt;- Affine.forward(network$W2, network$b2, Relu_1$out)
+  return(list(x = Affine_2$out, Affine_1.forward = Affine_1, Affine_2.forward = Affine_2, Relu_1.forward = Relu_1))
+}
+
+loss &lt;- function(model.forward, x, t){
+  temp &lt;- model.forward(x)
+  y &lt;- temp$x
+  last_layer.forward &lt;- SoftmaxWithLoss.forward(y, t)
+  return(list(loss = last_layer.forward$loss, softmax = last_layer.forward, predict =  temp))
+}
+
+
+gradient &lt;- function(model.forward, x, t) {
+  # 순전파
+  temp &lt;- loss(model.forward, x, t)
+  # 역전파
+  dout &lt;- 1
+  last.backward &lt;- SoftmaxWithLoss.backward(temp$softmax, dout)
+  Affine_2.backward &lt;- Affine.backward(temp$predict$Affine_2.forward, dout  =  last.backward$dx)
+  Relu_1.backward &lt;- Relu.backward(temp$predict$Relu_1.forward, dout  =  Affine_2.backward$dx)
+  Affine_1.backward &lt;- Affine.backward(temp$predict$Affine_1.forward, dout  =  Relu_1.backward$dx)
+  grads  &lt;- list(W1  =  Affine_1.backward$dW, b1  =  Affine_1.backward$db, W2  =  Affine_2.backward$dW, b2  =  Affine_2.backward$db)
+  return(grads)
+}
+
+model.evaluate &lt;- function(model,x,t){
+    temp &lt;- model(x)
+    y &lt;- max.col(temp$x)
+    t &lt;- max.col(t)
+    accuracy &lt;- (sum(ifelse(y == t,1,0))) / dim(x)[1]
+    return(accuracy)
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>이제 옵티마이저를 선택하는 함수를 만들어 줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">get_optimizer &lt;- function(network,grad,name){
+  if(name==&#34;SGD&#34;){
+    return(sgd.update(network,grad))
+  }
+  else if(name==&#34;momentum&#34;){
+    return(momentum.update(network,grad,optimizer$Momentum))
+  }
+  else if(name==&#34;adagrad&#34;){
+    return(AdaGrad.update(network,grad,optimizer$AdaGrad))
+  }
+  else if(name==&#34;Rmsprop&#34;){
+    return(Rmsprop.update(network,grad,optimizer$Rmsprop))
+  }
+  else{
+    return(Adam.update(network, grad, optimizer$Adam$iter,m = optimizer$Adam$m, v = optimizer$Adam$v))
+  }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>이 함수는 입력된 옵티마이저 이름에 따라 적절한 옵티마이저를 선택해 갱신을 진행합니다.
+이제 직접 옵티마이저 별로 학습을 진행해 봅시다.</p>
+<p>기존의 훈련 방법을 함수화 해줍니다. 기존에 for문과 외부 변수를 통해 학습을 진행하던 과정을 함수로 묶어 만들어줍니다. 단 이 과정에서 모델의 정확성을 판단하는 것을 에폭이 아닌 반복문에 횟수에 따라 정확성을 평가하고 저장하기에 약 하나의 옵티마이저당 30분 정도의 시간이 좀 걸리게 됩니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">train_model &lt;- function(batch_size, iters_num, optimizer_name){
+  train_size &lt;- dim(x_train_normalize)[1]
+  train_loss_list &lt;- data.frame(lossvalue  =  rep(0,iters_num))
+  train_acc_list &lt;- data.frame(train_acc  =  rep(0,iters_num))
+  test_acc_list &lt;- data.frame(test_acc  =  rep(0,iters_num))
+  for(i in 1:iters_num){
+    batch_mask &lt;- sample(train_size ,batch_size)
+    x_batch &lt;- x_train_normalize[batch_mask,]
+    t_batch &lt;- t_train_onehotlabel[batch_mask,]
+
+    grad &lt;- gradient(model.forward=forward, x_batch, t_batch)
+
+    network &lt;&lt;- get_optimizer(network,grad,optimizer_name)
+
+    train_loss_list[i,1] &lt;- loss(forward ,x_batch, t_batch)$loss
+    test_acc_list[i,1]  &lt;- model.evaluate(forward, x_test_normalize, t_test_onehotlabel)
+  }
+  return(data.frame(train_loss_list=train_loss_list,test_acc_list=test_acc_list))
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>이제 5가지 옵티마이저에 따른 2000번의 학습을 진행합니다. 참고로 매번 학습을 진행할 때 초기값을 재설정해주어야 학습이 이어서 진행되지 않습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">sgd_result &lt;- train_model(100, 2000, &#34;SGD&#34;)
+momentum_result &lt;- train_model(100, 2000, &#34;momentum&#34;)
+adagrad_result &lt;- train_model(100, 2000, &#34;adagrad&#34;)
+Rmsprop_result &lt;- train_model(100, 2000, &#34;Rmsprop&#34;)
+adam_result &lt;- train_model(100, 2000, &#34;adam&#34;)
+</code></pre></td></tr></table>
+</div>
+</div><p>그래프를 통해 결과를 비교해 봅시다. 아래의 코드로 그림을 그려 볼 수 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ggplot(data = sgd_result)+geom_point(aes(x=1:2000,y=lossvalue,color=&#34;sgd&#34;))+geom_point(data = momentum_result,aes(x=1:2000,y=lossvalue,color=&#34;momentum&#34;))+geom_point(data = adagrad_result,aes(x=1:2000,y=lossvalue,color=&#34;adagrad&#34;))+geom_point(data = Rmsprop_result,aes(x=1:2000,y=lossvalue,color=&#34;Rmsprop&#34;))+geom_point(data = adam_result,aes(x=1:2000,y=lossvalue,color=&#34;adam&#34;))
+</code></pre></td></tr></table>
+</div>
+</div><p>그림을 보시면 SGD의 성능이 가장 좋지 않은 것을 알 수 있습니다. 또한 Rmsprop 과 Adam 의 경우가 손실 값이 가장 많이 떨어지는 것을 확인할 수 있습니다.</p>
+<p><img src="(https://user-images.githubusercontent.com/19144813/90000460-28405d00-dccb-11ea-942f-33f36553d1e6.png)" alt="손실값 비교"></p>
+<p>테스트 셋에 대한 정확도 역시 그래프로 비교합니다. 아래의 코드로 그림을 그려볼 수 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ggplot(data = sgd_result)+geom_point(aes(x=1:2000,y=test_acc,color=&#34;sgd&#34;))+geom_point(data = momentum_result,aes(x=1:2000,y=test_acc,color=&#34;momentum&#34;))+geom_point(data = adagrad_result,aes(x=1:2000,y=test_acc,color=&#34;adagrad&#34;))+geom_point(data = Rmsprop_result,aes(x=1:2000,y=test_acc,color=&#34;Rmsprop&#34;))+geom_point(data = adam_result,aes(x=1:2000,y=test_acc,color=&#34;adam&#34;))
+</code></pre></td></tr></table>
+</div>
+</div><p>마찬가지로 그림을 보시면 SGD의 정확도가 가장 낮은 것을 알 수 있습니다. 반대로 Rmsprop 과 Adam 의 경우에 높은 정확도를 보이는 것을 확인할 수 있습니다.</p>
+<p><img src="https://user-images.githubusercontent.com/19144813/90000743-80775f00-dccb-11ea-9e1c-fa511bb97f3f.png" alt="정확도 비교"></p>
+<p>결론적으로 같은 조건일 때 모델의 성능을 가장 좋게 만드는 옵티마이저는 Rmsprop 과 Adam 입니다.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Sunsick</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2020-08-12</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/r%EB%A1%9C-%EB%94%A5%EB%9F%AC%EB%8B%9D%ED%95%98%EA%B8%B0/">R로 딥러닝하기</a>
+          <a href="/tags/%EC%8B%A0%EA%B2%BD%EB%A7%9D/">신경망</a>
+          <a href="/tags/%EC%98%B5%ED%8B%B0%EB%A7%88%EC%9D%B4%EC%A0%80/">옵티마이저</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/contents_list/">
+            <span class="next-text nav-default">R로 딥러닝하기 목차</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.google.com/" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/choosunsick" class="iconfont icon-github" title="github"></a>
+  <a href="https://choosunsick.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Sunsick</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

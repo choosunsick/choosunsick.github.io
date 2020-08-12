@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>옵티마이저 on Sunsick&#39;s blog</title>
+    <link>https://choosunsick.github.io/tags/%EC%98%B5%ED%8B%B0%EB%A7%88%EC%9D%B4%EC%A0%80/</link>
+    <description>Recent content in 옵티마이저 on Sunsick&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko</language>
+    <lastBuildDate>Wed, 12 Aug 2020 18:26:14 +0900</lastBuildDate>
+    
+	<atom:link href="https://choosunsick.github.io/tags/%EC%98%B5%ED%8B%B0%EB%A7%88%EC%9D%B4%EC%A0%80/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Optimizer_compare</title>
+      <link>https://choosunsick.github.io/post/optimizer_compare/</link>
+      <pubDate>Wed, 12 Aug 2020 18:26:14 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/optimizer_compare/</guid>
+      <description>옵티마이저(optimizer)란 ? 이번 글에서는 가중치와 편향을 갱신하는 방법을 소개합니다. 기존의 방식과 다른 방식으로 가중치와 편향을 갱신할 수 있으며</description>
+    </item>
+    
+  </channel>
+</rss>

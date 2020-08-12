@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>R on Sunsick&#39;s blog</title>
@@ -6,10 +6,19 @@
     <description>Recent content in R on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 04 Apr 2020 14:06:58 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 12 Aug 2020 18:26:14 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Optimizer_compare</title>
+      <link>https://choosunsick.github.io/post/optimizer_compare/</link>
+      <pubDate>Wed, 12 Aug 2020 18:26:14 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/optimizer_compare/</guid>
+      <description>옵티마이저(optimizer)란 ? 이번 글에서는 가중치와 편향을 갱신하는 방법을 소개합니다. 기존의 방식과 다른 방식으로 가중치와 편향을 갱신할 수 있으며</description>
+    </item>
     
     <item>
       <title>R로 딥러닝하기 목차</title>

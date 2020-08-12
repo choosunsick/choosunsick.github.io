@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.69.2 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://choosunsick.github.io/post/vector_operation/" />
@@ -41,21 +41,18 @@
 <meta property="og:title" content="Chpater1 벡터의 연산" />
 <meta property="og:description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 만약 R 사용이 처음이시라면 링크의 R 초심자를 위한 기초 사용법을 참조해주세요. 소개 이번 글" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://choosunsick.github.io/post/vector_operation/" /><meta property="article:published_time" content="2020-02-08T20:21:30&#43;09:00"/>
-<meta property="article:modified_time" content="2020-02-08T20:21:30&#43;09:00"/>
-
+<meta property="og:url" content="https://choosunsick.github.io/post/vector_operation/" />
+<meta property="article:published_time" content="2020-02-08T20:21:30+09:00" />
+<meta property="article:modified_time" content="2020-02-08T20:21:30+09:00" />
 <meta itemprop="name" content="Chpater1 벡터의 연산">
 <meta itemprop="description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 만약 R 사용이 처음이시라면 링크의 R 초심자를 위한 기초 사용법을 참조해주세요. 소개 이번 글">
-
-
 <meta itemprop="datePublished" content="2020-02-08T20:21:30&#43;09:00" />
 <meta itemprop="dateModified" content="2020-02-08T20:21:30&#43;09:00" />
 <meta itemprop="wordCount" content="1056">
 
 
 
-<meta itemprop="keywords" content="R로 딥러닝하기,기초,벡터,벡터연산," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="R로 딥러닝하기,기초,벡터,벡터연산," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Chpater1 벡터의 연산"/>
 <meta name="twitter:description" content="이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 만약 R 사용이 처음이시라면 링크의 R 초심자를 위한 기초 사용법을 참조해주세요. 소개 이번 글"/>
 
@@ -135,36 +132,25 @@
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#소개">소개</a></li>
-<li><a href="#용어-정리">용어 정리</a></li>
-<li><a href="#벡터의-연산">벡터의 연산</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#소개">소개</a></li>
+    <li><a href="#용어-정리">용어 정리</a></li>
+    <li><a href="#벡터의-연산">벡터의 연산</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 만약 R 사용이 처음이시라면 <a href="https://choosunsick.github.io/post/contents_list/">링크</a>의 R 초심자를 위한 기초 사용법을 참조해주세요.</p>
-
+      <p>이 시리즈는 R로 딥러닝을 구현하고 설명하는 것에 목표를 둔 글입니다. 만약 R 사용이 처음이시라면 <a href="https://choosunsick.github.io/post/contents_list/">링크</a>의 R 초심자를 위한 기초 사용법을 참조해주세요.</p>
 <h2 id="소개">소개</h2>
-
 <p>이번 글에서는 R에서의 벡터, 행렬의 연산 방법과 R에서 수학 법칙에 따른 연산뿐만 아니라 브로드캐스트(원소별연산)에 대해서 알아볼 것입니다. 브로드캐스트 연산은 일반적으로 사용하지 않지만 딥러닝의 계산과정에서 그 시간을 단축시키는 기술입니다. 먼저 벡터의 연산에 대해 알아보고 이후 행렬의 연산에 대해 살펴본 다음 마지막으로 브로드캐스트 연산에 대해 알아보겠습니다.</p>
-
 <h2 id="용어-정리">용어 정리</h2>
-
 <p>브로드캐스트: 행렬의 연산에서 크기가 다른 행렬 간 원소별로 연산을 하게 끔 자동으로 행렬의 크기를 변경하여 연산하는 방법, 예를 들면 2행 2열 크기의 행렬에 1행 2열 크기의 행렬을 더 한다고 할 때 1행 2열의 행렬을 2행 2열 크기로 변경하여 더하는 경우가 브로드캐스트 연산 방법입니다.</p>
-
 <p>내적: 벡터의 연산 방법 중 하나로 두 벡터 간 원소별 곱셈 이후 합으로 나타냅니다. 2개의 벡터가 있는 행렬의 경우 내적은 행렬의 곱으로 나타냅니다. 예를 들면 1,2,3과 4,5,6로 내적 값을 구해봅시다. 각 벡터의 원소를 순서대로 곱하면 4, 10, 18의 값을 얻는데 이 3개의 값을 다 더한 값인 32가 내적 값이 됩니다.</p>
-
 <h2 id="벡터의-연산">벡터의 연산</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -181,9 +167,9 @@
 </span><span class="lnt">15
 </span><span class="lnt">16
 </span><span class="lnt">17
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">a &lt;- c(1, 2, 3)
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">a &lt;- c(1, 2, 3)
 b &lt;- c(4, 5, 6)
 c &lt;- c(1, 2)
 
@@ -199,13 +185,11 @@ c &lt;- c(1, 2)
 longer object length is not a multiple of shorter object length[1] 1 4 3
 &gt; a%*%b
      [,1]
-[1,]   32</pre></td></tr></table>
+[1,]   32
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>두 벡터의 연산은 원소의 순서에 따라 이루어집니다. 코드에서는 대표적으로 곱셈만 있지만 수학에서 사용하는 덧셈, 뺄셈, 나눗셈이 모두 가능하며 원소의 순서에 대응하여 연산이 이루어집니다. 즉 벡터는 원칙적으로는 두 벡터의 데이터 개수가 같은 경우에만 연산이 가능합니다. 그러나 R에서는 개수가 다른 벡터 간의 연산도 가능한데 재활용 규칙이라는 규칙이 있기 때문입니다.</p>
-
+</div><p>두 벡터의 연산은 원소의 순서에 따라 이루어집니다. 코드에서는 대표적으로 곱셈만 있지만 수학에서 사용하는 덧셈, 뺄셈, 나눗셈이 모두 가능하며 원소의 순서에 대응하여 연산이 이루어집니다. 즉 벡터는 원칙적으로는 두 벡터의 데이터 개수가 같은 경우에만 연산이 가능합니다. 그러나 R에서는 개수가 다른 벡터 간의 연산도 가능한데 재활용 규칙이라는 규칙이 있기 때문입니다.</p>
 <p>R에서는 개수가 맞지 않는 경우 부족한 개수의 데이터에서 원소를 다시 사용하여 연산을 진행합니다. 이때 한번 연산에 사용한 원소를 다시 사용하기에 재활용 규칙이라고 부릅니다. 참고로 R에서 재활용 규칙이 사용되었을 경우 한쪽 데이터의 길이가 다른 쪽 보다 더 길다는 경고 문구를 맞이할 수 있습니다.</p>
-
 <p>기본적인 사칙연산 외 벡터의 연산에는 벡터의 내적이 있습니다. 벡터의 내적 연산은 원소별 곱셈의 합이라 부를 수 있습니다. 앞서 두 벡터 간 원소별 연산을 한 결과에서 모든 값을 다 더하면 그 값이 벡터의 내적 값이 됩니다. R에서 이 벡터의 내적 연산은 일반적인 곱셈 연산자를 사용하지 않고 <code>%*%</code> 라는 특별한 연산자를 통해 이루어 집니다. 또한, 벡터의 내적 연산은 벡터의 개수가 서로 대응되지 않을 경우 연산자체가 불가능합니다. 따라서 내적 연산에서는 재활용 규칙이 사용되지 않습니다.</p>
 
     </div>
