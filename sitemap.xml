@@ -9,13 +9,6 @@
   </url>
   
   <url>
-    <loc>https://choosunsick.github.io/post/optimizer_compare/</loc>
-    <lastmod>2020-08-12T18:26:14+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://choosunsick.github.io/post/</loc>
     <lastmod>2020-08-12T18:26:14+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -59,6 +52,13 @@
   
   <url>
     <loc>https://choosunsick.github.io/tags/%EC%98%B5%ED%8B%B0%EB%A7%88%EC%9D%B4%EC%A0%80/</loc>
+    <lastmod>2020-08-12T18:26:14+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/post/optimizer_compare/</loc>
     <lastmod>2020-08-12T18:26:14+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
