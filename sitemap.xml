@@ -3,41 +3,83 @@
   
   <url>
     <loc>https://choosunsick.github.io/categories/</loc>
-    <lastmod>2020-08-12T18:26:14+09:00</lastmod>
+    <lastmod>2020-08-22T14:03:50+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://choosunsick.github.io/post/</loc>
-    <lastmod>2020-08-12T18:26:14+09:00</lastmod>
+    <lastmod>2020-08-22T14:03:50+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/tags/r/</loc>
+    <lastmod>2020-08-22T14:03:50+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://choosunsick.github.io/categories/r/</loc>
-    <lastmod>2020-08-12T18:26:14+09:00</lastmod>
+    <lastmod>2020-08-22T14:03:50+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://choosunsick.github.io/tags/r%EB%A1%9C-%EB%94%A5%EB%9F%AC%EB%8B%9D%ED%95%98%EA%B8%B0/</loc>
-    <lastmod>2020-08-12T18:26:14+09:00</lastmod>
+    <loc>https://choosunsick.github.io/categories/r-%EC%83%A4%EC%9D%B4%EB%8B%88/</loc>
+    <lastmod>2020-08-22T14:03:50+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/post/dockerizing/</loc>
+    <lastmod>2020-08-22T14:03:50+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/tags/shiny/</loc>
+    <lastmod>2020-08-22T14:03:50+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://choosunsick.github.io/</loc>
-    <lastmod>2020-08-12T18:26:14+09:00</lastmod>
+    <lastmod>2020-08-22T14:03:50+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://choosunsick.github.io/tags/</loc>
+    <lastmod>2020-08-22T14:03:50+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/tags/%EB%8F%84%EC%BB%A4/</loc>
+    <lastmod>2020-08-22T14:03:50+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/tags/%EC%83%A4%EC%9D%B4%EB%8B%88/</loc>
+    <lastmod>2020-08-22T14:03:50+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/tags/r%EB%A1%9C-%EB%94%A5%EB%9F%AC%EB%8B%9D%ED%95%98%EA%B8%B0/</loc>
     <lastmod>2020-08-12T18:26:14+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>샤이니 on Sunsick&#39;s blog</title>
+    <link>https://choosunsick.github.io/tags/%EC%83%A4%EC%9D%B4%EB%8B%88/</link>
+    <description>Recent content in 샤이니 on Sunsick&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko</language>
+    <lastBuildDate>Sat, 22 Aug 2020 14:03:50 +0900</lastBuildDate>
+    
+	<atom:link href="https://choosunsick.github.io/tags/%EC%83%A4%EC%9D%B4%EB%8B%88/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>R 샤이니 앱 도커라이징(Dockerizing) 하기</title>
+      <link>https://choosunsick.github.io/post/dockerizing/</link>
+      <pubDate>Sat, 22 Aug 2020 14:03:50 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/dockerizing/</guid>
+      <description>R 샤이니란 ? 샤이니는 R과 직접적으로 상호작용할 수 있는 앱을 만들어주는 패키지입니다. 예를 들면 데이터 분석 결과에 대해 앱의 사용자가 웹과 상호작용하여 여러가</description>
+    </item>
+    
+  </channel>
+</rss>
