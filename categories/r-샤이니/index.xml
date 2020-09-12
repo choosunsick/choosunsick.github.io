@@ -6,18 +6,27 @@
     <description>Recent content in R 샤이니 on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 12 Sep 2020 16:00:31 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 12 Sep 2020 19:01:49 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/categories/r-%EC%83%A4%EC%9D%B4%EB%8B%88/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>R 샤이니: 자신만의 앱에 그래프 올리기</title>
-      <link>https://choosunsick.github.io/post/shiny_plotting/</link>
-      <pubDate>Sat, 12 Sep 2020 16:00:31 +0900</pubDate>
+      <title>샤이니 앱에 항목 탭 추가하기</title>
+      <link>https://choosunsick.github.io/post/shiny_navbarpage/</link>
+      <pubDate>Sat, 12 Sep 2020 19:01:49 +0900</pubDate>
       
-      <guid>https://choosunsick.github.io/post/shiny_plotting/</guid>
-      <description>자신만의 샤이니 앱 만들기 이전 글에서 샤이니 앱을 도커화(dockerizing) 해보았습니다. 이에 대한 자세한 내용은 이전 글을 참고해주시면 감사하겠습니</description>
+      <guid>https://choosunsick.github.io/post/shiny_navbarpage/</guid>
+      <description>이전 글에서는 샤이니 앱에 테마를 적용해 보았습니다. 샤이니 앱에 테마를 적용하는 방법은 이전 글을 참고해주세요 ! 이번 글에서는 샤이니 앱에 항목 탭을 추가해 볼 것입</description>
+    </item>
+    
+    <item>
+      <title>샤이니 앱에 테마 적용하기</title>
+      <link>https://choosunsick.github.io/post/shiny_apply_theme/</link>
+      <pubDate>Sat, 12 Sep 2020 19:01:31 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/shiny_apply_theme/</guid>
+      <description>이전 글에서 샤이니 앱을 도커화(dockerizing) 해보았습니다. 이에 대한 자세한 내용은 이전 글을 참고해주시면 감사하겠습니다. 자신만의 샤이니 앱을</description>
     </item>
     
     <item>
