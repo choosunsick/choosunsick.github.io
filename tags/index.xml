@@ -6,15 +6,24 @@
     <description>Recent content in Tags on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 22 Aug 2020 14:03:50 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 12 Sep 2020 16:00:31 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>plot</title>
+      <link>https://choosunsick.github.io/tags/plot/</link>
+      <pubDate>Sat, 12 Sep 2020 16:00:31 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/tags/plot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>R</title>
       <link>https://choosunsick.github.io/tags/r/</link>
-      <pubDate>Sat, 22 Aug 2020 14:03:50 +0900</pubDate>
+      <pubDate>Sat, 12 Sep 2020 16:00:31 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/tags/r/</guid>
       <description></description>
@@ -23,9 +32,18 @@
     <item>
       <title>shiny</title>
       <link>https://choosunsick.github.io/tags/shiny/</link>
-      <pubDate>Sat, 22 Aug 2020 14:03:50 +0900</pubDate>
+      <pubDate>Sat, 12 Sep 2020 16:00:31 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/tags/shiny/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>샤이니</title>
+      <link>https://choosunsick.github.io/tags/%EC%83%A4%EC%9D%B4%EB%8B%88/</link>
+      <pubDate>Sat, 12 Sep 2020 16:00:31 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/tags/%EC%83%A4%EC%9D%B4%EB%8B%88/</guid>
       <description></description>
     </item>
     
@@ -35,15 +53,6 @@
       <pubDate>Sat, 22 Aug 2020 14:03:50 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/tags/%EB%8F%84%EC%BB%A4/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>샤이니</title>
-      <link>https://choosunsick.github.io/tags/%EC%83%A4%EC%9D%B4%EB%8B%88/</link>
-      <pubDate>Sat, 22 Aug 2020 14:03:50 +0900</pubDate>
-      
-      <guid>https://choosunsick.github.io/tags/%EC%83%A4%EC%9D%B4%EB%8B%88/</guid>
       <description></description>
     </item>
     
