@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tab on Sunsick&#39;s blog</title>
+    <link>https://choosunsick.github.io/tags/tab/</link>
+    <description>Recent content in tab on Sunsick&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko</language>
+    <lastBuildDate>Sat, 12 Sep 2020 19:01:49 +0900</lastBuildDate>
+    
+	<atom:link href="https://choosunsick.github.io/tags/tab/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>샤이니 앱에 항목 탭 추가하기</title>
+      <link>https://choosunsick.github.io/post/shiny_navbarpage/</link>
+      <pubDate>Sat, 12 Sep 2020 19:01:49 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/shiny_navbarpage/</guid>
+      <description>이전 글에서는 샤이니 앱에 테마를 적용해 보았습니다. 샤이니 앱에 테마를 적용하는 방법은 이전 글을 참고해주세요! 이번 글에서는 샤이니 앱에 항목 탭을 추가해 볼 것입</description>
+    </item>
+    
+  </channel>
+</rss>
