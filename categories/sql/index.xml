@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SQL on Sunsick&#39;s blog</title>
+    <link>https://choosunsick.github.io/categories/sql/</link>
+    <description>Recent content in SQL on Sunsick&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko</language>
+    <lastBuildDate>Tue, 01 Dec 2020 20:47:37 +0900</lastBuildDate>
+    
+	<atom:link href="https://choosunsick.github.io/categories/sql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SQL 챕터 1장 요약정리</title>
+      <link>https://choosunsick.github.io/post/sql_ch_1/</link>
+      <pubDate>Tue, 01 Dec 2020 20:47:37 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/sql_ch_1/</guid>
+      <description>MYSQL 문법을 복습할 겸해서 HEAD FIRST SQL 책을 요약정리 합니다. 준비사항 실제로 SQL 문을 치기위해 MY SQL과 유사한 MARIA DB를 도커를 통해 설치해 줍니다. 도커를 설치하는 방법</description>
+    </item>
+    
+  </channel>
+</rss>
