@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>HEAD FIRST SQL 챕터 2장 요약정리 - Sunsick&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Sunsick" /><meta name="description" content="2장 SELECT 문: 데이터 가져오기의 축복 1장에서는 테이블 만드는 방법과 지우는 방법 데이터를 입력하는 방법을 배웠습니다. 이번 2장에서는 데이터를 가져오는 방법에 대" /><meta name="keywords" content="blog, R, Data Analysis" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.69.2 with theme even" />
+
+
+<link rel="canonical" href="https://choosunsick.github.io/post/sql_ch_2/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.c7bc1becf36bcf6a9ebd25d2947e43a2eb745ddb0c9a32b43126fd7fa460c351.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="HEAD FIRST SQL 챕터 2장 요약정리" />
+<meta property="og:description" content="2장 SELECT 문: 데이터 가져오기의 축복 1장에서는 테이블 만드는 방법과 지우는 방법 데이터를 입력하는 방법을 배웠습니다. 이번 2장에서는 데이터를 가져오는 방법에 대" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://choosunsick.github.io/post/sql_ch_2/" />
+<meta property="article:published_time" content="2020-12-03T19:11:13+09:00" />
+<meta property="article:modified_time" content="2020-12-03T19:11:13+09:00" />
+<meta itemprop="name" content="HEAD FIRST SQL 챕터 2장 요약정리">
+<meta itemprop="description" content="2장 SELECT 문: 데이터 가져오기의 축복 1장에서는 테이블 만드는 방법과 지우는 방법 데이터를 입력하는 방법을 배웠습니다. 이번 2장에서는 데이터를 가져오는 방법에 대">
+<meta itemprop="datePublished" content="2020-12-03T19:11:13&#43;09:00" />
+<meta itemprop="dateModified" content="2020-12-03T19:11:13&#43;09:00" />
+<meta itemprop="wordCount" content="3212">
+
+
+
+<meta itemprop="keywords" content="SQL," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="HEAD FIRST SQL 챕터 2장 요약정리"/>
+<meta name="twitter:description" content="2장 SELECT 문: 데이터 가져오기의 축복 1장에서는 테이블 만드는 방법과 지우는 방법 데이터를 입력하는 방법을 배웠습니다. 이번 2장에서는 데이터를 가져오는 방법에 대"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Choo&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Choo&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">HEAD FIRST SQL 챕터 2장 요약정리</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-12-03 </span>
+        <div class="post-category">
+            <a href="/categories/sql/"> SQL </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#2장-select-문-데이터-가져오기의-축복">2장 SELECT 문: 데이터 가져오기의 축복</a></li>
+    <li><a href="#where절-사용-예시">WHERE절 사용 예시</a></li>
+    <li><a href="#문자열-데이터에-작은따옴표-넣는-방법">문자열 데이터에 작은따옴표 넣는 방법</a></li>
+    <li><a href="#특정한-열만-가져오기">특정한 열만 가져오기</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="2장-select-문-데이터-가져오기의-축복">2장 SELECT 문: 데이터 가져오기의 축복</h2>
+<p>1장에서는 테이블 만드는 방법과 지우는 방법 데이터를 입력하는 방법을 배웠습니다. 이번 2장에서는 데이터를 가져오는 방법에 대해 알아봅시다.현재 데이터베이스에는 1장에서 만든 my_contacts 테이블과 doughnut_list 테이블이 남아있습니다. 이 테이블들을 지우거나 만드는 방법을 잊으셨다면, <a href="https://choosunsick.github.io/post/sql_ch_1/">링크</a>를 참조해 주시기 바랍니다.</p>
+<p>테이블에 있는 데이터를 가져오기 위해서는 SELECT 문을 사용해야 합니다. <code>SELECT</code> 문은 입력한 자료 전체를 확인할 수도 있고 <code>WHERE</code> 절과 함께 사용하여 일부 데이터만 확인할 수도 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_contacts</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>SELECT</code>문은 테이블의 데이터를 가져오는 방법</li>
+<li><code>*</code> 별 표시는 테이블의 모든 열을 선택하는 방법</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM my_contacts
+    -&gt; <span class="p">;</span>
++-----------+------------+----------------------------------+--------+------------+------------------+---------------+--------+--------------------+-----------------------+
+<span class="p">|</span> last_name <span class="p">|</span> first_name <span class="p">|</span> email                            <span class="p">|</span> gender <span class="p">|</span> birthday   <span class="p">|</span> profession       <span class="p">|</span> location      <span class="p">|</span> status <span class="p">|</span> interests          <span class="p">|</span> seeking               <span class="p">|</span>
++-----------+------------+----------------------------------+--------+------------+------------------+---------------+--------+--------------------+-----------------------+
+<span class="p">|</span> Anderson  <span class="p">|</span> Jillian    <span class="p">|</span> jill_anderson@breakneckpizza.com <span class="p">|</span> F      <span class="p">|</span> 1980-09-05 <span class="p">|</span> Technical Writer <span class="p">|</span> Palo Alto, CA <span class="p">|</span> Single <span class="p">|</span> Kayaking, Reptiles <span class="p">|</span> Relationship, Friends <span class="p">|</span>
+<span class="p">|</span> NULL      <span class="p">|</span> Pat        <span class="p">|</span> patpost@breakneckpizza.com       <span class="p">|</span> NULL   <span class="p">|</span> NULL       <span class="p">|</span> Postal Worker    <span class="p">|</span> Princeton, NJ <span class="p">|</span> NULL   <span class="p">|</span> NULL               <span class="p">|</span> NULL                  <span class="p">|</span>
++-----------+------------+----------------------------------+--------+------------+------------------+---------------+--------+--------------------+-----------------------+
+<span class="m">2</span> rows in <span class="nb">set</span> <span class="o">(</span>0.014 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>위 테이블에서 앤더슨(Anderson)의 정보만 가져오고 싶다면 어떻게 해야할까요? <code>SELECT</code>문에 <code>WHERE</code>절을 함께 사용하면 됩니다. 아래의 쿼리문은 last_name이라는 열이 &lsquo;Anderson&rsquo;인 경우에 해당하는 행의 모든 열을 불러오는 쿼리문입니다. 만약에 &lsquo;Anderson&rsquo;인 값이 여러개 있다면 그 행의 모든 열들도 가져옵니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_contacts</span> <span class="k">WHERE</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s1">&#39;Anderson&#39;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>WHERE</code> 절은 한 열의 값이 특정한 값일 때에 해당하는 데이터를 불러오는 방법입니다.</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM my_contacts WHERE <span class="nv">last_name</span> <span class="o">=</span> <span class="s1">&#39;Anderson&#39;</span><span class="p">;</span>
++-----------+------------+----------------------------------+--------+------------+------------------+---------------+--------+--------------------+-----------------------+
+<span class="p">|</span> last_name <span class="p">|</span> first_name <span class="p">|</span> email                            <span class="p">|</span> gender <span class="p">|</span> birthday   <span class="p">|</span> profession       <span class="p">|</span> location      <span class="p">|</span> status <span class="p">|</span> interests          <span class="p">|</span> seeking               <span class="p">|</span>
++-----------+------------+----------------------------------+--------+------------+------------------+---------------+--------+--------------------+-----------------------+
+<span class="p">|</span> Anderson  <span class="p">|</span> Jillian    <span class="p">|</span> jill_anderson@breakneckpizza.com <span class="p">|</span> F      <span class="p">|</span> 1980-09-05 <span class="p">|</span> Technical Writer <span class="p">|</span> Palo Alto, CA <span class="p">|</span> Single <span class="p">|</span> Kayaking, Reptiles <span class="p">|</span> Relationship, Friends <span class="p">|</span>
++-----------+------------+----------------------------------+--------+------------+------------------+---------------+--------+--------------------+-----------------------+
+<span class="m">1</span> row in <span class="nb">set</span> <span class="o">(</span>0.002 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="where절-사용-예시">WHERE절 사용 예시</h2>
+<p>먼저 새로운 테이블을 만들어 봅시다. 이 테이블은 음료수에 관한 테이블입니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">easy_drinks</span>
+<span class="p">(</span><span class="n">drink_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">main</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">amount1</span> <span class="nb">DEC</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+<span class="k">second</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">amount2</span> <span class="nb">DEC</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">directions</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>데이터를 입력할 때 아래와 같이 여러줄을 한번에 입력할 수도 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">easy_drinks</span>  
+<span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;Blackthorn&#39;</span><span class="p">,</span>  <span class="s1">&#39;tonic water&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;pineapple juice&#39;</span><span class="p">,</span> <span class="mi">1</span> <span class="p">,</span><span class="s1">&#39;stir with ice, strain into cocktail glass with lemon twist&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Blue moon&#39;</span><span class="p">,</span> <span class="s1">&#39;soda&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;blueberry juice&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">75</span><span class="p">,</span> <span class="s1">&#39;stir with ice, strain into cocktail glass with lemon twist&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Oh my Gosh&#39;</span><span class="p">,</span> <span class="s1">&#39;peach nectar&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;pineapple juice&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;stir with ice, strain into shot glass&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Lime  Fizz&#39;</span><span class="p">,</span> <span class="s1">&#39;sprite&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;lime juice&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;stir with ice, strain into cocktail glass&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Kiss on the Lips&#39;</span> <span class="p">,</span> <span class="s1">&#39;cherry juice&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;pineapple juice&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;serve over ice with straw&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Hot Gold&#39;</span><span class="p">,</span> <span class="s1">&#39;peach nectar&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;orange juice&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;pour hot orange juice in mug and add peach nectar&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Lone Tree&#39;</span><span class="p">,</span> <span class="s1">&#39;soda&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;cherry juice&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">75</span><span class="p">,</span> <span class="s1">&#39;stir with ice, strain into cocktail glass&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Greyhound&#39;</span><span class="p">,</span> <span class="s1">&#39;soda&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;grapefruit juice&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;serve over ice, stir well&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Indian Summer&#39;</span><span class="p">,</span> <span class="s1">&#39;apple juice&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;hot tea&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;add juice to mug and top offf with hot tea&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Bull Frog&#39;</span><span class="p">,</span> <span class="s1">&#39;iced tea&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;lemonade&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;serve over ice with lime slice&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Soda and It&#39;</span><span class="p">,</span> <span class="s1">&#39;soda&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;grape juice&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;shake in cocktail glass, no ice&#39;</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>입력한 데이터를 확인 해봅시다. 아래와 같은 테이블이 나오면 입력이 잘 이루어진 것입니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM easy_drinks<span class="p">;</span>
++------------------+--------------+---------+------------------+---------+------------------------------------------------------------+
+<span class="p">|</span> drink_name       <span class="p">|</span> main         <span class="p">|</span> amount1 <span class="p">|</span> second           <span class="p">|</span> amount2 <span class="p">|</span> directions                                                 <span class="p">|</span>
++------------------+--------------+---------+------------------+---------+------------------------------------------------------------+
+<span class="p">|</span> Blackthorn       <span class="p">|</span> tonic water  <span class="p">|</span>    1.50 <span class="p">|</span> pineapple juice  <span class="p">|</span>    1.00 <span class="p">|</span> stir with ice, strain into cocktail glass with lemon twist <span class="p">|</span>
+<span class="p">|</span> Blue moon        <span class="p">|</span> soda         <span class="p">|</span>    1.50 <span class="p">|</span> blueberry juice  <span class="p">|</span>    0.75 <span class="p">|</span> stir with ice, strain into cocktail glass with lemon twist <span class="p">|</span>
+<span class="p">|</span> Oh my Gosh       <span class="p">|</span> peach nectar <span class="p">|</span>    1.00 <span class="p">|</span> pineapple juice  <span class="p">|</span>    1.00 <span class="p">|</span> stir with ice, strain into shot glass                      <span class="p">|</span>
+<span class="p">|</span> Lime  Fizz       <span class="p">|</span> sprite       <span class="p">|</span>    1.50 <span class="p">|</span> lime juice       <span class="p">|</span>    1.00 <span class="p">|</span> stir with ice, strain into cocktail glass                  <span class="p">|</span>
+<span class="p">|</span> Kiss on the Lips <span class="p">|</span> cherry juice <span class="p">|</span>    2.00 <span class="p">|</span> pineapple juice  <span class="p">|</span>    7.00 <span class="p">|</span> serve over ice with straw                                  <span class="p">|</span>
+<span class="p">|</span> Hot Gold         <span class="p">|</span> peach nectar <span class="p">|</span>    3.00 <span class="p">|</span> orange juice     <span class="p">|</span>    6.00 <span class="p">|</span> pour hot orange juice in mug and add peach nectar          <span class="p">|</span>
+<span class="p">|</span> Lone Tree        <span class="p">|</span> soda         <span class="p">|</span>    1.50 <span class="p">|</span> cherry juice     <span class="p">|</span>    0.75 <span class="p">|</span> stir with ice, strain into cocktail glass                  <span class="p">|</span>
+<span class="p">|</span> Greyhound        <span class="p">|</span> soda         <span class="p">|</span>    1.50 <span class="p">|</span> grapefruit juice <span class="p">|</span>    5.00 <span class="p">|</span> serve over ice, stir well                                  <span class="p">|</span>
+<span class="p">|</span> Indian Summer    <span class="p">|</span> apple juice  <span class="p">|</span>    2.00 <span class="p">|</span> hot tea          <span class="p">|</span>    6.00 <span class="p">|</span> add juice to mug and top offf with hot tea                 <span class="p">|</span>
+<span class="p">|</span> Bull Frog        <span class="p">|</span> iced tea     <span class="p">|</span>    1.50 <span class="p">|</span> lemonade         <span class="p">|</span>    5.00 <span class="p">|</span> serve over ice with lime slice                             <span class="p">|</span>
+<span class="p">|</span> Soda and It      <span class="p">|</span> soda         <span class="p">|</span>    2.00 <span class="p">|</span> grape juice      <span class="p">|</span>    1.00 <span class="p">|</span> shake in cocktail glass, no ice                            <span class="p">|</span>
++------------------+--------------+---------+------------------+---------+------------------------------------------------------------+
+<span class="m">11</span> rows in <span class="nb">set</span> <span class="o">(</span>0.001 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>이제 이 테이블에서 WHERE절을 다양한 방법으로 사용하여 데이터를 가져와 봅시다.</p>
+<ul>
+<li>&lsquo;=&rsquo; : 같다</li>
+<li>&lsquo;&lt;&gt;&rsquo; : 같지 않다</li>
+<li>&lsquo;&lt;&rsquo; : 조건보다 작다 (미만)</li>
+<li>&lsquo;&gt;&rsquo; : 조건보다 크다 (초과)</li>
+<li>&lsquo;&lt;=&rsquo; : 조건과 같거나 작다 (이하)</li>
+<li>&lsquo;&gt;=&rsquo; : 조건과 같거나 크다 (이상)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">easy_drinks</span> <span class="k">WHERE</span> <span class="n">main</span> <span class="o">=</span> <span class="s1">&#39;sprite&#39;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>sprite를 메인으로 하는 음료는 1개로 아래와 같은 결과가 나옵니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM easy_drinks WHERE <span class="nv">main</span> <span class="o">=</span> <span class="s1">&#39;sprite&#39;</span><span class="p">;</span>
++------------+--------+---------+------------+---------+-------------------------------------------+
+<span class="p">|</span> drink_name <span class="p">|</span> main   <span class="p">|</span> amount1 <span class="p">|</span> second     <span class="p">|</span> amount2 <span class="p">|</span> directions                                <span class="p">|</span>
++------------+--------+---------+------------+---------+-------------------------------------------+
+<span class="p">|</span> Lime  Fizz <span class="p">|</span> sprite <span class="p">|</span>    1.50 <span class="p">|</span> lime juice <span class="p">|</span>    1.00 <span class="p">|</span> stir with ice, strain into cocktail glass <span class="p">|</span>
++------------+--------+---------+------------+---------+-------------------------------------------+
+<span class="m">1</span> row in <span class="nb">set</span> <span class="o">(</span>0.001 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">easy_drinks</span> <span class="k">WHERE</span> <span class="n">main</span> <span class="o">=</span> <span class="n">soda</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>soda를 메인으로 하는 음료는 4개가 있지만, soda 값에 작은 따옴표가 빠져있기 때문에 에러가 발생합니다. 어떤 값을 찾을 때는 문자열의 경우 반드시 &lsquo;&lsquo;를 붙여주어야 합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">easy_drinks</span> <span class="k">WHERE</span> <span class="n">amount2</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>amount2 열의 값이 6과 같은 음료는 2개가 있습니다. 따라서 아래와 같이 2개의 음료가 나옵니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM easy_drinks WHERE <span class="nv">amount2</span> <span class="o">=</span> 6<span class="p">;</span>
++---------------+--------------+---------+--------------+---------+---------------------------------------------------+
+<span class="p">|</span> drink_name    <span class="p">|</span> main         <span class="p">|</span> amount1 <span class="p">|</span> second       <span class="p">|</span> amount2 <span class="p">|</span> directions                                        <span class="p">|</span>
++---------------+--------------+---------+--------------+---------+---------------------------------------------------+
+<span class="p">|</span> Hot Gold      <span class="p">|</span> peach nectar <span class="p">|</span>    3.00 <span class="p">|</span> orange juice <span class="p">|</span>    6.00 <span class="p">|</span> pour hot orange juice in mug and add peach nectar <span class="p">|</span>
+<span class="p">|</span> Indian Summer <span class="p">|</span> apple juice  <span class="p">|</span>    2.00 <span class="p">|</span> hot tea      <span class="p">|</span>    6.00 <span class="p">|</span> add juice to mug and top offf with hot tea        <span class="p">|</span>
++---------------+--------------+---------+--------------+---------+---------------------------------------------------+
+<span class="m">2</span> rows in <span class="nb">set</span> <span class="o">(</span>0.003 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">easy_drinks</span> <span class="k">WHERE</span> <span class="k">second</span> <span class="o">=</span> <span class="s1">&#39;orange juice&#39;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>두 번째 음료 재료가 오렌지 주스인 음료는 1개가 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM easy_drinks WHERE <span class="nv">second</span> <span class="o">=</span> <span class="s1">&#39;orange juice&#39;</span><span class="p">;</span>
++------------+--------------+---------+--------------+---------+---------------------------------------------------+
+<span class="p">|</span> drink_name <span class="p">|</span> main         <span class="p">|</span> amount1 <span class="p">|</span> second       <span class="p">|</span> amount2 <span class="p">|</span> directions                                        <span class="p">|</span>
++------------+--------------+---------+--------------+---------+---------------------------------------------------+
+<span class="p">|</span> Hot Gold   <span class="p">|</span> peach nectar <span class="p">|</span>    3.00 <span class="p">|</span> orange juice <span class="p">|</span>    6.00 <span class="p">|</span> pour hot orange juice in mug and add peach nectar <span class="p">|</span>
++------------+--------------+---------+--------------+---------+---------------------------------------------------+
+<span class="m">1</span> row in <span class="nb">set</span> <span class="o">(</span>0.001 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">easy_drinks</span> <span class="k">WHERE</span> <span class="n">amount1</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">.</span><span class="mi">5</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>첫 번째 음료의 양이 1.5보다 작은 것은 1개가 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM easy_drinks WHERE amount1 &lt; 1.5<span class="p">;</span>
++------------+--------------+---------+-----------------+---------+---------------------------------------+
+<span class="p">|</span> drink_name <span class="p">|</span> main         <span class="p">|</span> amount1 <span class="p">|</span> second          <span class="p">|</span> amount2 <span class="p">|</span> directions                            <span class="p">|</span>
++------------+--------------+---------+-----------------+---------+---------------------------------------+
+<span class="p">|</span> Oh my Gosh <span class="p">|</span> peach nectar <span class="p">|</span>    1.00 <span class="p">|</span> pineapple juice <span class="p">|</span>    1.00 <span class="p">|</span> stir with ice, strain into shot glass <span class="p">|</span>
++------------+--------------+---------+-----------------+---------+---------------------------------------+
+<span class="m">1</span> row in <span class="nb">set</span> <span class="o">(</span>0.001 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">easy_drinks</span> <span class="k">WHERE</span> <span class="n">amount2</span> <span class="o">&lt;</span> <span class="s1">&#39;1&#39;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>이번에는 amount2의 양이 문자 1보다 작은 것을 찾는 WHERE 절이 있습니다. 숫자가 아니라 문자로 입력해도 쿼리문의 WHERE 절이 역할을 잘 수행합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM easy_drinks WHERE amount2 &lt; <span class="s1">&#39;1&#39;</span><span class="p">;</span>
++------------+------+---------+-----------------+---------+------------------------------------------------------------+
+<span class="p">|</span> drink_name <span class="p">|</span> main <span class="p">|</span> amount1 <span class="p">|</span> second          <span class="p">|</span> amount2 <span class="p">|</span> directions                                                 <span class="p">|</span>
++------------+------+---------+-----------------+---------+------------------------------------------------------------+
+<span class="p">|</span> Blue moon  <span class="p">|</span> soda <span class="p">|</span>    1.50 <span class="p">|</span> blueberry juice <span class="p">|</span>    0.75 <span class="p">|</span> stir with ice, strain into cocktail glass with lemon twist <span class="p">|</span>
+<span class="p">|</span> Lone Tree  <span class="p">|</span> soda <span class="p">|</span>    1.50 <span class="p">|</span> cherry juice    <span class="p">|</span>    0.75 <span class="p">|</span> stir with ice, strain into cocktail glass                  <span class="p">|</span>
++------------+------+---------+-----------------+---------+------------------------------------------------------------+
+<span class="m">2</span> rows in <span class="nb">set</span> <span class="o">(</span>0.001 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">easy_drinks</span> <span class="k">WHERE</span> <span class="n">main</span> <span class="o">&gt;</span> <span class="s1">&#39;soda&#39;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>이번에는 main 음료가 soda 보다 큰 것을 찾는 WHERE 절입니다. &lsquo;soda&rsquo; 보다 크다는 것이 이해가 잘 안되겠지만 결과를 보면 main의 값이 soda 보다 알파벳 상으로 더 뒤에 오는 것들을 의미합니다. 실제로 tonic water의 t가 s보다 뒤에 오고, sprite의 sp가 so보다 알파벳 순서상 더 뒤에 옵니다. 따라서 소다보다 큰 음료는 2개가 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM easy_drinks WHERE main &gt; <span class="s1">&#39;soda&#39;</span><span class="p">;</span>
++------------+-------------+---------+-----------------+---------+------------------------------------------------------------+
+<span class="p">|</span> drink_name <span class="p">|</span> main        <span class="p">|</span> amount1 <span class="p">|</span> second          <span class="p">|</span> amount2 <span class="p">|</span> directions                                                 <span class="p">|</span>
++------------+-------------+---------+-----------------+---------+------------------------------------------------------------+
+<span class="p">|</span> Blackthorn <span class="p">|</span> tonic water <span class="p">|</span>    1.50 <span class="p">|</span> pineapple juice <span class="p">|</span>    1.00 <span class="p">|</span> stir with ice, strain into cocktail glass with lemon twist <span class="p">|</span>
+<span class="p">|</span> Lime  Fizz <span class="p">|</span> sprite      <span class="p">|</span>    1.50 <span class="p">|</span> lime juice      <span class="p">|</span>    1.00 <span class="p">|</span> stir with ice, strain into cocktail glass                  <span class="p">|</span>
++------------+-------------+---------+-----------------+---------+------------------------------------------------------------+
+<span class="m">2</span> rows in <span class="nb">set</span> <span class="o">(</span>0.004 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">easy_drinks</span> <span class="k">WHERE</span> <span class="n">amount1</span> <span class="o">=</span> <span class="s1">&#39;1.5&#39;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>amount1의 값이 1.5인 값은 6개가 있습니다. 숫자 대신 문자열 &lsquo;1.5&rsquo;를 사용했지만 결과는 숫자를 사용한 경우와 똑같이 나옵니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM easy_drinks WHERE <span class="nv">amount1</span> <span class="o">=</span> <span class="s1">&#39;1.5&#39;</span><span class="p">;</span>
++------------+-------------+---------+------------------+---------+------------------------------------------------------------+
+<span class="p">|</span> drink_name <span class="p">|</span> main        <span class="p">|</span> amount1 <span class="p">|</span> second           <span class="p">|</span> amount2 <span class="p">|</span> directions                                                 <span class="p">|</span>
++------------+-------------+---------+------------------+---------+------------------------------------------------------------+
+<span class="p">|</span> Blackthorn <span class="p">|</span> tonic water <span class="p">|</span>    1.50 <span class="p">|</span> pineapple juice  <span class="p">|</span>    1.00 <span class="p">|</span> stir with ice, strain into cocktail glass with lemon twist <span class="p">|</span>
+<span class="p">|</span> Blue moon  <span class="p">|</span> soda        <span class="p">|</span>    1.50 <span class="p">|</span> blueberry juice  <span class="p">|</span>    0.75 <span class="p">|</span> stir with ice, strain into cocktail glass with lemon twist <span class="p">|</span>
+<span class="p">|</span> Lime  Fizz <span class="p">|</span> sprite      <span class="p">|</span>    1.50 <span class="p">|</span> lime juice       <span class="p">|</span>    1.00 <span class="p">|</span> stir with ice, strain into cocktail glass                  <span class="p">|</span>
+<span class="p">|</span> Lone Tree  <span class="p">|</span> soda        <span class="p">|</span>    1.50 <span class="p">|</span> cherry juice     <span class="p">|</span>    0.75 <span class="p">|</span> stir with ice, strain into cocktail glass                  <span class="p">|</span>
+<span class="p">|</span> Greyhound  <span class="p">|</span> soda        <span class="p">|</span>    1.50 <span class="p">|</span> grapefruit juice <span class="p">|</span>    5.00 <span class="p">|</span> serve over ice, stir well                                  <span class="p">|</span>
+<span class="p">|</span> Bull Frog  <span class="p">|</span> iced tea    <span class="p">|</span>    1.50 <span class="p">|</span> lemonade         <span class="p">|</span>    5.00 <span class="p">|</span> serve over ice with lime slice                             <span class="p">|</span>
++------------+-------------+---------+------------------+---------+------------------------------------------------------------+
+<span class="m">6</span> rows in <span class="nb">set</span> <span class="o">(</span>0.001 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>정리해보자면, 숫자는 작은따옴표가 있든 없든 같은 방식으로 동작하지만 문자열의 경우 반드시 작은따옴표가 있어야 쿼리문이 작동합니다.</p>
+<h2 id="문자열-데이터에-작은따옴표-넣는-방법">문자열 데이터에 작은따옴표 넣는 방법</h2>
+<p>문자열을 다룰 때 작은따옴표가 중요하다는 것을 알았습니다. 그렇다면 문자열 값 내부에 작은 따옴표가 있는 경우는 어떻게 처리해야 할까요?</p>
+<p>백슬래쉬 <code>\</code>를 이용해 줍니다. 영어의 어퍼스트로피와 같이 작은따옴표가 필요한 경우 해당 작은 따옴표 앞에 <code>\</code>를 붙여서 이 작은따옴표는 문자열을 나타내는 작은따옴표와 구분해줍니다. 만약 <code>\</code>없이 입력하게 될 경우 에러가 발생하게 됩니다. 에러가 발생할 경우 <code>';</code> 를 입력하면 빠져나올 수 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">my_contacts</span>
+<span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;Funyon&#39;</span><span class="p">,</span> <span class="s1">&#39;Steve&#39;</span><span class="p">,</span> <span class="s1">&#39;steve@onionflavoredrings.com&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;1970-04-01&#39;</span><span class="p">,</span> <span class="s1">&#39;Punk&#39;</span><span class="p">,</span> <span class="s1">&#39;Grover\&#39;</span><span class="n">s</span> <span class="n">MILL</span><span class="p">,</span> <span class="n">NJ</span><span class="s1">&#39;, &#39;</span><span class="n">Single</span><span class="s1">&#39;, &#39;</span><span class="n">Smashing</span> <span class="n">the</span> <span class="k">state</span><span class="s1">&#39;, &#39;</span><span class="n">compatriots</span><span class="p">,</span> <span class="n">guitar</span> <span class="n">players</span><span class="s1">&#39;);
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>\</code>는 문자열을 나타내는 작은따옴표가 아닌 경우 작은따옴표를 표시하기 위해 사용</li>
+</ul>
+<p>입력된 결과는 아래와 같습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM my_contacts<span class="p">;</span>
++-----------+------------+----------------------------------+--------+------------+------------------+-------------------+--------+--------------------+-----------------------------+
+<span class="p">|</span> last_name <span class="p">|</span> first_name <span class="p">|</span> email                            <span class="p">|</span> gender <span class="p">|</span> birthday   <span class="p">|</span> profession       <span class="p">|</span> location          <span class="p">|</span> status <span class="p">|</span> interests          <span class="p">|</span> seeking                     <span class="p">|</span>
++-----------+------------+----------------------------------+--------+------------+------------------+-------------------+--------+--------------------+-----------------------------+
+<span class="p">|</span> Anderson  <span class="p">|</span> Jillian    <span class="p">|</span> jill_anderson@breakneckpizza.com <span class="p">|</span> F      <span class="p">|</span> 1980-09-05 <span class="p">|</span> Technical Writer <span class="p">|</span> Palo Alto, CA     <span class="p">|</span> Single <span class="p">|</span> Kayaking, Reptiles <span class="p">|</span> Relationship, Friends       <span class="p">|</span>
+<span class="p">|</span> NULL      <span class="p">|</span> Pat        <span class="p">|</span> patpost@breakneckpizza.com       <span class="p">|</span> NULL   <span class="p">|</span> NULL       <span class="p">|</span> Postal Worker    <span class="p">|</span> Princeton, NJ     <span class="p">|</span> NULL   <span class="p">|</span> NULL               <span class="p">|</span> NULL                        <span class="p">|</span>
+<span class="p">|</span> Funyon    <span class="p">|</span> Steve      <span class="p">|</span> steve@onionflavoredrings.com     <span class="p">|</span> M      <span class="p">|</span> 1970-04-01 <span class="p">|</span> Punk             <span class="p">|</span> Grover<span class="err">&#39;</span>s MILL, NJ <span class="p">|</span> Single <span class="p">|</span> Smashing the state <span class="p">|</span> compatriots, guitar players <span class="p">|</span>
++-----------+------------+----------------------------------+--------+------------+------------------+-------------------+--------+--------------------+-----------------------------+
+<span class="m">3</span> rows in <span class="nb">set</span> <span class="o">(</span>0.001 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="특정한-열만-가져오기">특정한 열만 가져오기</h2>
+<p>모든 열을 가져오는 것이 불편할 경우 특정한 열만 가져올 수 있습니다. 별 대신 특정한 열의 이름을 사용하면 그 열에 해당하는 데이터만 가져올 수 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">drink_name</span><span class="p">,</span> <span class="n">main</span><span class="p">,</span> <span class="k">second</span> <span class="k">FROM</span> <span class="n">easy_drinks</span> <span class="k">WHERE</span> <span class="n">main</span> <span class="o">=</span> <span class="s1">&#39;soda&#39;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>모든 열을 보는 방법은 더 느리고 가독성에 좋지 않습니다. 원하는 열만 표시하는 방법을 사용하여 원하는 결과를 더 빠르고 가독성 좋은 결과를 가져올 수 있습니다.</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT drink_name, main, second FROM easy_drinks WHERE <span class="nv">main</span> <span class="o">=</span> <span class="s1">&#39;soda&#39;</span><span class="p">;</span>
++-------------+------+------------------+
+<span class="p">|</span> drink_name  <span class="p">|</span> main <span class="p">|</span> second           <span class="p">|</span>
++-------------+------+------------------+
+<span class="p">|</span> Blue moon   <span class="p">|</span> soda <span class="p">|</span> blueberry juice  <span class="p">|</span>
+<span class="p">|</span> Lone Tree   <span class="p">|</span> soda <span class="p">|</span> cherry juice     <span class="p">|</span>
+<span class="p">|</span> Greyhound   <span class="p">|</span> soda <span class="p">|</span> grapefruit juice <span class="p">|</span>
+<span class="p">|</span> Soda and It <span class="p">|</span> soda <span class="p">|</span> grape juice      <span class="p">|</span>
++-------------+------+------------------+
+<span class="m">4</span> rows in <span class="nb">set</span> <span class="o">(</span>0.001 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Sunsick</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-12-03
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/sql/">SQL</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/sql_ch_1/">
+            <span class="next-text nav-default">HEAD FIRST SQL 챕터 1장 요약정리</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.google.com/" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/choosunsick" class="iconfont icon-github" title="github"></a>
+  <a href="https://choosunsick.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020<span class="heart"><i class="iconfont icon-heart"></i></span><span>Sunsick</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

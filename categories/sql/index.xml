@@ -6,13 +6,22 @@
     <description>Recent content in SQL on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Tue, 01 Dec 2020 20:47:37 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 03 Dec 2020 19:11:13 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/categories/sql/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>SQL 챕터 1장 요약정리</title>
+      <title>HEAD FIRST SQL 챕터 2장 요약정리</title>
+      <link>https://choosunsick.github.io/post/sql_ch_2/</link>
+      <pubDate>Thu, 03 Dec 2020 19:11:13 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/sql_ch_2/</guid>
+      <description>2장 SELECT 문: 데이터 가져오기의 축복 1장에서는 테이블 만드는 방법과 지우는 방법 데이터를 입력하는 방법을 배웠습니다. 이번 2장에서는 데이터를 가져오는 방법에 대</description>
+    </item>
+    
+    <item>
+      <title>HEAD FIRST SQL 챕터 1장 요약정리</title>
       <link>https://choosunsick.github.io/post/sql_ch_1/</link>
       <pubDate>Tue, 01 Dec 2020 20:47:37 +0900</pubDate>
       
