@@ -6,13 +6,22 @@
     <description>Recent content in SQL on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Thu, 03 Dec 2020 19:11:13 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 03 Dec 2020 19:12:50 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/tags/sql/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>HEAD FIRST SQL 챕터 2장 요약정리</title>
+      <title>HEAD FIRST SQL 챕터 2장 요약정리-2</title>
+      <link>https://choosunsick.github.io/post/sql_ch_2_1/</link>
+      <pubDate>Thu, 03 Dec 2020 19:12:50 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/sql_ch_2_1/</guid>
+      <description>2장 SELECT 문: 데이터 가져오기의 축복 2장 앞부분에 이어서 진행됩니다. 앞부분의 링크는 다음과 같습니다. 쿼리들의 결합 하나의 조건이 아닌 여러 조건을 동시에 만족하</description>
+    </item>
+    
+    <item>
+      <title>HEAD FIRST SQL 챕터 2장 요약정리-1</title>
       <link>https://choosunsick.github.io/post/sql_ch_2/</link>
       <pubDate>Thu, 03 Dec 2020 19:11:13 +0900</pubDate>
       
