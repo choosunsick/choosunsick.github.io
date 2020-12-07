@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>라즈베리파이 클러스터에 하둡 설치하기 - Sunsick&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Sunsick" /><meta name="description" content="라즈베리파이 os 설치하기 raspberrypi imager를 통해 라즈베리파이의 os를 깔아줍니다. 해당 프로그램은 링크에서 자신의 컴퓨터 os에 맞게 설치할 수 있습니다. 설치" /><meta name="keywords" content="blog, R, Data Analysis" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.69.2 with theme even" />
+
+
+<link rel="canonical" href="https://choosunsick.github.io/post/hadoop_install/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.c7bc1becf36bcf6a9ebd25d2947e43a2eb745ddb0c9a32b43126fd7fa460c351.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="라즈베리파이 클러스터에 하둡 설치하기" />
+<meta property="og:description" content="라즈베리파이 os 설치하기 raspberrypi imager를 통해 라즈베리파이의 os를 깔아줍니다. 해당 프로그램은 링크에서 자신의 컴퓨터 os에 맞게 설치할 수 있습니다. 설치" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://choosunsick.github.io/post/hadoop_install/" />
+<meta property="article:published_time" content="2020-12-07T18:46:36+09:00" />
+<meta property="article:modified_time" content="2020-12-07T18:46:36+09:00" />
+<meta itemprop="name" content="라즈베리파이 클러스터에 하둡 설치하기">
+<meta itemprop="description" content="라즈베리파이 os 설치하기 raspberrypi imager를 통해 라즈베리파이의 os를 깔아줍니다. 해당 프로그램은 링크에서 자신의 컴퓨터 os에 맞게 설치할 수 있습니다. 설치">
+<meta itemprop="datePublished" content="2020-12-07T18:46:36&#43;09:00" />
+<meta itemprop="dateModified" content="2020-12-07T18:46:36&#43;09:00" />
+<meta itemprop="wordCount" content="1639">
+
+
+
+<meta itemprop="keywords" content="Hadoop,raspberrypi," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="라즈베리파이 클러스터에 하둡 설치하기"/>
+<meta name="twitter:description" content="라즈베리파이 os 설치하기 raspberrypi imager를 통해 라즈베리파이의 os를 깔아줍니다. 해당 프로그램은 링크에서 자신의 컴퓨터 os에 맞게 설치할 수 있습니다. 설치"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Choo&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Choo&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">라즈베리파이 클러스터에 하둡 설치하기</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-12-07 </span>
+        <div class="post-category">
+            <a href="/categories/raspberrypi/"> raspberrypi </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#라즈베리파이-os-설치하기">라즈베리파이 os 설치하기</a></li>
+    <li><a href="#라즈베리파이-간-서로-연동하기">라즈베리파이 간 서로 연동하기</a></li>
+    <li><a href="#마스터에서-다른-파이-조작하기">마스터에서 다른 파이 조작하기</a></li>
+    <li><a href="#하둡-설치">하둡 설치</a></li>
+    <li><a href="#하둡-싱글-노드-설정-적용하기">하둡 싱글 노드 설정 적용하기</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="라즈베리파이-os-설치하기">라즈베리파이 os 설치하기</h2>
+<p>raspberrypi imager를 통해 라즈베리파이의 os를 깔아줍니다. 해당 프로그램은 <a href="https://www.raspberrypi.org/software/">링크</a>에서 자신의 컴퓨터 os에 맞게 설치할 수 있습니다. 설치 후 sd카드를 꽂으면 이미저에서 sd 카드를 인식하고 아래 사진처럼 옵션을 선택하여 라즈베리파이 os를 설치할 수 있습니다.</p>
+<p><img src="https://user-images.githubusercontent.com/19144813/101337219-bf56a380-38be-11eb-9746-05cfc3e540a8.png" alt="raspberrypi imager"></p>
+<p>설치가 종료된후 sd 카드가 자동으로 언마운트 되므로 다시 삽입 해주신 후 터미널이나 cmd를 열고 아래와 같이 치고 sd카드를 뺀 후 라즈베리파이에 장착해 줍니다. 같은 과정을 자신의 라즈베리파이 수 만큼 반복해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> ~/Volumes/boot
+touch ssh
+<span class="nb">cd</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="라즈베리파이-간-서로-연동하기">라즈베리파이 간 서로 연동하기</h2>
+<p>먼저 아래 명령어로 라즈베리파이에 ssh로 접속해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh-keygen -R raspberrypi.local
+ssh pi@raspberrypi.local
+</code></pre></td></tr></table>
+</div>
+</div><p>이후 아래 코드로 각 라즈베리파이의 업데이트와 업그레이드를 해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get update
+sudo apt-get upgrade -y
+</code></pre></td></tr></table>
+</div>
+</div><p>아래의 명령어로 설정에 들어가고 시스템 옵션 Hostname 칸을 눌러 사용자 이름을 piX 로 변경해줍니다. 여기서 X는 숫자로 마스터가 될 라즈베리파이가 1이 되고 이후 워커가 될 파이들을 pi2, pi3 &hellip; 같이 설정해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo raspi-config
+</code></pre></td></tr></table>
+</div>
+</div><p>각 파이의 업데이트와 업그레이드가 끝나면 자신의 모든 라즈베리파이에 java와 에디터 vim을 설치해줍니다. java 설치에는 시간이 좀 소요됩니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get install vim -y
+
+sudo apt install openjdk-8-jdk openjdk-8-jre -y
+</code></pre></td></tr></table>
+</div>
+</div><p>이제 모든 라즈베리파이에서 hosts 파일을 변경해줍니다. hosts의 내용은 각 파이의 명칭과 ip를 적어줍니다. ip는 각 파이에서 ifconfig로 확인할 수 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo vim /etc/hosts
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#hosts 파일의 내용</span>
+192.168.0.17 pi1
+192.168.0.15 pi2
+192.168.0.14 pi3
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> ~/
+mkdir .ssh
+</code></pre></td></tr></table>
+</div>
+</div><p>이제 마스터로 사용할 파이에서 설정을 만들어줍니다. 설정파일에는 아래와 같이 각 파이의 명칭과 ip를 적은 정보를 입력합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> ~/.ssh
+touch config
+
+vim config
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#config 파일 내용</span>
+Host pi1
+User pi
+Hostname 192.168.0.17
+
+Host pi2
+User pi
+Hostname 192.168.0.15
+
+Host pi3
+User pi
+Hostname 192.168.0.14
+</code></pre></td></tr></table>
+</div>
+</div><p>이제 모든 파이에서 키값을 만들어줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh-keygen –t ed25519
+</code></pre></td></tr></table>
+</div>
+</div><p>마스터를 제외한 라즈베리파이에서 아래의 명령어를 쳐 마스터의 권한 부여합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">cat ~/.ssh/id_ed25519.pub <span class="p">|</span> ssh pi@pi1.local <span class="s1">&#39;cat &gt;&gt; .ssh/authorized_keys&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>다시 마스터 라즈베리파이로 돌아와 마스터의 키에 권한을 부여합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span>
+cat .ssh/id_ed25519.pub &gt;&gt; .ssh/authorized_keys
+</code></pre></td></tr></table>
+</div>
+</div><p>모든 파이 수 만큼 아래의 명령어를 입력합니다. 여기서는 총 2개의 워커를 사용하므로 pi2, pi3에 대해 입력합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">scp ~/.ssh/authorized_keys pi2.local:~/.ssh/authorized_keys
+scp ~/.ssh/authorized_keys pi3.local:~/.ssh/authorized_keys
+scp ~/.ssh/config pi2.local:~/.ssh/config
+scp ~/.ssh/config pi3.local:~/.ssh/config
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="마스터에서-다른-파이-조작하기">마스터에서 다른 파이 조작하기</h2>
+<p>마스터에서 워커 파이를 조작할 수 있게 설정파일에 함수를 입력해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> ~ <span class="o">&amp;&amp;</span> vim ~/.bashrc
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#bashrc 파일 내용</span>
+
+<span class="k">function</span> otherpis <span class="o">{</span>
+  grep <span class="s2">&#34;pi&#34;</span> /etc/hosts <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> grep -v <span class="k">$(</span>hostname<span class="k">)</span>
+<span class="o">}</span>
+
+<span class="k">function</span> clustercmd <span class="o">{</span>
+  <span class="k">for</span> pi in <span class="k">$(</span>otherpis<span class="k">)</span><span class="p">;</span> <span class="k">do</span> ssh <span class="nv">$pi</span> <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span>
+  <span class="nv">$@</span>
+<span class="o">}</span>
+
+<span class="k">function</span> clusterreboot <span class="o">{</span>
+  clustercmd sudo shutdown -r now
+<span class="o">}</span>
+
+<span class="k">function</span> clustershutdown <span class="o">{</span>
+  clustercmd sudo shutdown now
+<span class="o">}</span>
+
+<span class="k">function</span> clusterscp <span class="o">{</span>
+  <span class="k">for</span> pi in <span class="k">$(</span>otherpis<span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+    cat <span class="nv">$1</span> <span class="p">|</span> ssh <span class="nv">$pi</span> <span class="s2">&#34;sudo tee </span><span class="nv">$1</span><span class="s2">&#34;</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span>
+  <span class="k">done</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>변경된 설정내용을 다른 모든 파이에 적용해줍니다. 마스터 라즈베리파이에서 아래의 명령어로 입력하면 다른 모든 파이에 변경된 설정이 적용됩니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">source</span> ~/.bashrc
+clusterscp ~/.bashrc
+clustercmd <span class="nb">source</span> ~/.bashrc
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="하둡-설치">하둡 설치</h2>
+<p>마스터 라즈베리파이에 하둡을 설치해 줍니다. 버전은 3.2.1 버전을 사용해 줍니다. 3.3.0의 경우 java나 차후에 설치할 spark와 연동을 위해 3.2.1버전을 사용합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">wget https://downloads.apache.org/hadoop/common/hadoop-3.2.1/hadoop-3.2.1.tar.gz
+
+sudo tar -xvf hadoop-3.2.1.tar.gz -C /opt/
+rm hadoop-3.2.1.tar.gz <span class="o">&amp;&amp;</span> <span class="nb">cd</span> /opt
+sudo mv hadoop-3.2.1 hadoop
+
+sudo chown pi:pi -R /opt/hadoop
+</code></pre></td></tr></table>
+</div>
+</div><p>하둡 관련 폴더 설정 경로를 설정파일에 지정해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">vim ~/.bashrc
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># bashrc 파일을 열고 맨 처음에 보면 for examples이 보인다  그 밑에 아래의 내용을 입력한다.</span>
+
+<span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span><span class="k">$(</span>readlink –f /usr/bin/java <span class="p">|</span> sed <span class="s2">&#34;s:bin/java::&#34;</span><span class="k">)</span>
+<span class="nb">export</span> <span class="nv">HADOOP_HOME</span><span class="o">=</span>/opt/hadoop
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HADOOP_HOME</span>/bin:<span class="nv">$HADOOP_HOME</span>/sbin
+
+<span class="nb">export</span> <span class="nv">HADOOP_INSTALL</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span>
+<span class="nb">export</span> <span class="nv">HADOOP_MAPRED_HOME</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span>
+<span class="nb">export</span> <span class="nv">HADOOP_COMMON_HOME</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span>
+<span class="nb">export</span> <span class="nv">HADOOP_HDFS_HOME</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span>
+<span class="nb">export</span> <span class="nv">HADOOP_INSTALL</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span>
+<span class="nb">export</span> <span class="nv">YARN_HOME</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span>
+<span class="nb">export</span> <span class="nv">HADOOP_COMMON_LIB_NATIVE_DIR</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span>/lib/native
+<span class="nb">export</span> <span class="nv">HADOOP_CONF_DIR</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span>/etc/hadoop
+<span class="nb">export</span> <span class="nv">HADOOP_OPTS</span><span class="o">=</span><span class="s2">&#34;-Djava.library.path=</span><span class="nv">$HADOOP_HOME</span><span class="s2">/lib/native&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>아래 명령어로 적용</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">source</span> ~/.bashrc
+</code></pre></td></tr></table>
+</div>
+</div><p>하둡 환경설정에도 자바 경로를 입력해준다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">vim /opt/hadoop/etc/hadoop/hadoop-env.sh
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># hadoop-env의 내용</span>
+<span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span><span class="k">$(</span>readlink –f /usr/bin/java <span class="p">|</span> sed <span class="s2">&#34;s:bin/java::&#34;</span><span class="k">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>아래 명령어로 마스터 라즈베리파이에 하둡이 잘 설치된지 확인할 수 있다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">hadoop version <span class="p">|</span> grep Hadoop
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="하둡-싱글-노드-설정-적용하기">하둡 싱글 노드 설정 적용하기</h2>
+<p>XML 파일이 있는 위치로 디렉토리를 변경해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /opt/hadoop/etc/hadoop
+</code></pre></td></tr></table>
+</div>
+</div><p>먼저 core-site.xml, hdfs-site.xml 2개의 파일을 변경해줍니다. 파일 내용을 입력할 때는 <code>&lt;configuration&gt;</code> 아래에 입력해야한다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">vim core-site.xml
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#core-site.xml 내용</span>
+&lt;property&gt;
+    &lt;name&gt;fs.defaultFS&lt;/name&gt;
+    &lt;value&gt;hdfs://pi1:9000&lt;/value&gt;
+&lt;/property&gt;
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">vim hdfs-site.xml
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#hdfs-site.xml 내용</span>
+&lt;property&gt;
+    &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+    &lt;value&gt;file:///opt/hadoop_tmp/hdfs/datanode&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+    &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
+    &lt;value&gt;file:///opt/hadoop_tmp/hdfs/namenode&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+    &lt;name&gt;dfs.replication&lt;/name&gt;
+    &lt;value&gt;1&lt;/value&gt;
+&lt;/property&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>데이터노드와 네임노드를 저장할 공간을 만들어 준다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo mkdir -p /opt/hadoop_tmp/hdfs/datanode
+sudo mkdir -p /opt/hadoop_tmp/hdfs/namenode
+
+sudo chown pi:pi -R /opt/hadoop_tmp
+</code></pre></td></tr></table>
+</div>
+</div><p>yarn 설정과 관련된 다른 두 개 설정 파일도 변경해준다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">vim mapred-site.xml
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">&lt;property&gt;
+    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+    &lt;value&gt;yarn&lt;/value&gt;
+&lt;/property&gt;
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">vim yarn-site.xml
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">&lt;property&gt;
+    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+    &lt;name&gt;yarn.nodemanager.auxservices.mapreduce.shuffle.class&lt;/name&gt;  
+    &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
+&lt;/property&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>아래의 명령어로 마스터 노드에 하둡 시스템이 잘 작동하는지 확인할 수 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">hdfs namenode -format
+
+start-dfs.sh
+start-yarn.sh
+
+jps
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Sunsick</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-12-07
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/hadoop/">Hadoop</a>
+          <a href="/tags/raspberrypi/">raspberrypi</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/hadoop_multinode/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">라즈베리파이 클러스터에 하둡 설치하기 2</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/sql_ch_2_1/">
+            <span class="next-text nav-default">HEAD FIRST SQL 챕터 2장 요약정리-2</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.google.com/" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/choosunsick" class="iconfont icon-github" title="github"></a>
+  <a href="https://choosunsick.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020<span class="heart"><i class="iconfont icon-heart"></i></span><span>Sunsick</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
