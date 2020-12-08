@@ -6,19 +6,10 @@
     <description>Recent content on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Mon, 07 Dec 2020 20:14:56 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 07 Dec 2020 18:46:36 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>라즈베리파이 클러스터에 하둡 설치하기 2</title>
-      <link>https://choosunsick.github.io/post/hadoop_multinode/</link>
-      <pubDate>Mon, 07 Dec 2020 20:14:56 +0900</pubDate>
-      
-      <guid>https://choosunsick.github.io/post/hadoop_multinode/</guid>
-      <description>하둡 분산 시스템 설정하기 이 글은 앞선 라즈베리 파이에 하둡 설치하기 글에 이어지는 글입니다. 먼저 글을 보고 와주시면 감사하겠습니다. 다른 모든 파이에도 하둡을 설</description>
-    </item>
     
     <item>
       <title>라즈베리파이 클러스터에 하둡 설치하기</title>

@@ -49,7 +49,7 @@
 <meta itemprop="description" content="라즈베리파이 os 설치하기 raspberrypi imager를 통해 라즈베리파이의 os를 깔아줍니다. 해당 프로그램은 링크에서 자신의 컴퓨터 os에 맞게 설치할 수 있습니다. 설치">
 <meta itemprop="datePublished" content="2020-12-07T18:46:36&#43;09:00" />
 <meta itemprop="dateModified" content="2020-12-07T18:46:36&#43;09:00" />
-<meta itemprop="wordCount" content="1639">
+<meta itemprop="wordCount" content="2380">
 
 
 
@@ -139,6 +139,8 @@
     <li><a href="#마스터에서-다른-파이-조작하기">마스터에서 다른 파이 조작하기</a></li>
     <li><a href="#하둡-설치">하둡 설치</a></li>
     <li><a href="#하둡-싱글-노드-설정-적용하기">하둡 싱글 노드 설정 적용하기</a></li>
+    <li><a href="#하둡-분산-시스템-설정하기">하둡 분산 시스템 설정하기</a></li>
+    <li><a href="#분산-시스템을-위한-config-변경">분산 시스템을 위한 config 변경</a></li>
   </ul>
 </nav>
   </div>
@@ -534,14 +536,12 @@ sudo chown pi:pi -R /opt/hadoop
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
-</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#core-site.xml 내용</span>
-&lt;property&gt;
-    &lt;name&gt;fs.defaultFS&lt;/name&gt;
-    &lt;value&gt;hdfs://pi1:9000&lt;/value&gt;
-&lt;/property&gt;
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>fs.defaultFS<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>hdfs://pi1:9000<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
 
 </code></pre></td></tr></table>
 </div>
@@ -567,22 +567,20 @@ sudo chown pi:pi -R /opt/hadoop
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
-</span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#hdfs-site.xml 내용</span>
-&lt;property&gt;
-    &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
-    &lt;value&gt;file:///opt/hadoop_tmp/hdfs/datanode&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-    &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
-    &lt;value&gt;file:///opt/hadoop_tmp/hdfs/namenode&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-    &lt;name&gt;dfs.replication&lt;/name&gt;
-    &lt;value&gt;1&lt;/value&gt;
-&lt;/property&gt;
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>dfs.datanode.data.dir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>file:///opt/hadoop_tmp/hdfs/datanode<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>dfs.namenode.name.dir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>file:///opt/hadoop_tmp/hdfs/namenode<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>dfs.replication<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>데이터노드와 네임노드를 저장할 공간을 만들어 준다.</p>
@@ -617,10 +615,10 @@ sudo chown pi:pi -R /opt/hadoop_tmp
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">&lt;property&gt;
-    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
-    &lt;value&gt;yarn&lt;/value&gt;
-&lt;/property&gt;
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>mapreduce.framework.name<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>yarn<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
 </code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
@@ -643,14 +641,14 @@ sudo chown pi:pi -R /opt/hadoop_tmp
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">&lt;property&gt;
-    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
-    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-    &lt;name&gt;yarn.nodemanager.auxservices.mapreduce.shuffle.class&lt;/name&gt;  
-    &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
-&lt;/property&gt;
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>yarn.nodemanager.aux-services<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>mapreduce_shuffle<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>yarn.nodemanager.auxservices.mapreduce.shuffle.class<span class="nt">&lt;/name&gt;</span>  
+    <span class="nt">&lt;value&gt;</span>org.apache.hadoop.mapred.ShuffleHandler<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>아래의 명령어로 마스터 노드에 하둡 시스템이 잘 작동하는지 확인할 수 있습니다.</p>
@@ -672,7 +670,346 @@ start-yarn.sh
 jps
 </code></pre></td></tr></table>
 </div>
+</div><h2 id="하둡-분산-시스템-설정하기">하둡 분산 시스템 설정하기</h2>
+<p>다른 모든 파이에도 하둡을 설치하기 위해 폴더를 만들고 권한을 설정합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">clustercmd sudo mkdir -p /opt/hadoop_tmp/hdfs
+clustercmd sudo chown pi:pi –R /opt/hadoop_tmp
+clustercmd sudo mkdir -p /opt/hadoop
+clustercmd sudo chown pi:pi /opt/hadoop
+</code></pre></td></tr></table>
 </div>
+</div><p>아래 명령어를 통해 다른 파이들에게 하둡 설치와 설정을 복사해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="k">for</span> pi in <span class="k">$(</span>otherpis<span class="k">)</span><span class="p">;</span> <span class="k">do</span> rsync –avxP <span class="nv">$HADOOP_HOME</span> <span class="nv">$pi</span>:/opt<span class="p">;</span> <span class="k">done</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>복사가 끝나면 설정을 다시한번 복사 및 적용해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">clusterscp ~/.bashrc
+clustercmd <span class="nb">source</span> ~/.bashrc
+</code></pre></td></tr></table>
+</div>
+</div><p>아래 명령어에 3.2.1이 다른 파이의 개수만큼 뜨면 다른 파이에 하둡이 설치가 잘 되었다는 것입니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">clustercmd hadoop version <span class="p">|</span> grep Hadoop
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="분산-시스템을-위한-config-변경">분산 시스템을 위한 config 변경</h2>
+<p>먼저 설정 파일이 있는 디렉토리로 변경해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /opt/hadoop/etc/hadoop
+</code></pre></td></tr></table>
+</div>
+</div><p>이제 앞서 단일 하둡 시스템에서 편집한 4개의 파일을 다시 편집해 줍니다. 마찬가지로 <code>&lt;configuration&gt;</code> 사이에 내용을 입력해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">vim core-site.xml
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>fs.default.name<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>hdfs://pi1:9000<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">vim hdfs-site.xml
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>dfs.datanode.data.dir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>/opt/hadoop_tmp/hdfs/datanode<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>dfs.namenode.name.dir<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>/opt/hadoop_tmp/hdfs/namenode<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>dfs.replication<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>2<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">vim mapred-site.xml
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>mapreduce.framework.name<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>yarn<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>yarn.app.mapreduce.am.env<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>HADOOP_MAPRED_HOME=$HADOOP_HOME<span class="nt">&lt;/value&gt;</span>\
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>mapreduce.map.env<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>HADOOP_MAPRED_HOME=$HADOOP_HOME<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>mapreduce.reduce.env<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>HADOOP_MAPRED_HOME=$HADOOP_HOME<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>yarn.app.mapreduce.am.resource.memory-mb<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>512<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>mapreduce.map.resource.memory-mb<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>256<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>mapreduce.reduce.resource.memory-mb<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>256<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">vim yarn-site.xml
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>yarn.acl.enable<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>0<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>yarn.resourcemanager.hostname<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>pi1<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>yarn.nodemanager.aux-services<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>mapreduce_shuffle<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>yarn.nodemanager.resource.memory-mb<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1536<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>yarn.scheduler.maximum-allocation-mb<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1536<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>yarn.scheduler.minimum-allocation-mb<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>128<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+        <span class="nt">&lt;name&gt;</span>yarn.nodemanager.vmem-check-enabled<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;value&gt;</span>false<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>설정 파일 변경이 끝나면 다른 파이에서 데이터 노드와 네임 노드를 삭제하여 초기화 시켜줍니다. 이후 name node가 마스터에서 작동하지 않을 수 있기에 초기화 과정을 거쳐줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">clustercmd rm –rf /opt/hadoop_tmp/hdfs/datanode/*
+clustercmd rm –rf /opt/hadoop_tmp/hdfs/namenode/*
+</code></pre></td></tr></table>
+</div>
+</div><p>하둡 설정 파일을 저장하는 공간에 마스터와 워커들에 대한 정보를 만들어줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /opt/hadoop/etc/hadoop
+
+touch master
+vim master
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">pi1
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">touch workers
+vim workers
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># localhost를 지우고 아래 내용을 입력합니다.</span>
+
+pi2
+pi3
+</code></pre></td></tr></table>
+</div>
+</div><p>이제 변경된 설정파일의 적용을 위해서 전체 파이의 재부팅을 해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">clusterreboot
+</code></pre></td></tr></table>
+</div>
+</div><p>각 파이들을 재시작 한 후 마스터 라즈베리파이에서 아래의 명령어를 실행합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">hdfs namenode -format
+start-dfs.sh <span class="o">&amp;&amp;</span> start-yarn.sh
+jps
+</code></pre></td></tr></table>
+</div>
+</div><p>jps 를 쳤을때 마스터에는 namenode가 있고 워커 라즈베리파이에 jps를 쳤을 때 datanode가 있으면 분산 시스템이 잘 적용된 것입니다.</p>
+
     </div>
 
     <div class="post-copyright">
@@ -696,11 +1033,7 @@ jps
           <a href="/tags/raspberrypi/">raspberrypi</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/hadoop_multinode/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">라즈베리파이 클러스터에 하둡 설치하기 2</span>
-            <span class="prev-text nav-mobile">Prev</span>
-          </a>
+        
         <a class="next" href="/post/sql_ch_2_1/">
             <span class="next-text nav-default">HEAD FIRST SQL 챕터 2장 요약정리-2</span>
             <span class="next-text nav-mobile">Next</span>
