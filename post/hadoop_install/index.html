@@ -49,7 +49,7 @@
 <meta itemprop="description" content="라즈베리파이 os 설치하기 raspberrypi imager를 통해 라즈베리파이의 os를 깔아줍니다. 해당 프로그램은 링크에서 자신의 컴퓨터 os에 맞게 설치할 수 있습니다. 설치">
 <meta itemprop="datePublished" content="2020-12-07T18:46:36&#43;09:00" />
 <meta itemprop="dateModified" content="2020-12-07T18:46:36&#43;09:00" />
-<meta itemprop="wordCount" content="2380">
+<meta itemprop="wordCount" content="2631">
 
 
 
@@ -141,6 +141,7 @@
     <li><a href="#하둡-싱글-노드-설정-적용하기">하둡 싱글 노드 설정 적용하기</a></li>
     <li><a href="#하둡-분산-시스템-설정하기">하둡 분산 시스템 설정하기</a></li>
     <li><a href="#분산-시스템을-위한-config-변경">분산 시스템을 위한 config 변경</a></li>
+    <li><a href="#word-count로-하둡-분산-시스템-테스트하기">word count로 하둡 분산 시스템 테스트하기</a></li>
   </ul>
 </nav>
   </div>
@@ -686,35 +687,6 @@ clustercmd sudo mkdir -p /opt/hadoop
 clustercmd sudo chown pi:pi /opt/hadoop
 </code></pre></td></tr></table>
 </div>
-</div><p>아래 명령어를 통해 다른 파이들에게 하둡 설치와 설정을 복사해줍니다.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="k">for</span> pi in <span class="k">$(</span>otherpis<span class="k">)</span><span class="p">;</span> <span class="k">do</span> rsync –avxP <span class="nv">$HADOOP_HOME</span> <span class="nv">$pi</span>:/opt<span class="p">;</span> <span class="k">done</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>복사가 끝나면 설정을 다시한번 복사 및 적용해줍니다.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">clusterscp ~/.bashrc
-clustercmd <span class="nb">source</span> ~/.bashrc
-</code></pre></td></tr></table>
-</div>
-</div><p>아래 명령어에 3.2.1이 다른 파이의 개수만큼 뜨면 다른 파이에 하둡이 설치가 잘 되었다는 것입니다.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">clustercmd hadoop version <span class="p">|</span> grep Hadoop
-</code></pre></td></tr></table>
-</div>
 </div><h2 id="분산-시스템을-위한-config-변경">분산 시스템을 위한 config 변경</h2>
 <p>먼저 설정 파일이 있는 디렉토리로 변경해줍니다.</p>
 <div class="highlight"><div class="chroma">
@@ -912,20 +884,29 @@ clustercmd <span class="nb">source</span> ~/.bashrc
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
         <span class="nt">&lt;name&gt;</span>yarn.nodemanager.resource.memory-mb<span class="nt">&lt;/name&gt;</span>
-        <span class="nt">&lt;value&gt;</span>1536<span class="nt">&lt;/value&gt;</span>
+        <span class="nt">&lt;value&gt;</span>3072<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
         <span class="nt">&lt;name&gt;</span>yarn.scheduler.maximum-allocation-mb<span class="nt">&lt;/name&gt;</span>
-        <span class="nt">&lt;value&gt;</span>1536<span class="nt">&lt;/value&gt;</span>
+        <span class="nt">&lt;value&gt;</span>3072<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
         <span class="nt">&lt;name&gt;</span>yarn.scheduler.minimum-allocation-mb<span class="nt">&lt;/name&gt;</span>
-        <span class="nt">&lt;value&gt;</span>128<span class="nt">&lt;/value&gt;</span>
+        <span class="nt">&lt;value&gt;</span>256<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;property&gt;</span>
         <span class="nt">&lt;name&gt;</span>yarn.nodemanager.vmem-check-enabled<span class="nt">&lt;/name&gt;</span>
         <span class="nt">&lt;value&gt;</span>false<span class="nt">&lt;/value&gt;</span>
 <span class="nt">&lt;/property&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>아래 명령어를 통해 다른 파이들에게 하둡 파일과 설정을 복사해줍니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="k">for</span> pi in <span class="k">$(</span>otherpis<span class="k">)</span><span class="p">;</span> <span class="k">do</span> rsync –avxP <span class="nv">$HADOOP_HOME</span> <span class="nv">$pi</span>:/opt<span class="p">;</span> <span class="k">done</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>설정 파일 변경이 끝나면 다른 파이에서 데이터 노드와 네임 노드를 삭제하여 초기화 시켜줍니다. 이후 name node가 마스터에서 작동하지 않을 수 있기에 초기화 과정을 거쳐줍니다.</p>
@@ -1009,7 +990,73 @@ jps
 </code></pre></td></tr></table>
 </div>
 </div><p>jps 를 쳤을때 마스터에는 namenode가 있고 워커 라즈베리파이에 jps를 쳤을 때 datanode가 있으면 분산 시스템이 잘 적용된 것입니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">yarn node –list
+</code></pre></td></tr></table>
+</div>
+</div><p>위 명령어를 쳐서 자신의 워커 개수만큼의 노드 수가 나오면 분산 시스템이 잘 적용된 것입니다. 이외에도 <code>9870, 8088</code>등의 번호로 hdfs와 yarn 실행 환경을 웹 상에서 확인하실 수 있습니다. 정확한 방법은 <code>pi1.local:9870, pi1.local:8088</code> 이며 만약 마스터 이름을 변경했다면 pi1.local 자리에 자신의 마스터 라즈베리파이의 이름을 적어주어야 합니다.</p>
+<h2 id="word-count로-하둡-분산-시스템-테스트하기">word count로 하둡 분산 시스템 테스트하기</h2>
+<p>먼저 하둡 공간에 텍스트 파일을 저장할 장소를 만듭니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">hdfs dfs -mkdir -p /user/pi
+hdfs dfs -mkdir books
+<span class="nb">cd</span> ~
+</code></pre></td></tr></table>
+</div>
+</div><p>텍스트 파일은 아래의 링크에서 받아오실 수 있습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">wget -O alice.txt https://www.gutenberg.org/files/11/11-0.txt
+wget -O holmes.txt https://www.gutenberg.org/files/1661/1661-0.txt
+wget -O frankenstein.txt https://www.gutenberg.org/files/84/84-0.txt
 
+hdfs dfs -put alice.txt holmes.txt frankenstein.txt books
+
+hdfs dfs -ls books
+</code></pre></td></tr></table>
+</div>
+</div><p>북 디렉토리에 있는 모든 파일에 대해 워드 카운트를 실행하고 output에 저장합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.1.jar wordcount <span class="s2">&#34;books/*&#34;</span> output
+</code></pre></td></tr></table>
+</div>
+</div><p>이제 output에 들어간 워드 카운트 결과를 확인합니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">hdfs dfs -ls output
+
+hdfs dfs -cat output/part-r-00000 <span class="p">|</span> less
+</code></pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <div class="post-copyright">
@@ -1034,8 +1081,8 @@ jps
           </div>
       <nav class="post-nav">
         
-        <a class="next" href="/post/sql_ch_2_1/">
-            <span class="next-text nav-default">HEAD FIRST SQL 챕터 2장 요약정리-2</span>
+        <a class="next" href="/post/sql_ch_2/">
+            <span class="next-text nav-default">SELECT 문: 데이터 가져오기의 축복</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>

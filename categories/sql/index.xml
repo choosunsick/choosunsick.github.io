@@ -6,36 +6,27 @@
     <description>Recent content in SQL on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Thu, 03 Dec 2020 19:12:50 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 03 Dec 2020 19:11:13 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/categories/sql/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>HEAD FIRST SQL 챕터 2장 요약정리-2</title>
-      <link>https://choosunsick.github.io/post/sql_ch_2_1/</link>
-      <pubDate>Thu, 03 Dec 2020 19:12:50 +0900</pubDate>
-      
-      <guid>https://choosunsick.github.io/post/sql_ch_2_1/</guid>
-      <description>2장 SELECT 문: 데이터 가져오기의 축복 2장 앞부분에 이어서 진행됩니다. 앞부분의 링크는 다음과 같습니다. 쿼리들의 결합 하나의 조건이 아닌 여러 조건을 동시에 만족하</description>
-    </item>
-    
-    <item>
-      <title>HEAD FIRST SQL 챕터 2장 요약정리-1</title>
+      <title>SELECT 문: 데이터 가져오기의 축복</title>
       <link>https://choosunsick.github.io/post/sql_ch_2/</link>
       <pubDate>Thu, 03 Dec 2020 19:11:13 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/sql_ch_2/</guid>
-      <description>2장 SELECT 문: 데이터 가져오기의 축복 1장에서는 테이블 만드는 방법과 지우는 방법 데이터를 입력하는 방법을 배웠습니다. 이번 2장에서는 데이터를 가져오는 방법에 대</description>
+      <description>2장 1장에서는 테이블 만드는 방법과 지우는 방법 데이터를 입력하는 방법을 배웠습니다. 이번 2장에서는 데이터를 가져오는 방법에 대해 알아봅시다.현재 데이터베</description>
     </item>
     
     <item>
-      <title>HEAD FIRST SQL 챕터 1장 요약정리</title>
+      <title>데이터와 테이블: 데이터 처리</title>
       <link>https://choosunsick.github.io/post/sql_ch_1/</link>
       <pubDate>Tue, 01 Dec 2020 20:47:37 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/post/sql_ch_1/</guid>
-      <description>MYSQL 문법을 복습할 겸해서 HEAD FIRST SQL 책을 요약정리 합니다. 준비사항 실제로 SQL 문을 치기위해 MY SQL과 유사한 MARIA DB를 도커를 통해 설치해 줍니다. 도커를 설치하는 방법</description>
+      <description>준비사항 실제로 SQL 문을 치기위해 MY SQL과 유사한 MARIA DB를 도커를 통해 설치해 줍니다. 도커를 설치하는 방법은 도커 홈페이지를 참조하세요. 이제 MARIA D를 설치할 차</description>
     </item>
     
   </channel>
