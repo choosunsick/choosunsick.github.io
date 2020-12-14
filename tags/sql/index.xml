@@ -6,10 +6,19 @@
     <description>Recent content in SQL on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Thu, 03 Dec 2020 19:11:13 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 14 Dec 2020 19:27:28 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/tags/sql/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>DElETE와 UPDATE 문</title>
+      <link>https://choosunsick.github.io/post/sql_ch_3/</link>
+      <pubDate>Mon, 14 Dec 2020 19:27:28 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/sql_ch_3/</guid>
+      <description>2장에서는 데이터를 가져오는 방법에 대해 알아보았습니다. SELECT 문의 사용 방법에 대해 다시 확인하고 싶으시다면 링크를 참조해 주시기 바랍니다. 이번 장에서 테이블 내</description>
+    </item>
     
     <item>
       <title>SELECT 문: 데이터 가져오기의 축복</title>
