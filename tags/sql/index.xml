@@ -6,10 +6,19 @@
     <description>Recent content in SQL on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Mon, 14 Dec 2020 19:27:28 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 28 Dec 2020 19:14:52 +0900</lastBuildDate>
     
 	<atom:link href="https://choosunsick.github.io/tags/sql/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>좋은 테이블 설계(정규화)와 기본키</title>
+      <link>https://choosunsick.github.io/post/sql_ch_4/</link>
+      <pubDate>Mon, 28 Dec 2020 19:14:52 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/sql_ch_4/</guid>
+      <description>4장 이 글은 MYSQL 문법을 복습할 겸해서 HEAD FIRST SQL 책을 요약정리 한 것입니다. 3장에서는 테이블의 데이터를 지우거나(DELETE) 변경(UPDATE)하는 방법에</description>
+    </item>
     
     <item>
       <title>DElETE와 UPDATE 문</title>

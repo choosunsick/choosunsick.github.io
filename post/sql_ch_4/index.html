@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>좋은 테이블 설계(정규화)와 기본키 - Sunsick&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Sunsick" /><meta name="description" content="4장 이 글은 MYSQL 문법을 복습할 겸해서 HEAD FIRST SQL 책을 요약정리 한 것입니다. 3장에서는 테이블의 데이터를 지우거나(DELETE) 변경(UPDATE)하는 방법에" /><meta name="keywords" content="blog, R, Data Analysis" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.69.2 with theme even" />
+
+
+<link rel="canonical" href="https://choosunsick.github.io/post/sql_ch_4/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.c7bc1becf36bcf6a9ebd25d2947e43a2eb745ddb0c9a32b43126fd7fa460c351.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="좋은 테이블 설계(정규화)와 기본키" />
+<meta property="og:description" content="4장 이 글은 MYSQL 문법을 복습할 겸해서 HEAD FIRST SQL 책을 요약정리 한 것입니다. 3장에서는 테이블의 데이터를 지우거나(DELETE) 변경(UPDATE)하는 방법에" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://choosunsick.github.io/post/sql_ch_4/" />
+<meta property="article:published_time" content="2020-12-28T19:14:52+09:00" />
+<meta property="article:modified_time" content="2020-12-28T19:14:52+09:00" />
+<meta itemprop="name" content="좋은 테이블 설계(정규화)와 기본키">
+<meta itemprop="description" content="4장 이 글은 MYSQL 문법을 복습할 겸해서 HEAD FIRST SQL 책을 요약정리 한 것입니다. 3장에서는 테이블의 데이터를 지우거나(DELETE) 변경(UPDATE)하는 방법에">
+<meta itemprop="datePublished" content="2020-12-28T19:14:52&#43;09:00" />
+<meta itemprop="dateModified" content="2020-12-28T19:14:52&#43;09:00" />
+<meta itemprop="wordCount" content="4660">
+
+
+
+<meta itemprop="keywords" content="SQL," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="좋은 테이블 설계(정규화)와 기본키"/>
+<meta name="twitter:description" content="4장 이 글은 MYSQL 문법을 복습할 겸해서 HEAD FIRST SQL 책을 요약정리 한 것입니다. 3장에서는 테이블의 데이터를 지우거나(DELETE) 변경(UPDATE)하는 방법에"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Choo&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Choo&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">좋은 테이블 설계(정규화)와 기본키</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-12-28 </span>
+        <div class="post-category">
+            <a href="/categories/sql/"> SQL </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#4장">4장</a></li>
+    <li><a href="#원자적-데이터">원자적 데이터</a></li>
+    <li><a href="#정규화">정규화</a></li>
+    <li><a href="#기본키-규칙">기본키 규칙</a></li>
+    <li><a href="#기존-테이블에-기본키-추가하기-alter-table">기존 테이블에 기본키 추가하기 ALTER TABLE</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="4장">4장</h2>
+<p>이 글은 MYSQL 문법을 복습할 겸해서 <a href="http://www.yes24.com/Product/Goods/2922303?OzSrank=2">HEAD FIRST SQL 책</a>을 요약정리 한 것입니다.</p>
+<p>3장에서는 테이블의 데이터를 지우거나(DELETE) 변경(UPDATE)하는 방법에 대해 알아 봤습니다. 관련된 sql 문법에 대해 다시 확인하고 싶으시다면 <a href="https://choosunsick.github.io/post/sql_ch_3/">링크</a>를 참조해 주시기 바랍니다. 데이터를 변경하거나 지우는 일은 중요한 일입니다. 그러나 처음부터 그런일이 없게 테이블을 잘 만드는 방법을 아는 것은 더 중요하다. 이번 장에서는 그 방법에 대해 알아보자.</p>
+<p>테이블을 만들 때는 테이블의 사용 목적을 고려해야 한다. 사용 목적에 따라 같은 자료를 보고도 서로 다른 테이블이 만들어질 수 있습니다. 물고기의 정보가 담긴 데이터가 있다고 해봅시다. 이때 같은 물고기의 정보를 가지고 학문적 접근을 하는 경우와 낚시 기록이 중요한 경우 서로 만들어지는 테이블이 달라질 수 있습니다.</p>
+<p>먼저 학문적으로 접근할 때는 물고기의 종 정보가 중요한 정보가 됩니다. 즉 아래와 같이 species 열이 필요하다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">fish_info</span><span class="p">(</span><span class="n">common</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">species</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="k">location</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">weight</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">));</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">fish_info</span>  
+<span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;bass, largemouth&#39;</span><span class="p">,</span> <span class="s1">&#39;M. sakmoides&#39;</span><span class="p">,</span> <span class="s1">&#39;Montgomery Lake, GA&#39;</span><span class="p">,</span> <span class="s1">&#39;22 lb 4 oz&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;walleye&#39;</span><span class="p">,</span> <span class="s1">&#39;S. vitreus&#39;</span><span class="p">,</span> <span class="s1">&#39;Old Hickory Lake, TN&#39;</span><span class="p">,</span> <span class="s1">&#39;25 lb 0 oz&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;trout, cutthroat&#39;</span><span class="p">,</span> <span class="s1">&#39;O. Clarki&#39;</span><span class="p">,</span> <span class="s1">&#39;Pyramid Lake, NV&#39;</span><span class="p">,</span> <span class="s1">&#39;41 lb 0 oz&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;perch, yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;P. Flavescens&#39;</span><span class="p">,</span> <span class="s1">&#39;Boredentown, NJ&#39;</span><span class="p">,</span> <span class="s1">&#39;4 lb 3 oz&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;bluegill&#39;</span><span class="p">,</span> <span class="s1">&#39;L. Macrochirus&#39;</span><span class="p">,</span> <span class="s1">&#39;Ketana Lake, AL&#39;</span><span class="p">,</span> <span class="s1">&#39;4 lb 13 oz&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;gar, longnose&#39;</span><span class="p">,</span> <span class="s1">&#39;L. Osseus&#39;</span><span class="p">,</span> <span class="s1">&#39;Trinity River, TX&#39;</span><span class="p">,</span> <span class="s1">&#39;50 lb 5 oz&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;crappie, white&#39;</span><span class="p">,</span> <span class="s1">&#39;P. annularis&#39;</span><span class="p">,</span> <span class="s1">&#39;Enid Dam, MS&#39;</span><span class="p">,</span> <span class="s1">&#39;5 lb 3 oz&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;pickerel, grass&#39;</span><span class="p">,</span> <span class="s1">&#39;E. americanus&#39;</span><span class="p">,</span> <span class="s1">&#39;Dewart Lake, IN&#39;</span><span class="p">,</span> <span class="s1">&#39;1 lb 0 oz&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;goldfish&#39;</span><span class="p">,</span> <span class="s1">&#39;C. auratus&#39;</span><span class="p">,</span> <span class="s1">&#39;Lake Hodges, CA&#39;</span><span class="p">,</span> <span class="s1">&#39;6 lb 10 oz&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;salmon, chinook&#39;</span><span class="p">,</span> <span class="s1">&#39;O. Tshawytscha&#39;</span><span class="p">,</span> <span class="s1">&#39;Kenai River, AK&#39;</span><span class="p">,</span> <span class="s1">&#39;97 lb 4 oz&#39;</span><span class="p">);</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>만들어진 테이블의 결과는 아래와 같다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM fish_info<span class="p">;</span>
++------------------+----------------+----------------------+------------+
+<span class="p">|</span> common           <span class="p">|</span> species        <span class="p">|</span> location             <span class="p">|</span> weight     <span class="p">|</span>
++------------------+----------------+----------------------+------------+
+<span class="p">|</span> bass, largemouth <span class="p">|</span> M. sakmoides   <span class="p">|</span> Montgomery Lake, GA  <span class="p">|</span> <span class="m">22</span> lb <span class="m">4</span> oz <span class="p">|</span>
+<span class="p">|</span> walleye          <span class="p">|</span> S. vitreus     <span class="p">|</span> Old Hickory Lake, TN <span class="p">|</span> <span class="m">25</span> lb <span class="m">0</span> oz <span class="p">|</span>
+<span class="p">|</span> trout, cutthroat <span class="p">|</span> O. Clarki      <span class="p">|</span> Pyramid Lake, NV     <span class="p">|</span> <span class="m">41</span> lb <span class="m">0</span> oz <span class="p">|</span>
+<span class="p">|</span> perch, yellow    <span class="p">|</span> P. Flavescens  <span class="p">|</span> Boredentown, NJ      <span class="p">|</span> <span class="m">4</span> lb <span class="m">3</span> oz  <span class="p">|</span>
+<span class="p">|</span> bluegill         <span class="p">|</span> L. Macrochirus <span class="p">|</span> Ketana Lake, AL      <span class="p">|</span> <span class="m">4</span> lb <span class="m">13</span> oz <span class="p">|</span>
+<span class="p">|</span> gar, longnose    <span class="p">|</span> L. Osseus      <span class="p">|</span> Trinity River, TX    <span class="p">|</span> <span class="m">50</span> lb <span class="m">5</span> oz <span class="p">|</span>
+<span class="p">|</span> crappie, white   <span class="p">|</span> P. annularis   <span class="p">|</span> Enid Dam, MS         <span class="p">|</span> <span class="m">5</span> lb <span class="m">3</span> oz  <span class="p">|</span>
+<span class="p">|</span> pickerel, grass  <span class="p">|</span> E. americanus  <span class="p">|</span> Dewart Lake, IN      <span class="p">|</span> <span class="m">1</span> lb <span class="m">0</span> oz  <span class="p">|</span>
+<span class="p">|</span> goldfish         <span class="p">|</span> C. auratus     <span class="p">|</span> Lake Hodges, CA      <span class="p">|</span> <span class="m">6</span> lb <span class="m">10</span> oz <span class="p">|</span>
+<span class="p">|</span> salmon, chinook  <span class="p">|</span> O. Tshawytscha <span class="p">|</span> Kenai River, AK      <span class="p">|</span> <span class="m">97</span> lb <span class="m">4</span> oz <span class="p">|</span>
++------------------+----------------+----------------------+------------+
+<span class="m">10</span> rows in <span class="nb">set</span> <span class="o">(</span>0.001 sec<span class="o">)</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>반면에 물고기를 낚은 기록이 중요한 경우 물고기의 종에 대한 정보는 필요가 없다 대신에 잡은 사람의 이름과 잡은 날짜가 중요하다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">fish_records</span><span class="p">(</span><span class="n">first_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">last_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">common</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="k">location</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span><span class="k">state</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">weight</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="nb">date</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">));</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">fish_records</span>  
+<span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;George&#39;</span><span class="p">,</span> <span class="s1">&#39;Perry&#39;</span><span class="p">,</span> <span class="s1">&#39;bass, largemouth&#39;</span><span class="p">,</span> <span class="s1">&#39;Montgomery Lake&#39;</span><span class="p">,</span> <span class="s1">&#39;GA&#39;</span><span class="p">,</span> <span class="s1">&#39;22 lb 4 oz&#39;</span><span class="p">,</span> <span class="s1">&#39;6/2/1932&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Mabry&#39;</span><span class="p">,</span> <span class="s1">&#39;Harper&#39;</span><span class="p">,</span> <span class="s1">&#39;walleye&#39;</span><span class="p">,</span> <span class="s1">&#39;Old Hickory Lake&#39;</span><span class="p">,</span> <span class="s1">&#39;TN&#39;</span><span class="p">,</span> <span class="s1">&#39;25 lb 0 oz&#39;</span><span class="p">,</span> <span class="s1">&#39;8/2/1960&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Skimmerhorn&#39;</span><span class="p">,</span> <span class="s1">&#39;trout, cutthroat&#39;</span><span class="p">,</span> <span class="s1">&#39;Pyramid Lake&#39;</span><span class="p">,</span> <span class="s1">&#39;NV&#39;</span><span class="p">,</span> <span class="s1">&#39;41 lb 0 oz&#39;</span><span class="p">,</span> <span class="s1">&#39;12/1/1925&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;C.C.&#39;</span><span class="p">,</span> <span class="s1">&#39;Abbot&#39;</span><span class="p">,</span> <span class="s1">&#39;perch, yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;Boredentown&#39;</span><span class="p">,</span> <span class="s1">&#39;NJ&#39;</span><span class="p">,</span> <span class="s1">&#39;4 lb 3 oz&#39;</span><span class="p">,</span> <span class="s1">&#39;5/1/1865&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;T.S.&#39;</span><span class="p">,</span> <span class="s1">&#39;Hudson&#39;</span><span class="p">,</span> <span class="s1">&#39;bluegill&#39;</span><span class="p">,</span> <span class="s1">&#39;Ketana Lake&#39;</span><span class="p">,</span> <span class="s1">&#39;AL&#39;</span><span class="p">,</span> <span class="s1">&#39;4 lb 13 oz&#39;</span><span class="p">,</span> <span class="s1">&#39;4/9/1950&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Townsend&#39;</span><span class="p">,</span> <span class="s1">&#39;Miller&#39;</span><span class="p">,</span> <span class="s1">&#39;gar, longnose&#39;</span><span class="p">,</span> <span class="s1">&#39;Trinity River&#39;</span><span class="p">,</span> <span class="s1">&#39;TX&#39;</span><span class="p">,</span> <span class="s1">&#39;50 lb 5 oz&#39;</span><span class="p">,</span> <span class="s1">&#39;7/30/1954&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;Bright&#39;</span><span class="p">,</span> <span class="s1">&#39;crappie, white&#39;</span><span class="p">,</span> <span class="s1">&#39;Enid Dam&#39;</span><span class="p">,</span> <span class="s1">&#39;MS&#39;</span><span class="p">,</span> <span class="s1">&#39;5 lb 3 oz&#39;</span><span class="p">,</span> <span class="s1">&#39;7/31/1957&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Mike&#39;</span><span class="p">,</span> <span class="s1">&#39;Berg&#39;</span><span class="p">,</span> <span class="s1">&#39;pickerel, grass&#39;</span><span class="p">,</span> <span class="s1">&#39;Dewart Lake&#39;</span><span class="p">,</span> <span class="s1">&#39;IN&#39;</span><span class="p">,</span> <span class="s1">&#39;1 lb 0 oz&#39;</span><span class="p">,</span> <span class="s1">&#39;6/9/1990&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Flprentino&#39;</span><span class="p">,</span> <span class="s1">&#39;Abena&#39;</span><span class="p">,</span> <span class="s1">&#39;goldfish&#39;</span><span class="p">,</span> <span class="s1">&#39;Lake Hodges&#39;</span><span class="p">,</span> <span class="s1">&#39;CA&#39;</span><span class="p">,</span> <span class="s1">&#39;6 lb 10 oz&#39;</span><span class="p">,</span> <span class="s1">&#39;4/17/1996&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Les&#39;</span><span class="p">,</span> <span class="s1">&#39;Anderson&#39;</span><span class="p">,</span> <span class="s1">&#39;salmon, chinook&#39;</span><span class="p">,</span> <span class="s1">&#39;Kenai River&#39;</span><span class="p">,</span> <span class="s1">&#39;AK&#39;</span><span class="p">,</span> <span class="s1">&#39;97 lb 4 oz&#39;</span><span class="p">,</span> <span class="s1">&#39;5/17/1985&#39;</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>만들어진 테이블에 종 정보 대신 잡은 날짜와 잡은 사람에 대한 정보가 들어가 있다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM fish_records<span class="p">;</span>
++------------+-------------+------------------+------------------+-------+------------+-----------+
+<span class="p">|</span> first_name <span class="p">|</span> last_name   <span class="p">|</span> common           <span class="p">|</span> location         <span class="p">|</span> state <span class="p">|</span> weight     <span class="p">|</span> date      <span class="p">|</span>
++------------+-------------+------------------+------------------+-------+------------+-----------+
+<span class="p">|</span> George     <span class="p">|</span> Perry       <span class="p">|</span> bass, largemouth <span class="p">|</span> Montgomery Lake  <span class="p">|</span> GA    <span class="p">|</span> <span class="m">22</span> lb <span class="m">4</span> oz <span class="p">|</span> 6/2/1932  <span class="p">|</span>
+<span class="p">|</span> Mabry      <span class="p">|</span> Harper      <span class="p">|</span> walleye          <span class="p">|</span> Old Hickory Lake <span class="p">|</span> TN    <span class="p">|</span> <span class="m">25</span> lb <span class="m">0</span> oz <span class="p">|</span> 8/2/1960  <span class="p">|</span>
+<span class="p">|</span> John       <span class="p">|</span> Skimmerhorn <span class="p">|</span> trout, cutthroat <span class="p">|</span> Pyramid Lake     <span class="p">|</span> NV    <span class="p">|</span> <span class="m">41</span> lb <span class="m">0</span> oz <span class="p">|</span> 12/1/1925 <span class="p">|</span>
+<span class="p">|</span> C.C.       <span class="p">|</span> Abbot       <span class="p">|</span> perch, yellow    <span class="p">|</span> Boredentown      <span class="p">|</span> NJ    <span class="p">|</span> <span class="m">4</span> lb <span class="m">3</span> oz  <span class="p">|</span> 5/1/1865  <span class="p">|</span>
+<span class="p">|</span> T.S.       <span class="p">|</span> Hudson      <span class="p">|</span> bluegill         <span class="p">|</span> Ketana Lake      <span class="p">|</span> AL    <span class="p">|</span> <span class="m">4</span> lb <span class="m">13</span> oz <span class="p">|</span> 4/9/1950  <span class="p">|</span>
+<span class="p">|</span> Townsend   <span class="p">|</span> Miller      <span class="p">|</span> gar, longnose    <span class="p">|</span> Trinity River    <span class="p">|</span> TX    <span class="p">|</span> <span class="m">50</span> lb <span class="m">5</span> oz <span class="p">|</span> 7/30/1954 <span class="p">|</span>
+<span class="p">|</span> Fred       <span class="p">|</span> Bright      <span class="p">|</span> crappie, white   <span class="p">|</span> Enid Dam         <span class="p">|</span> MS    <span class="p">|</span> <span class="m">5</span> lb <span class="m">3</span> oz  <span class="p">|</span> 7/31/1957 <span class="p">|</span>
+<span class="p">|</span> Mike       <span class="p">|</span> Berg        <span class="p">|</span> pickerel, grass  <span class="p">|</span> Dewart Lake      <span class="p">|</span> IN    <span class="p">|</span> <span class="m">1</span> lb <span class="m">0</span> oz  <span class="p">|</span> 6/9/1990  <span class="p">|</span>
+<span class="p">|</span> Flprentino <span class="p">|</span> Abena       <span class="p">|</span> goldfish         <span class="p">|</span> Lake Hodges      <span class="p">|</span> CA    <span class="p">|</span> <span class="m">6</span> lb <span class="m">10</span> oz <span class="p">|</span> 4/17/1996 <span class="p">|</span>
+<span class="p">|</span> Les        <span class="p">|</span> Anderson    <span class="p">|</span> salmon, chinook  <span class="p">|</span> Kenai River      <span class="p">|</span> AK    <span class="p">|</span> <span class="m">97</span> lb <span class="m">4</span> oz <span class="p">|</span> 5/17/1985 <span class="p">|</span>
++------------+-------------+------------------+------------------+-------+------------+-----------+
+<span class="m">10</span> rows in <span class="nb">set</span> <span class="o">(</span>0.001 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>목적이 다르기에 만들어진 테이블에 대한 같은 목적에 대한 쿼리 방법도 달라진다. 예를 들어 NJ 주에서 잡힌 물고기에 대한 정보를 얻고 싶다고 할 때 주(state) 라는 열이 있는 fish_records 테이블에는 주를 통해 쿼리를 할 수 있다. 반면 location 열에 주 정보가 있는 fish_info 테이블에서는 만약 NJ라는 글자가 들어간 장소가 있다면 쿼리 결과가 달라질 수 있다. 아래와 같이 같은 목적에 대해 쿼리 방법이 다른 것을 확인할 수 있다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">fish_info</span> <span class="k">WHERE</span> <span class="k">location</span> <span class="k">LIKE</span> <span class="s1">&#39;%NJ&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">fish_records</span> <span class="k">WHERE</span> <span class="k">state</span><span class="o">=</span><span class="s1">&#39;NJ&#39;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>fish_list<span class="o">]</span>&gt; SELECT * FROM fish_info WHERE location LIKE <span class="s1">&#39;%NJ&#39;</span><span class="p">;</span>
++---------------+---------------+-----------------+-----------+
+<span class="p">|</span> common        <span class="p">|</span> species       <span class="p">|</span> location        <span class="p">|</span> weight    <span class="p">|</span>
++---------------+---------------+-----------------+-----------+
+<span class="p">|</span> perch, yellow <span class="p">|</span> P. Flavescens <span class="p">|</span> Boredentown, NJ <span class="p">|</span> <span class="m">4</span> lb <span class="m">3</span> oz <span class="p">|</span>
++---------------+---------------+-----------------+-----------+
+<span class="m">1</span> row in <span class="nb">set</span> <span class="o">(</span>0.010 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>fish_list<span class="o">]</span>&gt; SELECT * FROM fish_records WHERE <span class="nv">state</span><span class="o">=</span><span class="s1">&#39;NJ&#39;</span><span class="p">;</span>
++------------+-----------+---------------+-------------+-------+-----------+----------+
+<span class="p">|</span> first_name <span class="p">|</span> last_name <span class="p">|</span> common        <span class="p">|</span> location    <span class="p">|</span> state <span class="p">|</span> weight    <span class="p">|</span> date     <span class="p">|</span>
++------------+-----------+---------------+-------------+-------+-----------+----------+
+<span class="p">|</span> C.C.       <span class="p">|</span> Abbot     <span class="p">|</span> perch, yellow <span class="p">|</span> Boredentown <span class="p">|</span> NJ    <span class="p">|</span> <span class="m">4</span> lb <span class="m">3</span> oz <span class="p">|</span> 5/1/1865 <span class="p">|</span>
++------------+-----------+---------------+-------------+-------+-----------+----------+
+<span class="m">1</span> row in <span class="nb">set</span> <span class="o">(</span>0.006 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>SQL은 관계형 데이터 베이스 관리를 위한 언어이다. 관계형이란 말은 테이블을 설계할 때 여러 테이블의 열들이 서로 어떠한 연관이 있는지를 고려해야한다는 말이다. 테이블 내의 열들에 관계에 대해서 고려하면서 테이블을 설계할 때는 3가지 과정을 거친다.</p>
+<ol>
+<li>테이블로 표현하려는 것을 선택한다. - 테이블을 만드는 이유</li>
+<li>테이블을 사용하여 얻어야 하는 정보들의 목록을 정리한다. - 테이블에 담겨야 할 내용 정리</li>
+<li>테이블을 정리한 정보들의 조각으로 나누어 구성한다. - 테이블의 열을 어떻게 구성할지에 대한 고민</li>
+</ol>
+<p>데이터를 조각으로 나누어 구성한다는 말은 테이블을 만드는 이유에 적합하도록 데이터를 나누는 작업을 의미하며 데이터가 충분히 열로 잘 쪼개져 있는 것을 데이터가 원자적이다라고 표현한다.</p>
+<h2 id="원자적-데이터">원자적 데이터</h2>
+<p>원자적 데이터란 데이터가 쪼개질 수 없는 가장 작은 부분들로 이루어졌다는 의미이다. 원자적 데이터를 만들기 위한 방법은 다음과 같다.</p>
+<ul>
+<li>원자적 데이터의 규칙</li>
+</ul>
+<p>규칙1: 원자적 데이터로 구성된 열은 그 열에 같은 타입의 데이터 여러개를 가질 수 없다.</p>
+<p>규칙2: 원자적 데이터로 구성된 테이블은 같은 타입의 데이터를 여러 열에 가질 수 없다. 단 테이블을 사용하는 목적에 따라 원자적 데이터 테이블의 형태가 달라질 수 있다.</p>
+<p><strong>원자적 데이터를 만든다는 말은 데이터를 가능한 한 작게 나누는 것이 아닌 효율적인 테이블을 만드는 한도 내에서 필요한 만큼 가능한 작게 데이터를 나누는 것이다.</strong> 필요 이상으로 데이터를 나눌 필요는 없다. 추가 열이 사용할 필요가 없으면, 데이터를 나눌 수 있더라도 더 이상 쪼갤 필요가 없다.</p>
+<p>예를 들면 피자 배달부에게 주소는 하나의 전체 주소의 경우가 더 편리하여 더 나눌 필요가 없는 원자적 데이터가 되며, 쿼리의 경우도 피자 배달부에게는 주문 번호가 중요하기에 주문 번호를 기준으로 쿼리를 주게 된다. 부동산 업자에게는 주소의 이름과 숫자가 나누어진 것이 원자적 데이터가 된다. 쿼리의 경우 거리 이름을 기준으로 쿼리를 주게 된다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">pizza_deliveries</span><span class="p">(</span><span class="n">order_number</span> <span class="nb">INT</span><span class="p">,</span> <span class="n">address</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">));</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>피자배달부에게는 주문 번호와 완전한 주소가 중요하다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">pizza_deliveries</span>  
+<span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;246&#39;</span><span class="p">,</span>  <span class="s1">&#39;59 N. Ajax Rapids&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;247&#39;</span><span class="p">,</span>  <span class="s1">&#39;849 SQL Street&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;248&#39;</span><span class="p">,</span>  <span class="s1">&#39;2348 E. PMP Plaza&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;249&#39;</span><span class="p">,</span>  <span class="s1">&#39;1978 HTML Heights&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;250&#39;</span><span class="p">,</span>  <span class="s1">&#39;24 S. Sevlets Springs&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;251&#39;</span><span class="p">,</span>  <span class="s1">&#39;807 Infinite Circle&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;252&#39;</span><span class="p">,</span>  <span class="s1">&#39;32 Disign Patterns Plaza&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;253&#39;</span><span class="p">,</span>  <span class="s1">&#39;9208 S. Java Ranch&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;254&#39;</span><span class="p">,</span>  <span class="s1">&#39;4653 W. EJB Estate&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;255&#39;</span><span class="p">,</span>  <span class="s1">&#39;8678 OOA&amp;D Orchard&#39;</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>쿼리는 다음과 같이 주문 번호로 줄 수 있다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">address</span> <span class="k">FROM</span> <span class="n">pizza_deliveries</span> <span class="k">WHERE</span> <span class="n">order_number</span> <span class="o">=</span> <span class="mi">252</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>쿼리 결과는 다음과 같다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT address FROM pizza_deliveries WHERE <span class="nv">order_number</span> <span class="o">=</span> 252<span class="p">;</span>
++--------------------------+
+<span class="p">|</span> address                  <span class="p">|</span>
++--------------------------+
+<span class="p">|</span> <span class="m">32</span> Disign Patterns Plaza <span class="p">|</span>
++--------------------------+
+<span class="m">1</span> row in <span class="nb">set</span> <span class="o">(</span>0.001 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>부동산 업자의 경우 주소를 세부 주소로 나누어 열을 만들고 테이블을 만든다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">real_estate</span><span class="p">(</span><span class="n">street_number</span> <span class="nb">INT</span><span class="p">,</span> <span class="n">street_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">property_type</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">price</span> <span class="nb">INT</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">real_estate</span>  
+<span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;59&#39;</span><span class="p">,</span> <span class="s1">&#39;N. Ajax Rapids&#39;</span><span class="p">,</span> <span class="s1">&#39;condo&#39;</span><span class="p">,</span><span class="mi">189000</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;849&#39;</span><span class="p">,</span> <span class="s1">&#39;SQL Street&#39;</span><span class="p">,</span> <span class="s1">&#39;apartment&#39;</span><span class="p">,</span> <span class="mi">109000</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;2348&#39;</span><span class="p">,</span> <span class="s1">&#39;E. PMP Plaza&#39;</span><span class="p">,</span> <span class="s1">&#39;house&#39;</span><span class="p">,</span> <span class="mi">355000</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;1978&#39;</span><span class="p">,</span> <span class="s1">&#39;HTML Heights&#39;</span><span class="p">,</span> <span class="s1">&#39;apartment&#39;</span><span class="p">,</span> <span class="mi">134000</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;24&#39;</span><span class="p">,</span> <span class="s1">&#39;S. Sevlets Springs&#39;</span><span class="p">,</span> <span class="s1">&#39;house&#39;</span><span class="p">,</span> <span class="mi">355000</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;807&#39;</span><span class="p">,</span> <span class="s1">&#39;Infinite Circle&#39;</span><span class="p">,</span> <span class="s1">&#39;condo&#39;</span><span class="p">,</span> <span class="mi">143900</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;32&#39;</span><span class="p">,</span> <span class="s1">&#39;Disign Patterns Plaza&#39;</span><span class="p">,</span> <span class="s1">&#39;house&#39;</span><span class="p">,</span> <span class="mi">465000</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;9208&#39;</span><span class="p">,</span> <span class="s1">&#39;S. Java Ranch&#39;</span><span class="p">,</span> <span class="s1">&#39;house&#39;</span><span class="p">,</span> <span class="mi">699000</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;4653&#39;</span><span class="p">,</span> <span class="s1">&#39;SQL Street&#39;</span><span class="p">,</span> <span class="s1">&#39;apartment&#39;</span><span class="p">,</span> <span class="mi">115000</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;8678&#39;</span><span class="p">,</span> <span class="s1">&#39;OOA&amp;D Orchard&#39;</span><span class="p">,</span> <span class="s1">&#39;house&#39;</span><span class="p">,</span> <span class="mi">355000</span><span class="p">)</span> <span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>쿼리는 거리 이름으로 줄 수 있다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">price</span><span class="p">,</span> <span class="n">property_type</span> <span class="k">FROM</span> <span class="n">real_estate</span> <span class="k">WHERE</span> <span class="n">street_name</span> <span class="o">=</span> <span class="s1">&#39;SQL Street&#39;</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>쿼리 결과는 다음과 같다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT price, property_type FROM real_estate WHERE <span class="nv">street_name</span> <span class="o">=</span> <span class="s1">&#39;SQL Street&#39;</span><span class="p">;</span>
++--------+---------------+
+<span class="p">|</span> price  <span class="p">|</span> property_type <span class="p">|</span>
++--------+---------------+
+<span class="p">|</span> <span class="m">109000</span> <span class="p">|</span> apartment     <span class="p">|</span>
+<span class="p">|</span> <span class="m">115000</span> <span class="p">|</span> apartment     <span class="p">|</span>
++--------+---------------+
+<span class="m">2</span> rows in <span class="nb">set</span> <span class="o">(</span>0.000 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="정규화">정규화</h2>
+<p>테이블을 정규화 한다는 것은 테이블들이 표준 규칙을 따른다는 의미이며, 원자적 데이터로 테이블을 구성하는 것이 정규화의 첫 걸음이다. 테이블 정규화를 하면 중복 데이터가 없어서 데이터베이스의 크기를 줄여준다. 또한, 찾아야할 데이터가 적어 쿼리가 더 빨라진다. 테이블이 작은 경우에도 커질 경우를 고려하여 정규 테이블을 사용하는 것이 좋다.</p>
+<p>정규 테이블이 되려면, 원자적 데이터를 만들고 나서 데이터의 형태가 제 1 정규형(1NF)의 형태를 가져야 한다. 제 1 정규형은 각 행의 데이터들은 원자적 값을 가져야한다. 각 행은 유일무이한 식별자인 기본키를 가져야 한다.</p>
+<h2 id="기본키-규칙">기본키 규칙</h2>
+<p>기본키는 각 행을 다른 행과 구분하는 열이다. 기본키를 구성하는데 필요한 4가지 규칙이 있다.</p>
+<ol>
+<li>기본키는 NULL 값이 될 수 없다. NULL 값은 유일무이하지 않기 때문이다.</li>
+<li>기본키는 행이 삽입될 때 값이 있어야 한다.</li>
+<li>기본키는 간결해야한다. 유일무이한 정보를 가지고 있어야한다.</li>
+<li>기본키의 값은 변경 불가능한 값이여야 한다. 유일무이 하기에 변경 가능하면 중복이 생길 수도 있기에 변경 불가능 해야 한다.</li>
+</ol>
+<p>기본키를 만들기 위한 가장 좋은 방법은 기본키만을 위한 열을 새로 만드는 방법이다. 새로 만드는 기본키의 경우 synthetic key라 하고, 이미 존재하는 열을 기본키로 사용할 경우 natural key라 한다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_contacts</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>SHOW CREATE TABLE 명령어를 사용하면 이전에 만들었던 테이블을 만든 코드를 반환해준다.</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SHOW CREATE TABLE my_contacts<span class="p">;</span>
+<span class="p">|</span> Table       <span class="p">|</span> Create Table                                                                                                      <span class="p">|</span> my_contacts <span class="p">|</span> CREATE TABLE <span class="sb">`</span>my_contacts<span class="sb">`</span> <span class="o">(</span>
+  <span class="sb">`</span>last_name<span class="sb">`</span> varchar<span class="o">(</span>30<span class="o">)</span> default NULL,
+  <span class="sb">`</span>first_name<span class="sb">`</span> varchar<span class="o">(</span>20<span class="o">)</span> default NULL,
+  <span class="sb">`</span>email<span class="sb">`</span> varchar<span class="o">(</span>50<span class="o">)</span> default NULL,
+  <span class="sb">`</span>gender<span class="sb">`</span> char<span class="o">(</span>1<span class="o">)</span> default NULL,
+  <span class="sb">`</span>birthday<span class="sb">`</span> date default NULL,
+  <span class="sb">`</span>profession<span class="sb">`</span> varchar<span class="o">(</span>50<span class="o">)</span> default NULL,
+  <span class="sb">`</span>location<span class="sb">`</span> varchar<span class="o">(</span>50<span class="o">)</span> default NULL,
+  <span class="sb">`</span>status<span class="sb">`</span> varchar<span class="o">(</span>20<span class="o">)</span> default NULL,
+  <span class="sb">`</span>interests<span class="sb">`</span> varchar<span class="o">(</span>100<span class="o">)</span> default NULL,
+  <span class="sb">`</span>seeking<span class="sb">`</span> varchar<span class="o">(</span>100<span class="o">)</span> default NULL
+<span class="o">)</span> <span class="nv">ENGINE</span><span class="o">=</span>InnoDB DEFAULT <span class="nv">CHARSET</span><span class="o">=</span>utf8mb4 <span class="p">|</span>
+<span class="m">1</span> row in <span class="nb">set</span> <span class="o">(</span>0.008 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>기존에 1장에서 만들었던 테이블에는 기본키가 없었다. 이제 기본키가 있는 테이블을 생성해 보자. 아래와 같이 contact_id 열을 추가한 후 PRIMARY KEY 명령어로 기본키를 만들 수 있다.</p>
+<p>기존의 테이블을 지우고 새롭게 테이블을 만들어준다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">my_contacts</span><span class="p">;</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_contacts</span><span class="p">(</span>
+    <span class="n">contact_id</span> <span class="nb">INT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">last_name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">first_name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">email</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">gender</span> <span class="nb">char</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">birthday</span> <span class="nb">date</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">profession</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="k">location</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">status</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">interests</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">seeking</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">contact_id</span><span class="p">)</span>
+    <span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>기존의 코드와 달라진 점은 <code>PRIMARY KEY (contact_id)</code> 가 붙은 점이다. 이 부분이 contact_id 열을 기본키로 만들어주는 역할을 한다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; DESC my_contacts<span class="p">;</span>
++------------+--------------+------+-----+---------+-------+
+<span class="p">|</span> Field      <span class="p">|</span> Type         <span class="p">|</span> Null <span class="p">|</span> Key <span class="p">|</span> Default <span class="p">|</span> Extra <span class="p">|</span>
++------------+--------------+------+-----+---------+-------+
+<span class="p">|</span> contact_id <span class="p">|</span> int<span class="o">(</span>11<span class="o">)</span>      <span class="p">|</span> NO   <span class="p">|</span> PRI <span class="p">|</span> NULL    <span class="p">|</span>       <span class="p">|</span>
+<span class="p">|</span> last_name  <span class="p">|</span> varchar<span class="o">(</span>30<span class="o">)</span>  <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>       <span class="p">|</span>
+<span class="p">|</span> first_name <span class="p">|</span> varchar<span class="o">(</span>20<span class="o">)</span>  <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>       <span class="p">|</span>
+<span class="p">|</span> email      <span class="p">|</span> varchar<span class="o">(</span>50<span class="o">)</span>  <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>       <span class="p">|</span>
+<span class="p">|</span> gender     <span class="p">|</span> char<span class="o">(</span>1<span class="o">)</span>      <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>       <span class="p">|</span>
+<span class="p">|</span> birthday   <span class="p">|</span> date         <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>       <span class="p">|</span>
+<span class="p">|</span> profession <span class="p">|</span> varchar<span class="o">(</span>50<span class="o">)</span>  <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>       <span class="p">|</span>
+<span class="p">|</span> location   <span class="p">|</span> varchar<span class="o">(</span>50<span class="o">)</span>  <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>       <span class="p">|</span>
+<span class="p">|</span> status     <span class="p">|</span> varchar<span class="o">(</span>20<span class="o">)</span>  <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>       <span class="p">|</span>
+<span class="p">|</span> interests  <span class="p">|</span> varchar<span class="o">(</span>100<span class="o">)</span> <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>       <span class="p">|</span>
+<span class="p">|</span> seeking    <span class="p">|</span> varchar<span class="o">(</span>100<span class="o">)</span> <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>       <span class="p">|</span>
++------------+--------------+------+-----+---------+-------+
+<span class="m">11</span> rows in <span class="nb">set</span> <span class="o">(</span>0.002 sec<span class="o">)</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>id가 1부터 n까지 숫자를 자동증가하게 만들려면 명령어 AUTO_INCREMENT를 뒤에 추가하면 된다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">my_contacts</span><span class="p">;</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_contacts</span><span class="p">(</span>
+    <span class="n">contact_id</span> <span class="nb">INT</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+    <span class="n">last_name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">first_name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">email</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">gender</span> <span class="nb">char</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">birthday</span> <span class="nb">date</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">profession</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="k">location</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">status</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">interests</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">seeking</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">contact_id</span><span class="p">)</span>
+    <span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>auto_increment 를 설정하면 키 값을 비워두어도 자동으로 숫자가 1부터 오름차순으로 진행된다.</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; desc my_contacts
+    -&gt; <span class="p">;</span>
++------------+--------------+------+-----+---------+----------------+
+<span class="p">|</span> Field      <span class="p">|</span> Type         <span class="p">|</span> Null <span class="p">|</span> Key <span class="p">|</span> Default <span class="p">|</span> Extra          <span class="p">|</span>
++------------+--------------+------+-----+---------+----------------+
+<span class="p">|</span> contact_id <span class="p">|</span> int<span class="o">(</span>11<span class="o">)</span>      <span class="p">|</span> NO   <span class="p">|</span> PRI <span class="p">|</span> NULL    <span class="p">|</span> auto_increment <span class="p">|</span>
+<span class="p">|</span> last_name  <span class="p">|</span> varchar<span class="o">(</span>30<span class="o">)</span>  <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>                <span class="p">|</span>
+<span class="p">|</span> first_name <span class="p">|</span> varchar<span class="o">(</span>20<span class="o">)</span>  <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>                <span class="p">|</span>
+<span class="p">|</span> email      <span class="p">|</span> varchar<span class="o">(</span>50<span class="o">)</span>  <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>                <span class="p">|</span>
+<span class="p">|</span> gender     <span class="p">|</span> char<span class="o">(</span>1<span class="o">)</span>      <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>                <span class="p">|</span>
+<span class="p">|</span> birthday   <span class="p">|</span> date         <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>                <span class="p">|</span>
+<span class="p">|</span> profession <span class="p">|</span> varchar<span class="o">(</span>50<span class="o">)</span>  <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>                <span class="p">|</span>
+<span class="p">|</span> location   <span class="p">|</span> varchar<span class="o">(</span>50<span class="o">)</span>  <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>                <span class="p">|</span>
+<span class="p">|</span> status     <span class="p">|</span> varchar<span class="o">(</span>20<span class="o">)</span>  <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>                <span class="p">|</span>
+<span class="p">|</span> interests  <span class="p">|</span> varchar<span class="o">(</span>100<span class="o">)</span> <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>                <span class="p">|</span>
+<span class="p">|</span> seeking    <span class="p">|</span> varchar<span class="o">(</span>100<span class="o">)</span> <span class="p">|</span> YES  <span class="p">|</span>     <span class="p">|</span> NULL    <span class="p">|</span>                <span class="p">|</span>
++------------+--------------+------+-----+---------+----------------+
+<span class="m">11</span> rows in <span class="nb">set</span> <span class="o">(</span>0.004 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>예시</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">name_lists</span><span class="p">(</span>
+    <span class="n">id</span> <span class="nb">INT</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+    <span class="n">first_name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">last_name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">name_lists</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="k">NULL</span><span class="p">,</span> <span class="s1">&#39;Marcia&#39;</span><span class="p">,</span> <span class="s1">&#39;Bredy&#39;</span><span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">name_lists</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Bobby&#39;</span><span class="p">,</span> <span class="s1">&#39;Bredy&#39;</span><span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">name_lists</span> <span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Cindy&#39;</span><span class="p">,</span> <span class="s1">&#39;Bredy&#39;</span><span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">name_lists</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="mi">99</span><span class="p">,</span> <span class="s1">&#39;Peter&#39;</span><span class="p">,</span> <span class="s1">&#39;Bredy&#39;</span><span class="p">);</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>id를 NULL로 입력한 곳에 자동으로 1이 들어간 것을 확인할 수 있다. id 열의 값을 입력하지 않은 3번 insert 문의 경우 자동으로 2 다음에 3이 들어간 것을 확인할 수 있다. 물론 맨 마지막의 경우처럼 자동으로 증가 외에도 중복이 아닌 임의의 숫자를 id로 지정할 수 있다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT *  FROM name_lists<span class="p">;</span>
++----+------------+-----------+
+<span class="p">|</span> id <span class="p">|</span> first_name <span class="p">|</span> last_name <span class="p">|</span>
++----+------------+-----------+
+<span class="p">|</span>  <span class="m">1</span> <span class="p">|</span> Marcia     <span class="p">|</span> Bredy     <span class="p">|</span>
+<span class="p">|</span>  <span class="m">2</span> <span class="p">|</span> Bobby      <span class="p">|</span> Bredy     <span class="p">|</span>
+<span class="p">|</span>  <span class="m">3</span> <span class="p">|</span> Cindy      <span class="p">|</span> Bredy     <span class="p">|</span>
+<span class="p">|</span> <span class="m">99</span> <span class="p">|</span> Peter      <span class="p">|</span> Bredy     <span class="p">|</span>
++----+------------+-----------+
+<span class="m">4</span> rows in <span class="nb">set</span> <span class="o">(</span>0.001 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="기존-테이블에-기본키-추가하기-alter-table">기존 테이블에 기본키 추가하기 ALTER TABLE</h2>
+<p>그렇다면 이미 만들어진 테이블에 기본키를 추가하려면 어떻게 해야할까 ? ALTER TABLE 문을 이용하면 된다. 5장에서 자세히 다룰 것이기에 여기서는 코드 사용 방법만 한번 보고 넘어간다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">my_contacts</span><span class="p">;</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_contacts</span><span class="p">(</span>
+    <span class="n">last_name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">first_name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">email</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">gender</span> <span class="nb">char</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">birthday</span> <span class="nb">date</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">profession</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="k">location</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">status</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">interests</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">seeking</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span>
+    <span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">my_contacts</span><span class="p">(</span>
+    <span class="n">last_name</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">birthday</span><span class="p">,</span> <span class="n">profession</span><span class="p">,</span> <span class="k">location</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">interests</span><span class="p">,</span> <span class="n">seeking</span>
+<span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span>
+    <span class="s1">&#39;Anderson&#39;</span><span class="p">,</span> <span class="s1">&#39;Jillian&#39;</span><span class="p">,</span> <span class="s1">&#39;jill_anderson@breakneckpizza.com&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;1980-09-05&#39;</span><span class="p">,</span> <span class="s1">&#39;Technical Writer&#39;</span><span class="p">,</span> <span class="s1">&#39;Palo Alto, CA&#39;</span><span class="p">,</span> <span class="s1">&#39;Single&#39;</span><span class="p">,</span> <span class="s1">&#39;Kayaking, Reptiles&#39;</span><span class="p">,</span> <span class="s1">&#39;Relationship, Friends&#39;</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">my_contacts</span><span class="p">(</span>
+    <span class="n">first_name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">profession</span><span class="p">,</span> <span class="k">location</span>
+<span class="p">)</span>
+<span class="k">VALUES</span><span class="p">(</span>
+    <span class="s1">&#39;Pat&#39;</span><span class="p">,</span> <span class="s1">&#39;patpost@breakneckpizza.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Postal Worker&#39;</span><span class="p">,</span> <span class="s1">&#39;Princeton, NJ&#39;</span>
+<span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>기존의 my_contactㄴ 테이블을 다시 복원했다. 여기서 이제 기본키를 추가해보는 작업을 해보자.
+새로운 열을 추가하는 명령어는 ALTER TABLE과 ADD COLUMN 명령어로 이루어진다. 아래 코드에서 FIRST는 첫번째 열로 추가해준다는 명령어이며, 여기서 따로 열 순서를 지정하지 않을 경우 마지막 열로 들어간다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_contacts</span>
+<span class="k">ADD</span> <span class="k">COLUMN</span> <span class="n">contact_id</span> <span class="nb">INT</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span> <span class="k">FIRST</span><span class="p">,</span>
+<span class="k">ADD</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">contact_id</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>ALTER TABLE 테이블의 구조를 변경하는 방법</li>
+</ul>
+<p>기존 테이블에 들어 있던 데이터에 id 열이 생기고 id가 1이 부여된 것을 확인할 수 있다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">MariaDB <span class="o">[</span>gregs_list<span class="o">]</span>&gt; SELECT * FROM my_contacts<span class="p">;</span>
++------------+-----------+------------+----------------------------------+--------+------------+------------------+---------------+--------+--------------------+-----------------------+
+<span class="p">|</span> contact_id <span class="p">|</span> last_name <span class="p">|</span> first_name <span class="p">|</span> email                            <span class="p">|</span> gender <span class="p">|</span> birthday   <span class="p">|</span> profession       <span class="p">|</span> location      <span class="p">|</span> status <span class="p">|</span> interests          <span class="p">|</span> seeking               <span class="p">|</span>
++------------+-----------+------------+----------------------------------+--------+------------+------------------+---------------+--------+--------------------+-----------------------+
+<span class="p">|</span>          <span class="m">1</span> <span class="p">|</span> Anderson  <span class="p">|</span> Jillian    <span class="p">|</span> jill_anderson@breakneckpizza.com <span class="p">|</span> F      <span class="p">|</span> 1980-09-05 <span class="p">|</span> Technical Writer <span class="p">|</span> Palo Alto, CA <span class="p">|</span> Single <span class="p">|</span> Kayaking, Reptiles <span class="p">|</span> Relationship, Friends <span class="p">|</span>
+<span class="p">|</span>          <span class="m">2</span> <span class="p">|</span> NULL      <span class="p">|</span> Pat        <span class="p">|</span> patpost@breakneckpizza.com       <span class="p">|</span> NULL   <span class="p">|</span> NULL       <span class="p">|</span> Postal Worker    <span class="p">|</span> Princeton, NJ <span class="p">|</span> NULL   <span class="p">|</span> NULL               <span class="p">|</span> NULL                  <span class="p">|</span>
++------------+-----------+------------+----------------------------------+--------+------------+------------------+---------------+--------+--------------------+-----------------------+
+<span class="m">2</span> rows in <span class="nb">set</span> <span class="o">(</span>0.001 sec<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Sunsick</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-12-28
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/sql/">SQL</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/sql_ch_3/">
+            <span class="next-text nav-default">DElETE와 UPDATE 문</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.google.com/" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/choosunsick" class="iconfont icon-github" title="github"></a>
+  <a href="https://choosunsick.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020<span class="heart"><i class="iconfont icon-heart"></i></span><span>Sunsick</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
