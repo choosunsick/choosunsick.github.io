@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on Sunsick&#39;s blog</title>
+    <link>https://choosunsick.github.io/categories/python/</link>
+    <description>Recent content in Python on Sunsick&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko</language>
+    <lastBuildDate>Sat, 06 Feb 2021 17:00:50 +0900</lastBuildDate>
+    
+	<atom:link href="https://choosunsick.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>정규표현식 * 와 ? 패턴 비교하기</title>
+      <link>https://choosunsick.github.io/post/regex_1/</link>
+      <pubDate>Sat, 06 Feb 2021 17:00:50 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/regex_1/</guid>
+      <description>여러가지 데이터를 다룰 때 숫자와 더불어 문자열 데이터를 분석하거나 전처리 해야하는 경우가 종종 생기게 됩니다. 이런 문자열 데이터는 단순하게 다룰 수 있는 경우도 있</description>
+    </item>
+    
+  </channel>
+</rss>

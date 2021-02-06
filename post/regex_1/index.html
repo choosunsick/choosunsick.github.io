@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>정규표현식 * 와 ? 패턴 비교하기 - Sunsick&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Sunsick" /><meta name="description" content="여러가지 데이터를 다룰 때 숫자와 더불어 문자열 데이터를 분석하거나 전처리 해야하는 경우가 종종 생기게 됩니다. 이런 문자열 데이터는 단순하게 다룰 수 있는 경우도 있" /><meta name="keywords" content="blog, R, Data Analysis" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.69.2 with theme even" />
+
+
+<link rel="canonical" href="https://choosunsick.github.io/post/regex_1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="정규표현식 * 와 ? 패턴 비교하기" />
+<meta property="og:description" content="여러가지 데이터를 다룰 때 숫자와 더불어 문자열 데이터를 분석하거나 전처리 해야하는 경우가 종종 생기게 됩니다. 이런 문자열 데이터는 단순하게 다룰 수 있는 경우도 있" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://choosunsick.github.io/post/regex_1/" />
+<meta property="article:published_time" content="2021-02-06T17:00:50+09:00" />
+<meta property="article:modified_time" content="2021-02-06T17:00:50+09:00" />
+<meta itemprop="name" content="정규표현식 * 와 ? 패턴 비교하기">
+<meta itemprop="description" content="여러가지 데이터를 다룰 때 숫자와 더불어 문자열 데이터를 분석하거나 전처리 해야하는 경우가 종종 생기게 됩니다. 이런 문자열 데이터는 단순하게 다룰 수 있는 경우도 있">
+<meta itemprop="datePublished" content="2021-02-06T17:00:50&#43;09:00" />
+<meta itemprop="dateModified" content="2021-02-06T17:00:50&#43;09:00" />
+<meta itemprop="wordCount" content="1386">
+
+
+
+<meta itemprop="keywords" content="Python,정규표현식," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="정규표현식 * 와 ? 패턴 비교하기"/>
+<meta name="twitter:description" content="여러가지 데이터를 다룰 때 숫자와 더불어 문자열 데이터를 분석하거나 전처리 해야하는 경우가 종종 생기게 됩니다. 이런 문자열 데이터는 단순하게 다룰 수 있는 경우도 있"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Choo&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Choo&#39;s Blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">정규표현식 * 와 ? 패턴 비교하기</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-02-06 </span>
+        <div class="post-category">
+            <a href="/categories/python/"> Python </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#-와--패턴">* 와 ? 패턴</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>여러가지 데이터를 다룰 때 숫자와 더불어 문자열 데이터를 분석하거나 전처리 해야하는 경우가 종종 생기게 됩니다. 이런 문자열 데이터는 단순하게  다룰 수 있는 경우도 있지만 조건이 까다롭거나 다루는 과정에서 시간이 오래 걸리거나 원하는 결과를 제대로 산출하지 못하는 경우가 생길 수 있습니다. 예를 들면, 복잡한 문자열 데이터 사이에서 특정한 문자만 검색하거나 해당 문자를 제거하거나 변경하는 경우가 그렇습니다. 그런 상황에서 편리하게 사용할 수 있는 것이 바로 정규표현식입니다. 프로그래밍 언어마다 정규표현식을 다루는 방식은 차이가 존재하지만 문자열 데이터를 더 쉽게 다룰 수 있게 해준다는 것은 사실입니다. 그래서 이번에 정규표현식을 공부하면서 헷갈렸던 개념들을 정리해볼까 합니다.</p>
+<h2 id="-와--패턴">* 와 ? 패턴</h2>
+<p>정규표현식은 패턴을 통해 문자열 데이터를 더 쉽게 다룰 수 있게 만들어 줍니다. 정규표현식에는 다양한 패턴들이 있습니다. 여기서 살펴볼 패턴은 문자의 개수와 관련있는 패턴인 <code>*</code> 와 <code>?</code> 입니다. 먼저 <code>*</code> 패턴은 특정한 문자나 패턴 뒤에 붙여 사용하는 것으로 해당 문자가 최소 0번에서 n번 나타나는 것을 의미합니다. <code>?</code> 패턴 역시 마찬가지 특정한 문자나 패턴 뒤에 붙여서 사용하는 것으로 해당 문자가 최소 0번에서 최대 1번 나타나는 것을 의미합니다.</p>
+<p>이제 두 패턴에 대해 파이썬 예제를 통해 비교해보겠습니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="s2">&#34;http://www.forta.com/, httpa://www.forta.com/, https://www.forta.com/, httpsss://www.forta.com/&#34;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&#34;https*:\/\/[\w.]+&#34;</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&#34;https?:\/\/[\w.]+&#34;</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>파이썬은 정규표현식을 re 라는 패키지를 통해 다룹니다. re 패키지는 기본 패키지로 바로 import 할 수 있습니다. 예시 문자열 데이터로는 여러 개의 http 혹은 https와 유사한 문자열이 있는 경우를 가정해보겠습니다. 먼저 http인 경우와 https인 경우 그리고 http 뒤에 s가 아닌 다른 문자가 오는 경우 http 뒤에 s가 왔지만 하나가 아닌 경우 4가지 예시 문자열이 있습니다. 여기서 찾고 싶은 문자열 데이터는 정상적인 URL인 http와 https인 경우입니다. 이 두 가지 문자열을 찾을려면 <code>*</code> 이 아닌 <code>?</code> 패턴을 사용해야 합니다.</p>
+<p>먼저 <code>*</code> 패턴이 사용되는 경우 결과를 살펴보면 아래의 첫 번째와 같습니다. 첫 번째 결과물에는 s가 하나가 아닌 경우가 포함되어 있습니다. 왜냐하면 <code>*</code> 패턴의 경우 해당 문자가 최대 n번의 경우까지 포함하여 매칭하기 때문입니다. 반면 <code>?</code> 패턴의 경우 우리가 원하는 문자열 2가지만 추출할 수 있습니다. <code>?</code> 패턴은 최대 1번까지 나타나는 것을 매칭하기 때문에 s가 2번 이상 나오는 경우인 &lsquo;httpsss://www.forta.com/&rsquo; 문자열은 제외하게 됩니다. 따라서 s가 0개인 &lsquo;<a href="http://www.forta.com/'">http://www.forta.com/'</a>와 s가 1개인 경우 &lsquo;<a href="https://www.forta.com/'">https://www.forta.com/'</a> 두 가지만 추출하게 됩니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="p">[</span><span class="s1">&#39;http://www.forta.com/&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.forta.com/&#39;</span><span class="p">,</span> <span class="s1">&#39;httpsss://www.forta.com/&#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">&#39;http://www.forta.com/&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.forta.com/&#39;</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>그렇다면 만약 http 문자 뒤에 s가 아닌 다른 문자가 오는 경우를 포함해야한다면 어떻게 해야할까요 ?  기존의 <code>*</code> 과 <code>?</code> 패턴 앞에 <code>.</code>을 추가해주면 됩니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">t</span> <span class="o">=</span> <span class="s2">&#34;http://www.forta.com/, httpa://www.forta.com/, https://www.forta.com/, httpsss://www.forta.com/&#34;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&#34;http.*:\/\/[\w.]+&#34;</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&#34;http.?:\/\/[\w.]+&#34;</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>.*</code> 패턴은 http 뒤에 아무 문자가 최소 0개에서 n개까지 오는 경우를 의미합니다. http 문자 뒤에 아무 문자가 최소 0개에서 n개까지 올 수 있기 때문에 4가지의 모든 경우가 다 나타날 수 있습니다. <code>.?</code> 패턴은 http 뒤에 아무 문자가 최소 0개에서 최대 1개까지 오는 경우를 의미합니다. 이에 따라 기존 <code>?</code> 패턴에 http 문자 뒤에 s가 아닌 a가 오는 경우까지 포함하게 됩니다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="p">[</span><span class="s1">&#39;http://www.forta.com/, httpa://www.forta.com/, https://www.forta.com/, httpsss://www.forta.com&#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">&#39;http://www.forta.com&#39;</span><span class="p">,</span> <span class="s1">&#39;httpa://www.forta.com&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.forta.com&#39;</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>정리하자면, 문자 뒤에 <code>*</code> 패턴이 붙는다면 그 특정문자가 0개에 n개인 경우가 포함되고, <code>?</code> 패턴이 붙는다면 특정문자가 0개에서 1개까지인 경우가 포함됩니다. 문자 뒤에 <code>.*</code> 이 붙는다면 그 문자 뒤에 해당 특정문자가 아닌 아무 문자가 0개에서 n개 나오는 경우가 됩니다. 마찬가지로 문자 뒤에 <code>.?</code> 의 패턴이 붙는다면 아무 문자가 와도 상관 없지만 그 문자의 개수가 0개에서 1개까지 오는 경우가 됩니다.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Sunsick</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2021-02-06
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/python/">Python</a>
+          <a href="/tags/%EC%A0%95%EA%B7%9C%ED%91%9C%ED%98%84%EC%8B%9D/">정규표현식</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/sql_ch_4/">
+            <span class="next-text nav-default">좋은 테이블 설계(정규화)와 기본키</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://www.google.com/" class="iconfont icon-google" title="google"></a>
+      <a href="https://github.com/choosunsick" class="iconfont icon-github" title="github"></a>
+  <a href="https://choosunsick.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Sunsick</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
