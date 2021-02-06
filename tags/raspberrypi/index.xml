@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>라즈베리파이 클러스터에 하둡 설치하기</title>
+      <title>라즈베리파이 yarn 클러스터에 하둡(hadoop)과 스파크(spark) 설치하기</title>
       <link>https://choosunsick.github.io/post/hadoop_install/</link>
       <pubDate>Mon, 07 Dec 2020 18:46:36 +0900</pubDate>
       
