@@ -100,13 +100,6 @@
   </url>
   
   <url>
-    <loc>https://choosunsick.github.io/tags/r/</loc>
-    <lastmod>2020-12-07T18:46:36+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://choosunsick.github.io/tags/raspberrypi/</loc>
     <lastmod>2020-12-07T18:46:36+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -142,7 +135,7 @@
   </url>
   
   <url>
-    <loc>https://choosunsick.github.io/categories/r/</loc>
+    <loc>https://choosunsick.github.io/tags/r/</loc>
     <lastmod>2020-09-12T19:01:49+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -228,6 +221,13 @@
   <url>
     <loc>https://choosunsick.github.io/tags/%EB%8F%84%EC%BB%A4/</loc>
     <lastmod>2020-08-22T14:03:50+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://choosunsick.github.io/categories/r/</loc>
+    <lastmod>2020-08-12T18:26:14+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

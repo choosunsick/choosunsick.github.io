@@ -6,11 +6,7 @@
     <description>Recent content in Hadoop on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Mon, 07 Dec 2020 18:46:36 +0900</lastBuildDate>
-    
-	<atom:link href="https://choosunsick.github.io/categories/hadoop/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 07 Dec 2020 18:46:36 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/categories/hadoop/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>라즈베리파이 yarn 클러스터에 하둡(hadoop)과 스파크(spark) 설치하기</title>
       <link>https://choosunsick.github.io/post/hadoop_install/</link>

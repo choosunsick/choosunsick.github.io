@@ -6,11 +6,7 @@
     <description>Recent content in Data Analysis on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Wed, 17 Jul 2019 17:21:17 +0900</lastBuildDate>
-    
-	<atom:link href="https://choosunsick.github.io/categories/data-analysis/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 17 Jul 2019 17:21:17 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/categories/data-analysis/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>R을 사용해 HDF5 파일로 만들고 데이터 압축하기</title>
       <link>https://choosunsick.github.io/post/make_hdf_5_for_r/</link>

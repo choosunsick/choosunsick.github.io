@@ -6,11 +6,7 @@
     <description>Recent content in 소프트맥스 on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Mon, 16 Mar 2020 19:35:04 +0900</lastBuildDate>
-    
-	<atom:link href="https://choosunsick.github.io/tags/%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 16 Mar 2020 19:35:04 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Chapter2 신경망 연습</title>
       <link>https://choosunsick.github.io/post/neural_network_practice/</link>

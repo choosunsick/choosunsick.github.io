@@ -6,11 +6,7 @@
     <description>Recent content in R로 딥러닝하기 on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Wed, 12 Aug 2020 18:26:14 +0900</lastBuildDate>
-    
-	<atom:link href="https://choosunsick.github.io/tags/r%EB%A1%9C-%EB%94%A5%EB%9F%AC%EB%8B%9D%ED%95%98%EA%B8%B0/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 12 Aug 2020 18:26:14 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/r%EB%A1%9C-%EB%94%A5%EB%9F%AC%EB%8B%9D%ED%95%98%EA%B8%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>옵티마이저(optimizer) 비교하기</title>
       <link>https://choosunsick.github.io/post/optimizer_compare/</link>

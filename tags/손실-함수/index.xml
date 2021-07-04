@@ -6,11 +6,7 @@
     <description>Recent content in 손실 함수 on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 14 Mar 2020 22:14:04 +0900</lastBuildDate>
-    
-	<atom:link href="https://choosunsick.github.io/tags/%EC%86%90%EC%8B%A4-%ED%95%A8%EC%88%98/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 14 Mar 2020 22:14:04 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/%EC%86%90%EC%8B%A4-%ED%95%A8%EC%88%98/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Chapter3 미니 배치 학습과 손실 함수 사용의 이유</title>
       <link>https://choosunsick.github.io/post/neural_network_3/</link>

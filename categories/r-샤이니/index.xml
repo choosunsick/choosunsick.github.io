@@ -6,11 +6,7 @@
     <description>Recent content in R 샤이니 on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 12 Sep 2020 19:01:49 +0900</lastBuildDate>
-    
-	<atom:link href="https://choosunsick.github.io/categories/r-%EC%83%A4%EC%9D%B4%EB%8B%88/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 12 Sep 2020 19:01:49 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/categories/r-%EC%83%A4%EC%9D%B4%EB%8B%88/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>샤이니 앱에 항목 탭 추가하기</title>
       <link>https://choosunsick.github.io/post/shiny_navbarpage/</link>

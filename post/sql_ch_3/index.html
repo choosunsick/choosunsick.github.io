@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.69.2 with theme even" />
+<meta name="generator" content="Hugo 0.84.4 with theme even" />
 
 
 <link rel="canonical" href="https://choosunsick.github.io/post/sql_ch_3/" />
@@ -35,24 +35,21 @@
 
 
 
-<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
 <meta property="og:title" content="DElETE와 UPDATE 문" />
 <meta property="og:description" content="3장 이 글은 MYSQL 문법을 복습할 겸해서 HEAD FIRST SQL 책을 요약정리 한 것입니다. 2장에서는 데이터를 가져오는 방법에 대해 알아보았습니다. SELECT 문의 사용 방법에 대해 다시 확인" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://choosunsick.github.io/post/sql_ch_3/" />
+<meta property="og:url" content="https://choosunsick.github.io/post/sql_ch_3/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2020-12-14T19:27:28+09:00" />
 <meta property="article:modified_time" content="2020-12-14T19:27:28+09:00" />
+
 <meta itemprop="name" content="DElETE와 UPDATE 문">
-<meta itemprop="description" content="3장 이 글은 MYSQL 문법을 복습할 겸해서 HEAD FIRST SQL 책을 요약정리 한 것입니다. 2장에서는 데이터를 가져오는 방법에 대해 알아보았습니다. SELECT 문의 사용 방법에 대해 다시 확인">
-<meta itemprop="datePublished" content="2020-12-14T19:27:28&#43;09:00" />
-<meta itemprop="dateModified" content="2020-12-14T19:27:28&#43;09:00" />
-<meta itemprop="wordCount" content="2335">
-
-
-
+<meta itemprop="description" content="3장 이 글은 MYSQL 문법을 복습할 겸해서 HEAD FIRST SQL 책을 요약정리 한 것입니다. 2장에서는 데이터를 가져오는 방법에 대해 알아보았습니다. SELECT 문의 사용 방법에 대해 다시 확인"><meta itemprop="datePublished" content="2020-12-14T19:27:28+09:00" />
+<meta itemprop="dateModified" content="2020-12-14T19:27:28+09:00" />
+<meta itemprop="wordCount" content="2193">
 <meta itemprop="keywords" content="SQL," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="DElETE와 UPDATE 문"/>
 <meta name="twitter:description" content="3장 이 글은 MYSQL 문법을 복습할 겸해서 HEAD FIRST SQL 책을 요약정리 한 것입니다. 2장에서는 데이터를 가져오는 방법에 대해 알아보았습니다. SELECT 문의 사용 방법에 대해 다시 확인"/>
@@ -162,8 +159,8 @@
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">clown_info</span><span class="p">(</span><span class="n">name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="n">last_seen</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">appearance</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">200</span><span class="p">),</span> <span class="n">activities</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">));</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">clown_info</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="n">last_seen</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span><span class="w"> </span><span class="n">appearance</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">200</span><span class="p">),</span><span class="w"> </span><span class="n">activities</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">));</span><span class="w">
+</span></code></pre></td></tr></table>
 </div>
 </div><p>광대들의 정보 테이블에는 이름, 등장 장소, 외형, 활동 등의 정보가 나타납니다.</p>
 <div class="highlight"><div class="chroma">
@@ -182,18 +179,18 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">clown_info</span>
-    <span class="k">VALUES</span>
-        <span class="p">(</span><span class="s1">&#39;Elsie&#39;</span><span class="p">,</span> <span class="s1">&#39;Cherry Hill Sennior Center&#39;</span><span class="p">,</span> <span class="s1">&#39;F, red hair, green dress, huge feet&#39;</span><span class="p">,</span> <span class="s1">&#39;balloons, little car&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;Pickles&#39;</span><span class="p">,</span> <span class="s1">&#39;Jack Green\&#39;</span><span class="n">s</span> <span class="n">Party</span><span class="s1">&#39;, &#39;</span><span class="n">M</span><span class="p">,</span> <span class="n">orange</span> <span class="n">hair</span><span class="p">,</span> <span class="n">blue</span> <span class="n">suit</span><span class="p">,</span> <span class="n">huge</span> <span class="n">feet</span><span class="s1">&#39;, &#39;</span><span class="n">mime</span><span class="s1">&#39;),
-</span><span class="s1">        (&#39;</span><span class="n">Sunggles</span><span class="s1">&#39;, &#39;</span><span class="n">Ball</span><span class="o">-</span><span class="n">Mart</span><span class="s1">&#39;, &#39;</span><span class="n">F</span><span class="p">,</span> <span class="n">yellow</span> <span class="n">shirt</span><span class="p">,</span> <span class="n">baggy</span> <span class="n">red</span> <span class="n">pants</span><span class="s1">&#39;, &#39;</span><span class="n">horn</span><span class="p">,</span> <span class="n">umbrella</span><span class="s1">&#39;),
-</span><span class="s1">        (&#39;</span><span class="n">Mr</span><span class="p">.</span><span class="n">Hobo</span><span class="s1">&#39;, &#39;</span><span class="n">BG</span> <span class="n">Circus</span><span class="s1">&#39;,&#39;</span><span class="n">M</span><span class="p">,</span> <span class="n">cigar</span><span class="p">,</span> <span class="n">black</span> <span class="n">hair</span><span class="p">,</span> <span class="n">tiny</span> <span class="n">hat</span><span class="s1">&#39;, &#39;</span><span class="n">violin</span><span class="s1">&#39;),
-</span><span class="s1">        (&#39;</span><span class="n">Clarabelle</span><span class="s1">&#39;, &#39;</span><span class="n">Belmont</span> <span class="n">Senior</span> <span class="n">Certer</span><span class="s1">&#39;, &#39;</span><span class="n">F</span><span class="p">,</span> <span class="n">pink</span> <span class="n">hair</span><span class="p">,</span> <span class="n">huge</span> <span class="n">flower</span><span class="p">,</span> <span class="n">blue</span> <span class="n">dress</span><span class="s1">&#39;, &#39;</span><span class="n">yelling</span><span class="p">,</span> <span class="n">dancing</span><span class="s1">&#39;),
-</span><span class="s1">        (&#39;</span><span class="n">Scooter</span><span class="s1">&#39;, &#39;</span><span class="n">Oakland</span> <span class="n">Hospital</span><span class="s1">&#39;, &#39;</span><span class="n">M</span><span class="p">,</span> <span class="n">blue</span> <span class="n">hair</span><span class="p">,</span> <span class="n">red</span> <span class="n">suit</span><span class="p">,</span> <span class="n">huge</span> <span class="n">nose</span><span class="s1">&#39;, &#39;</span><span class="n">balloons</span><span class="s1">&#39;),
-</span><span class="s1">        (&#39;</span><span class="n">Zippo</span><span class="s1">&#39;, &#39;</span><span class="n">Millstone</span> <span class="n">Mall</span><span class="s1">&#39;, &#39;</span><span class="n">F</span><span class="p">,</span> <span class="n">orange</span> <span class="n">suit</span><span class="p">,</span> <span class="n">baggy</span> <span class="n">pants</span><span class="s1">&#39;, &#39;</span><span class="n">dancing</span><span class="s1">&#39;),
-</span><span class="s1">        (&#39;</span><span class="n">Babe</span><span class="s1">&#39;, &#39;</span><span class="n">Earl</span><span class="err">\</span><span class="s1">&#39;s Autos&#39;</span><span class="p">,</span> <span class="s1">&#39;F, all pink and sparkly&#39;</span><span class="p">,</span> <span class="s1">&#39;balancing, little car&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;Bonzo&#39;</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="s1">&#39;M, in drag, polka dotted dress&#39;</span><span class="p">,</span> <span class="s1">&#39;singing, dancing&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;Sniffles&#39;</span><span class="p">,</span> <span class="s1">&#39;Tracy\&#39;</span><span class="n">s</span><span class="s1">&#39;, &#39;</span><span class="n">M</span><span class="p">,</span> <span class="n">green</span> <span class="k">and</span> <span class="n">puple</span> <span class="n">suit</span><span class="p">,</span> <span class="n">pointy</span> <span class="n">nose</span><span class="s1">&#39;, NULL);
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">clown_info</span><span class="w">
+</span><span class="w">    </span><span class="k">VALUES</span><span class="w">
+</span><span class="w">        </span><span class="p">(</span><span class="s1">&#39;Elsie&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Cherry Hill Sennior Center&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;F, red hair, green dress, huge feet&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;balloons, little car&#39;</span><span class="p">),</span><span class="w">
+</span><span class="w">        </span><span class="p">(</span><span class="s1">&#39;Pickles&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Jack Green\&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">Party</span><span class="s1">&#39;, &#39;</span><span class="n">M</span><span class="p">,</span><span class="w"> </span><span class="n">orange</span><span class="w"> </span><span class="n">hair</span><span class="p">,</span><span class="w"> </span><span class="n">blue</span><span class="w"> </span><span class="n">suit</span><span class="p">,</span><span class="w"> </span><span class="n">huge</span><span class="w"> </span><span class="n">feet</span><span class="s1">&#39;, &#39;</span><span class="n">mime</span><span class="s1">&#39;),
+</span><span class="s1">        (&#39;</span><span class="n">Sunggles</span><span class="s1">&#39;, &#39;</span><span class="n">Ball</span><span class="o">-</span><span class="n">Mart</span><span class="s1">&#39;, &#39;</span><span class="n">F</span><span class="p">,</span><span class="w"> </span><span class="n">yellow</span><span class="w"> </span><span class="n">shirt</span><span class="p">,</span><span class="w"> </span><span class="n">baggy</span><span class="w"> </span><span class="n">red</span><span class="w"> </span><span class="n">pants</span><span class="s1">&#39;, &#39;</span><span class="n">horn</span><span class="p">,</span><span class="w"> </span><span class="n">umbrella</span><span class="s1">&#39;),
+</span><span class="s1">        (&#39;</span><span class="n">Mr</span><span class="p">.</span><span class="n">Hobo</span><span class="s1">&#39;, &#39;</span><span class="n">BG</span><span class="w"> </span><span class="n">Circus</span><span class="s1">&#39;,&#39;</span><span class="n">M</span><span class="p">,</span><span class="w"> </span><span class="n">cigar</span><span class="p">,</span><span class="w"> </span><span class="n">black</span><span class="w"> </span><span class="n">hair</span><span class="p">,</span><span class="w"> </span><span class="n">tiny</span><span class="w"> </span><span class="n">hat</span><span class="s1">&#39;, &#39;</span><span class="n">violin</span><span class="s1">&#39;),
+</span><span class="s1">        (&#39;</span><span class="n">Clarabelle</span><span class="s1">&#39;, &#39;</span><span class="n">Belmont</span><span class="w"> </span><span class="n">Senior</span><span class="w"> </span><span class="n">Certer</span><span class="s1">&#39;, &#39;</span><span class="n">F</span><span class="p">,</span><span class="w"> </span><span class="n">pink</span><span class="w"> </span><span class="n">hair</span><span class="p">,</span><span class="w"> </span><span class="n">huge</span><span class="w"> </span><span class="n">flower</span><span class="p">,</span><span class="w"> </span><span class="n">blue</span><span class="w"> </span><span class="n">dress</span><span class="s1">&#39;, &#39;</span><span class="n">yelling</span><span class="p">,</span><span class="w"> </span><span class="n">dancing</span><span class="s1">&#39;),
+</span><span class="s1">        (&#39;</span><span class="n">Scooter</span><span class="s1">&#39;, &#39;</span><span class="n">Oakland</span><span class="w"> </span><span class="n">Hospital</span><span class="s1">&#39;, &#39;</span><span class="n">M</span><span class="p">,</span><span class="w"> </span><span class="n">blue</span><span class="w"> </span><span class="n">hair</span><span class="p">,</span><span class="w"> </span><span class="n">red</span><span class="w"> </span><span class="n">suit</span><span class="p">,</span><span class="w"> </span><span class="n">huge</span><span class="w"> </span><span class="n">nose</span><span class="s1">&#39;, &#39;</span><span class="n">balloons</span><span class="s1">&#39;),
+</span><span class="s1">        (&#39;</span><span class="n">Zippo</span><span class="s1">&#39;, &#39;</span><span class="n">Millstone</span><span class="w"> </span><span class="n">Mall</span><span class="s1">&#39;, &#39;</span><span class="n">F</span><span class="p">,</span><span class="w"> </span><span class="n">orange</span><span class="w"> </span><span class="n">suit</span><span class="p">,</span><span class="w"> </span><span class="n">baggy</span><span class="w"> </span><span class="n">pants</span><span class="s1">&#39;, &#39;</span><span class="n">dancing</span><span class="s1">&#39;),
+</span><span class="s1">        (&#39;</span><span class="n">Babe</span><span class="s1">&#39;, &#39;</span><span class="n">Earl</span><span class="err">\</span><span class="s1">&#39;s Autos&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;F, all pink and sparkly&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;balancing, little car&#39;</span><span class="p">),</span><span class="w">
+</span><span class="w">        </span><span class="p">(</span><span class="s1">&#39;Bonzo&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;M, in drag, polka dotted dress&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;singing, dancing&#39;</span><span class="p">),</span><span class="w">
+</span><span class="w">        </span><span class="p">(</span><span class="s1">&#39;Sniffles&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Tracy\&#39;</span><span class="n">s</span><span class="s1">&#39;, &#39;</span><span class="n">M</span><span class="p">,</span><span class="w"> </span><span class="n">green</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">puple</span><span class="w"> </span><span class="n">suit</span><span class="p">,</span><span class="w"> </span><span class="n">pointy</span><span class="w"> </span><span class="n">nose</span><span class="s1">&#39;, NULL);
 </span></code></pre></td></tr></table>
 </div>
 </div><p>완성된 테이블은 아래와 같습니다.</p>
@@ -247,14 +244,14 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">clown_info</span>
-    <span class="k">VALUES</span>
-        <span class="p">(</span><span class="s1">&#39;Zippo&#39;</span><span class="p">,</span> <span class="s1">&#39;Millstone Mall&#39;</span><span class="p">,</span> <span class="s1">&#39;F, orange suit, baggy pants&#39;</span><span class="p">,</span> <span class="s1">&#39;dancing, singing&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;Sunggles&#39;</span><span class="p">,</span> <span class="s1">&#39;Ball-Mart&#39;</span><span class="p">,</span> <span class="s1">&#39;F, yellow shirt, baggy blue pants&#39;</span><span class="p">,</span> <span class="s1">&#39;horn, umbrella&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;Bonzo&#39;</span><span class="p">,</span> <span class="s1">&#39;Dickson Park&#39;</span><span class="p">,</span> <span class="s1">&#39;M, in drag, polka dotted dress&#39;</span><span class="p">,</span> <span class="s1">&#39;singing, dancing&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;Sniffles&#39;</span><span class="p">,</span> <span class="s1">&#39;Tracy\&#39;</span><span class="n">s</span><span class="s1">&#39;, &#39;</span><span class="n">M</span><span class="p">,</span> <span class="n">green</span> <span class="k">and</span> <span class="n">puple</span> <span class="n">suit</span><span class="p">,</span> <span class="n">pointy</span> <span class="n">nose</span><span class="s1">&#39;, &#39;</span><span class="n">little</span> <span class="n">car</span><span class="s1">&#39;),
-</span><span class="s1">        (&#39;</span><span class="n">Mr</span><span class="p">.</span><span class="n">Hobo</span><span class="s1">&#39;, &#39;</span><span class="n">Eric</span> <span class="n">Gray</span><span class="err">\</span><span class="s1">&#39;s Party&#39;</span><span class="p">,</span> <span class="s1">&#39;M, cigar, black hair, tiny hat&#39;</span><span class="p">,</span> <span class="s1">&#39;violin&#39;</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">clown_info</span><span class="w">
+</span><span class="w">    </span><span class="k">VALUES</span><span class="w">
+</span><span class="w">        </span><span class="p">(</span><span class="s1">&#39;Zippo&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Millstone Mall&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;F, orange suit, baggy pants&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;dancing, singing&#39;</span><span class="p">),</span><span class="w">
+</span><span class="w">        </span><span class="p">(</span><span class="s1">&#39;Sunggles&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Ball-Mart&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;F, yellow shirt, baggy blue pants&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;horn, umbrella&#39;</span><span class="p">),</span><span class="w">
+</span><span class="w">        </span><span class="p">(</span><span class="s1">&#39;Bonzo&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Dickson Park&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;M, in drag, polka dotted dress&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;singing, dancing&#39;</span><span class="p">),</span><span class="w">
+</span><span class="w">        </span><span class="p">(</span><span class="s1">&#39;Sniffles&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Tracy\&#39;</span><span class="n">s</span><span class="s1">&#39;, &#39;</span><span class="n">M</span><span class="p">,</span><span class="w"> </span><span class="n">green</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">puple</span><span class="w"> </span><span class="n">suit</span><span class="p">,</span><span class="w"> </span><span class="n">pointy</span><span class="w"> </span><span class="n">nose</span><span class="s1">&#39;, &#39;</span><span class="n">little</span><span class="w"> </span><span class="n">car</span><span class="s1">&#39;),
+</span><span class="s1">        (&#39;</span><span class="n">Mr</span><span class="p">.</span><span class="n">Hobo</span><span class="s1">&#39;, &#39;</span><span class="n">Eric</span><span class="w"> </span><span class="n">Gray</span><span class="err">\</span><span class="s1">&#39;s Party&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;M, cigar, black hair, tiny hat&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;violin&#39;</span><span class="p">);</span><span class="w">
+</span></code></pre></td></tr></table>
 </div>
 </div><p>추가된 데이터까지 광대들의 정보가 담긴 테이블은 아래와 같이 만들어집니다.</p>
 <div class="highlight"><div class="chroma">
@@ -313,8 +310,8 @@
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">clown_info</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Zippo&#39;</span><span class="p">;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">clown_info</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Zippo&#39;</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -345,8 +342,8 @@
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">clown_info</span> <span class="k">WHERE</span> <span class="n">activities</span> <span class="o">=</span> <span class="s1">&#39;dancing&#39;</span><span class="p">;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">clown_info</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">activities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;dancing&#39;</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>DELETE 문은 테이블의 행을 지우는 방법입니다.</li>
@@ -357,8 +354,8 @@
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">clown_info</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Zippo&#39;</span><span class="p">;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">clown_info</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Zippo&#39;</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
 </div>
 </div><p>다시 <code>Zippo</code>의 기록을 확인해보면 아래와 같이 데이터가 하나만 남은 것을 확인할 수 있습니다.</p>
 <div class="highlight"><div class="chroma">
@@ -386,8 +383,8 @@
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">clown_info</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Zippo&#39;</span> <span class="k">AND</span> <span class="n">activities</span> <span class="o">=</span> <span class="s1">&#39;dancing&#39;</span><span class="p">;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">clown_info</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Zippo&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">activities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;dancing&#39;</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
 </div>
 </div><p><strong>DELETE 문 핵심</strong></p>
 <p><code>DELETE</code> 문은 한 열이나 여러 열의 값을 지우는 데 사용할 수 없다. 대신 <code>WHERE</code> 절의 조건에 따라 하나의 행이나 여러 행을 지울 수 있다.
@@ -400,8 +397,8 @@
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">clown_info</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Mr.Hobo&#39;</span><span class="p">;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">clown_info</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Mr.Hobo&#39;</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
 </div>
 </div><p>기존에 호보의 정보는 아래와 같습니다.</p>
 <div class="highlight"><div class="chroma">
@@ -434,10 +431,10 @@
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">UPDATE</span> <span class="n">clown_info</span>
-<span class="k">SET</span> <span class="n">last_seen</span> <span class="o">=</span> <span class="s1">&#39;Tracy\&#39;</span><span class="n">s</span><span class="s1">&#39;
-</span><span class="s1">WHERE name = &#39;</span><span class="n">Mr</span><span class="p">.</span><span class="n">Hobo</span><span class="s1">&#39; AND last_seen = &#39;</span><span class="n">Eric</span> <span class="n">Gray</span><span class="err">\</span><span class="s1">&#39;s Party&#39;</span><span class="p">;</span>
-</code></pre></td></tr></table>
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">UPDATE</span><span class="w"> </span><span class="n">clown_info</span><span class="w">
+</span><span class="w"></span><span class="k">SET</span><span class="w"> </span><span class="n">last_seen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Tracy\&#39;</span><span class="n">s</span><span class="s1">&#39;
+</span><span class="s1">WHERE name = &#39;</span><span class="n">Mr</span><span class="p">.</span><span class="n">Hobo</span><span class="s1">&#39; AND last_seen = &#39;</span><span class="n">Eric</span><span class="w"> </span><span class="n">Gray</span><span class="err">\</span><span class="s1">&#39;s Party&#39;</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>UPDATE 문은 기존의 열의 값을 변경하는 데 사용합니다.</li>
@@ -553,7 +550,7 @@
 
 
 
-<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

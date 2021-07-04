@@ -6,11 +6,7 @@
     <description>Recent content in 3층 신경망 구현 on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Mon, 16 Mar 2020 19:35:04 +0900</lastBuildDate>
-    
-	<atom:link href="https://choosunsick.github.io/tags/3%EC%B8%B5-%EC%8B%A0%EA%B2%BD%EB%A7%9D-%EA%B5%AC%ED%98%84/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 16 Mar 2020 19:35:04 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/3%EC%B8%B5-%EC%8B%A0%EA%B2%BD%EB%A7%9D-%EA%B5%AC%ED%98%84/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Chapter2 신경망 연습</title>
       <link>https://choosunsick.github.io/post/neural_network_practice/</link>

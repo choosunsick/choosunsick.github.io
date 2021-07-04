@@ -6,11 +6,7 @@
     <description>Recent content in 기초 on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 08 Feb 2020 20:22:00 +0900</lastBuildDate>
-    
-	<atom:link href="https://choosunsick.github.io/tags/%EA%B8%B0%EC%B4%88/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 08 Feb 2020 20:22:00 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/%EA%B8%B0%EC%B4%88/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Chpater1 브로드캐스트 연산</title>
       <link>https://choosunsick.github.io/post/broadcast_operation/</link>
