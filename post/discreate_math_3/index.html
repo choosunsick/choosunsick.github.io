@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>버블 정렬 - Sunsick&#39;s blog</title>
+  <title>버블 정렬(bubble sort) - Sunsick&#39;s blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Sunsick" /><meta name="description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 버블 정렬(bubble sort) 버블 정렬 시간복잡도는 최선의 경" /><meta name="keywords" content="blog, R, Data Analysis" />
+<meta name="author" content="Sunsick" /><meta name="description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 버블 정렬의 시간복잡도 버블 정렬 시간복잡도는 최선의 경우," /><meta name="keywords" content="blog, R, Data Analysis" />
 
 
 
@@ -39,20 +39,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="버블 정렬" />
-<meta property="og:description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 버블 정렬(bubble sort) 버블 정렬 시간복잡도는 최선의 경" />
+<meta property="og:title" content="버블 정렬(bubble sort)" />
+<meta property="og:description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 버블 정렬의 시간복잡도 버블 정렬 시간복잡도는 최선의 경우," />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://choosunsick.github.io/post/discreate_math_3/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-07-05T17:26:55+09:00" />
 <meta property="article:modified_time" content="2021-07-05T17:26:55+09:00" />
 
-<meta itemprop="name" content="버블 정렬">
-<meta itemprop="description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 버블 정렬(bubble sort) 버블 정렬 시간복잡도는 최선의 경"><meta itemprop="datePublished" content="2021-07-05T17:26:55+09:00" />
+<meta itemprop="name" content="버블 정렬(bubble sort)">
+<meta itemprop="description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 버블 정렬의 시간복잡도 버블 정렬 시간복잡도는 최선의 경우,"><meta itemprop="datePublished" content="2021-07-05T17:26:55+09:00" />
 <meta itemprop="dateModified" content="2021-07-05T17:26:55+09:00" />
-<meta itemprop="wordCount" content="349">
+<meta itemprop="wordCount" content="347">
 <meta itemprop="keywords" content="이산수학,Rust," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="버블 정렬"/>
-<meta name="twitter:description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 버블 정렬(bubble sort) 버블 정렬 시간복잡도는 최선의 경"/>
+<meta name="twitter:title" content="버블 정렬(bubble sort)"/>
+<meta name="twitter:description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 버블 정렬의 시간복잡도 버블 정렬 시간복잡도는 최선의 경우,"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -125,7 +125,7 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">버블 정렬</h1>
+      <h1 class="post-title">버블 정렬(bubble sort)</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2021-07-05 </span>
@@ -142,14 +142,14 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#버블-정렬bubble-sort">버블 정렬(bubble sort)</a></li>
+    <li><a href="#버블-정렬의-시간복잡도">버블 정렬의 시간복잡도</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
       <p>3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다.</p>
-<h2 id="버블-정렬bubble-sort">버블 정렬(bubble sort)</h2>
+<h2 id="버블-정렬의-시간복잡도">버블 정렬의 시간복잡도</h2>
 <p>버블 정렬 시간복잡도는 최선의 경우, 최악의 경우, 평균적인 경우 모두 일정합니다. 어떤 경우에도 버블 정렬은 마지막 인덱스까지 두 개의 원소를 비교하기에 항상 n²(n은 배열의 크기) 만큼의 순회가 필요하기 때문입니다. 시간복잡도를 계산해봅시다. 먼저 배열의 각 인덱스를 비교할 때 첫번째 인덱스의 경우 나머지 인덱스들과의 비교를 위해 n-1 번의 비교가 필요합니다. 이후 두번째, 세번째 등 나머지 인덱스에 대해서 비교해나가면 n-2, n-3 &hellip; 1 까지의 비교횟수가 늘어나게 되며 이것의 총합은 (n*(n-1))/2 가 됩니다. 이에 따라 시간복잡도는 n²이 됩니다.</p>
 <p>232 쪽 예제 4: 버블정렬을 사용하여 3,2,4,1,5,를 오름차순으로 정렬하라.</p>
 <div class="highlight"><div class="chroma">
@@ -226,11 +226,11 @@
       <nav class="post-nav">
         <a class="prev" href="/post/discreate_math_4/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">삽입 정렬</span>
+            <span class="prev-text nav-default">삽입 정렬(insertion sort)</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         <a class="next" href="/post/discreate_math_2/">
-            <span class="next-text nav-default">이진 탐색</span>
+            <span class="next-text nav-default">이진 탐색(binary_search)</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>

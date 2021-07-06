@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>삽입 정렬 - Sunsick&#39;s blog</title>
+  <title>삽입 정렬(insertion sort) - Sunsick&#39;s blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Sunsick" /><meta name="description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 삽입 정렬(insertion sort) 삽입 정렬의 시간복잡도는" /><meta name="keywords" content="blog, R, Data Analysis" />
+<meta name="author" content="Sunsick" /><meta name="description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 삽입 정렬의 시간복잡도 삽입 정렬의 시간복잡도는 입력 자료의" /><meta name="keywords" content="blog, R, Data Analysis" />
 
 
 
@@ -39,20 +39,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="삽입 정렬" />
-<meta property="og:description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 삽입 정렬(insertion sort) 삽입 정렬의 시간복잡도는" />
+<meta property="og:title" content="삽입 정렬(insertion sort)" />
+<meta property="og:description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 삽입 정렬의 시간복잡도 삽입 정렬의 시간복잡도는 입력 자료의" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://choosunsick.github.io/post/discreate_math_4/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-07-06T11:40:52+09:00" />
 <meta property="article:modified_time" content="2021-07-06T11:40:52+09:00" />
 
-<meta itemprop="name" content="삽입 정렬">
-<meta itemprop="description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 삽입 정렬(insertion sort) 삽입 정렬의 시간복잡도는"><meta itemprop="datePublished" content="2021-07-06T11:40:52+09:00" />
+<meta itemprop="name" content="삽입 정렬(insertion sort)">
+<meta itemprop="description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 삽입 정렬의 시간복잡도 삽입 정렬의 시간복잡도는 입력 자료의"><meta itemprop="datePublished" content="2021-07-06T11:40:52+09:00" />
 <meta itemprop="dateModified" content="2021-07-06T11:40:52+09:00" />
-<meta itemprop="wordCount" content="332">
+<meta itemprop="wordCount" content="318">
 <meta itemprop="keywords" content="이산수학,Rust," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="삽입 정렬"/>
-<meta name="twitter:description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 삽입 정렬(insertion sort) 삽입 정렬의 시간복잡도는"/>
+<meta name="twitter:title" content="삽입 정렬(insertion sort)"/>
+<meta name="twitter:description" content="3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 삽입 정렬의 시간복잡도 삽입 정렬의 시간복잡도는 입력 자료의"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -125,7 +125,7 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">삽입 정렬</h1>
+      <h1 class="post-title">삽입 정렬(insertion sort)</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2021-07-06 </span>
@@ -142,16 +142,16 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#삽입-정렬insertion-sort">삽입 정렬(insertion sort)</a></li>
+    <li><a href="#삽입-정렬의-시간복잡도">삽입 정렬의 시간복잡도</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
       <p>3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다.</p>
-<h2 id="삽입-정렬insertion-sort">삽입 정렬(insertion sort)</h2>
+<h2 id="삽입-정렬의-시간복잡도">삽입 정렬의 시간복잡도</h2>
 <p>삽입 정렬의 시간복잡도는 입력 자료의 구성에 따라 달라집니다. 최선의 경우 입력 자료가 정렬되어 있는 경우로 첫 번째 인덱스와 각 인덱스 간 n-1 (n은 배열의 크기)번의 비교만 이루어지기에 시간 복잡도는 n이 됩니다. 그러나 최악의 경우는 입력 자료가 역순으로 배치되어 있을 때 입니다. 이 때의 시간 복잡도는 n²이 되는데 버블 정렬과 마찬가지로 첫 번째 인덱스부터 n-1 번 이어서 나머지 인덱스들의 비교횟수는 n-2 &hellip; 1 번 비교하게 됩니다. 이에 따라 이 비교 횟수의 합은 (n*(n-1))/2 가 되고 시간복잡도는 n²이 됩니다.</p>
-<p>233 쪽 예제 5 삽입정렬을 사용하여 3,2,4,1,5,를 오름차순으로 정렬하라.</p>
+<p>233 쪽 예제 5: 3,2,4,1,5,를 오름차순으로 정렬하라.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -222,7 +222,7 @@
       <nav class="post-nav">
         
         <a class="next" href="/post/discreate_math_3/">
-            <span class="next-text nav-default">버블 정렬</span>
+            <span class="next-text nav-default">버블 정렬(bubble sort)</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>
