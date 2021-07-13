@@ -6,7 +6,16 @@
     <description>Recent content in 이산수학 on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 10 Jul 2021 17:44:40 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/%EC%9D%B4%EC%82%B0%EC%88%98%ED%95%99/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 13 Jul 2021 19:41:57 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/%EC%9D%B4%EC%82%B0%EC%88%98%ED%95%99/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>피보나치 수열</title>
+      <link>https://choosunsick.github.io/post/discreate_math_9/</link>
+      <pubDate>Tue, 13 Jul 2021 19:41:57 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/discreate_math_9/</guid>
+      <description>3월부터 공부한 이산수학 알고리즘 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 피보나치 수열 풀이 방식 비교 피보나치 수열을 계산하는 알고리</description>
+    </item>
+    
     <item>
       <title>정렬 알고리즘 총 정리</title>
       <link>https://choosunsick.github.io/post/discreate_math_8/</link>
