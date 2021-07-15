@@ -49,7 +49,7 @@
 <meta itemprop="name" content="순열과 조합">
 <meta itemprop="description" content="3월부터 공부한 이산수학 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 조합과 순열의 특징 순열과 조합은 모두 숫자를 나열하는 방법의 수를 나타"><meta itemprop="datePublished" content="2021-07-15T15:30:59+09:00" />
 <meta itemprop="dateModified" content="2021-07-15T15:30:59+09:00" />
-<meta itemprop="wordCount" content="566">
+<meta itemprop="wordCount" content="845">
 <meta itemprop="keywords" content="이산수학,Python," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="순열과 조합"/>
 <meta name="twitter:description" content="3월부터 공부한 이산수학 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 조합과 순열의 특징 순열과 조합은 모두 숫자를 나열하는 방법의 수를 나타"/>
@@ -143,6 +143,7 @@
     <nav id="TableOfContents">
   <ul>
     <li><a href="#조합과-순열의-특징">조합과 순열의 특징</a></li>
+    <li><a href="#코드-실행-결과">코드 실행 결과</a></li>
     <li><a href="#문제-풀이">문제 풀이</a></li>
   </ul>
 </nav>
@@ -153,6 +154,55 @@
 <h2 id="조합과-순열의-특징">조합과 순열의 특징</h2>
 <p>순열과 조합은 모두 숫자를 나열하는 방법의 수를 나타냅니다. 두 가지의 차이점은 순열은 순서가 중요하다는 것입니다. 예를 들면 조합에서는 1,2,3 과 2,1,3, 3,2,1 등과 같은 수열을 같은 것으로 봅니다. 순서가 없기 때문입니다. 반면 순열에서는 1,2,3 과 2,1,3은 다른 수열로 봅니다. 순서가 다르기에 수열도 다르다고 보는 것입니다. 따라서 일반적으로 순열의 개수가 조합의 개수보다 많습니다.</p>
 <p>일반적인 순열과 조합에서는 중복을 허용하지 않습니다. 예를 들면 1,1,1 같은 수열은 수를 나열하는 방법으로 올 수 없다는 말입니다. 그러나 중복을 허용하는 중복 순열과 중복 조합이 있습니다. 중복 순열과 중복 조합은 중복을 허용하기에 1,1,1과 같은 수열이 수를 나열하는 방법으로 올 수 있습니다. 중복 순열과 중복 조합의 차이도 마찬가지로 순서입니다. 예를 들면 1,1,2 와 1,2,1을 같은 수열로 보지 않는 경우가 중복 순열이며 같은 수열로 보는 경우가 중복 조합에 해당됩니다.</p>
+<h2 id="코드-실행-결과">코드 실행 결과</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 순열</span>
+len<span class="o">(</span>list<span class="o">(</span>permutations<span class="o">(</span>tmp,3<span class="o">)))</span>
+<span class="m">60</span>
+
+<span class="c1"># 조합</span>
+len<span class="o">(</span>list<span class="o">(</span>combinations<span class="o">(</span>tmp,3<span class="o">)))</span>
+<span class="m">10</span>
+
+<span class="c1"># 중복 순열</span>
+len<span class="o">(</span>list<span class="o">(</span>product<span class="o">(</span>tmp,repeat<span class="o">=</span>3<span class="o">)))</span>
+<span class="m">125</span>
+
+<span class="c1"># 중복 조합</span>
+len<span class="o">(</span>list<span class="o">(</span>combinations_with_replacement<span class="o">(</span>tmp,3<span class="o">)))</span>
+<span class="m">35</span>
+
+<span class="o">(</span>2, 3, 5<span class="o">)</span>
+<span class="o">(</span>2, 3, 5<span class="o">)</span>
+<span class="o">(</span>2, 3, 5<span class="o">)</span>
+<span class="o">(</span>2, 3, 5<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>순열의 개수가 60개 조합의 개수가 10개로 더 많은 것을 확인할 수 있습니다. 중복 허용한 결과에서도 마찬가지로 중복 순열의 개수가 125개 중복 조합의 개수가 35개로 더 많은 것을 확인할 수 있습니다. 정리하면 가장 많은 나열 방법은 125가지의 나열 방법의 수를 가지는 중복을 허용하고 순서를 중요시하는 중복 순열 입니다. 가장 적은 나열 방법은 10가지 나열 방법의 수를 가지는 중복을 허용하지 않고 순서를 무시하는 방법인 조합 입니다.</p>
+<p>각 조합과 순열에서 다음 수열의 값은 [2,3,5] 로 모두 같은 수열이 나오게 됩니다.</p>
 <h2 id="문제-풀이">문제 풀이</h2>
 <p>1,2,3,4,5 중 3개를 뽑는 방법의 수 - 순열, 조합, 중복 여부에 따라 어떻게 변하는지 모두 확인하시오.
 또한, 각 순열, 조합의 경우에서 2,3,4 다음에 오는 수열을 구하시오.</p>
