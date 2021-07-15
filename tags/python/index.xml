@@ -6,7 +6,16 @@
     <description>Recent content in Python on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Wed, 14 Jul 2021 17:33:06 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 15 Jul 2021 15:30:59 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>순열과 조합</title>
+      <link>https://choosunsick.github.io/post/permuandcombi/</link>
+      <pubDate>Thu, 15 Jul 2021 15:30:59 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/permuandcombi/</guid>
+      <description>3월부터 공부한 이산수학 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 조합과 순열의 특징 순열과 조합은 모두 숫자를 나열하는 방법의 수를 나타</description>
+    </item>
+    
     <item>
       <title>파이썬과 Rust 프로그래밍 코드 성능 비교</title>
       <link>https://choosunsick.github.io/post/pythonvsrust/</link>
