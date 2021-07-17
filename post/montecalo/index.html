@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Sunsick" /><meta name="description" content="시나리오 분석 방법으로 파이값 추정하기 아주 기초적인 단계를 지나, 통계학과 기계학습을 공부하다 보면, ‘몬테카를로’라는 단어를 접하게 됩니다. 전공으로 이런" /><meta name="keywords" content="blog, R, Data Analysis" />
+<meta name="author" content="Sunsick" /><meta name="description" content="아주 기초적인 단계를 지나, 통계학과 기계학습을 공부하다 보면, ‘몬테카를로’라는 단어를 접하게 됩니다. 전공으로 이런 분야를 접하지 않고 마구잡이로 공부한 저" /><meta name="keywords" content="blog, R, Data Analysis" />
 
 
 
@@ -40,19 +40,19 @@
 
 
 <meta property="og:title" content="몬테카를로 시뮬레이션" />
-<meta property="og:description" content="시나리오 분석 방법으로 파이값 추정하기 아주 기초적인 단계를 지나, 통계학과 기계학습을 공부하다 보면, ‘몬테카를로’라는 단어를 접하게 됩니다. 전공으로 이런" />
+<meta property="og:description" content="아주 기초적인 단계를 지나, 통계학과 기계학습을 공부하다 보면, ‘몬테카를로’라는 단어를 접하게 됩니다. 전공으로 이런 분야를 접하지 않고 마구잡이로 공부한 저" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://choosunsick.github.io/post/montecalo/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-07-17T16:15:35+09:00" />
 <meta property="article:modified_time" content="2021-07-17T16:15:35+09:00" />
 
 <meta itemprop="name" content="몬테카를로 시뮬레이션">
-<meta itemprop="description" content="시나리오 분석 방법으로 파이값 추정하기 아주 기초적인 단계를 지나, 통계학과 기계학습을 공부하다 보면, ‘몬테카를로’라는 단어를 접하게 됩니다. 전공으로 이런"><meta itemprop="datePublished" content="2021-07-17T16:15:35+09:00" />
+<meta itemprop="description" content="아주 기초적인 단계를 지나, 통계학과 기계학습을 공부하다 보면, ‘몬테카를로’라는 단어를 접하게 됩니다. 전공으로 이런 분야를 접하지 않고 마구잡이로 공부한 저"><meta itemprop="datePublished" content="2021-07-17T16:15:35+09:00" />
 <meta itemprop="dateModified" content="2021-07-17T16:15:35+09:00" />
-<meta itemprop="wordCount" content="2163">
+<meta itemprop="wordCount" content="2121">
 <meta itemprop="keywords" content="이산수학,R," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="몬테카를로 시뮬레이션"/>
-<meta name="twitter:description" content="시나리오 분석 방법으로 파이값 추정하기 아주 기초적인 단계를 지나, 통계학과 기계학습을 공부하다 보면, ‘몬테카를로’라는 단어를 접하게 됩니다. 전공으로 이런"/>
+<meta name="twitter:description" content="아주 기초적인 단계를 지나, 통계학과 기계학습을 공부하다 보면, ‘몬테카를로’라는 단어를 접하게 됩니다. 전공으로 이런 분야를 접하지 않고 마구잡이로 공부한 저"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -140,18 +140,13 @@
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#시나리오-분석-방법으로-파이값-추정하기">시나리오 분석 방법으로 파이값 추정하기</a></li>
-  </ul>
-</nav>
+    <nav id="TableOfContents"></nav>
   </div>
 </div>
     <div class="post-content">
-      <h2 id="시나리오-분석-방법으로-파이값-추정하기">시나리오 분석 방법으로 파이값 추정하기</h2>
-<p>아주 기초적인 단계를 지나, 통계학과 기계학습을 공부하다 보면, ‘몬테카를로’라는 단어를 접하게 됩니다. 전공으로 이런 분야를 접하지 않고 마구잡이로 공부한 저로서는 이 이름은 도박으로 유명한 도시인데, 왜 여기서 튀어 나올까 하는 생각이 들었습니다.</p>
+      <p>아주 기초적인 단계를 지나, 통계학과 기계학습을 공부하다 보면, ‘몬테카를로’라는 단어를 접하게 됩니다. 전공으로 이런 분야를 접하지 않고 마구잡이로 공부한 저로서는 이 이름은 도박으로 유명한 도시인데, 왜 여기서 튀어 나올까 하는 생각이 들었습니다.</p>
 <p>처음에는 본격적으로 알아보지 않다고 있다가, 스터디에서 이 부분을 발표하게 되었습니다. 그 때 발표한 자료를 토대로 저 같이 비전공자에게 조금이나마 도움이 될까 싶어서 글로 정리하게 되었습니다.</p>
-<p>위키를 찾아보니 다음과 같이 설명하고 이렇게 이름이 붙어진 이유는 이 방법을 쓴 사람이 그 도시가 도박으로 유명해서 <a href="https://ko.m.wikipedia.org/wiki/">https://ko.m.wikipedia.org/wiki/</a>몬테카를로_방법</p>
+<p><a href="https://ko.m.wikipedia.org/wiki/%EB%AA%AC%ED%85%8C%EC%B9%B4%EB%A5%BC%EB%A1%9C_%EB%B0%A9%EB%B2%95">위키</a>를 찾아보니 다음과 같이 설명하고 이렇게 이름이 붙어진 이유는 이 방법을 쓴 사람들이 도박으로 유명한 카지노의 이름인 몬테칼로를 따와서 입니다.</p>
 <blockquote>
 <p>몬테카를로 방법(Monte Carlo method)은 난수를 이용하여 함수의 값을 확률적으로 계산하는 알고리즘을 부르는 용어이다. 수학이나 물리학 등에 자주 사용되며, 계산하려는 값이 닫힌 형식으로 표현되지 않거나 복잡한 경우에 근사적으로 계산할 때 사용된다</p>
 </blockquote>
