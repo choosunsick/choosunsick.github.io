@@ -6,7 +6,16 @@
     <description>Recent content in 이산수학 on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Thu, 15 Jul 2021 15:30:59 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/categories/%EC%9D%B4%EC%82%B0%EC%88%98%ED%95%99/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Jul 2021 16:15:35 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/categories/%EC%9D%B4%EC%82%B0%EC%88%98%ED%95%99/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>몬테카를로 시뮬레이션</title>
+      <link>https://choosunsick.github.io/post/montecalo/</link>
+      <pubDate>Sat, 17 Jul 2021 16:15:35 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/montecalo/</guid>
+      <description>시나리오 분석 방법으로 파이값 추정하기 아주 기초적인 단계를 지나, 통계학과 기계학습을 공부하다 보면, ‘몬테카를로’라는 단어를 접하게 됩니다. 전공으로 이런</description>
+    </item>
+    
     <item>
       <title>순열과 조합</title>
       <link>https://choosunsick.github.io/post/permuandcombi/</link>

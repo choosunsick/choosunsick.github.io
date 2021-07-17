@@ -6,22 +6,31 @@
     <description>Recent content in Categories on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Thu, 15 Jul 2021 15:30:59 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Jul 2021 16:15:35 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Python</title>
-      <link>https://choosunsick.github.io/categories/python/</link>
-      <pubDate>Thu, 15 Jul 2021 15:30:59 +0900</pubDate>
+      <title>R</title>
+      <link>https://choosunsick.github.io/categories/r/</link>
+      <pubDate>Sat, 17 Jul 2021 16:15:35 +0900</pubDate>
       
-      <guid>https://choosunsick.github.io/categories/python/</guid>
+      <guid>https://choosunsick.github.io/categories/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>이산수학</title>
       <link>https://choosunsick.github.io/categories/%EC%9D%B4%EC%82%B0%EC%88%98%ED%95%99/</link>
-      <pubDate>Thu, 15 Jul 2021 15:30:59 +0900</pubDate>
+      <pubDate>Sat, 17 Jul 2021 16:15:35 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/categories/%EC%9D%B4%EC%82%B0%EC%88%98%ED%95%99/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://choosunsick.github.io/categories/python/</link>
+      <pubDate>Thu, 15 Jul 2021 15:30:59 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/categories/python/</guid>
       <description></description>
     </item>
     
@@ -58,15 +67,6 @@
       <pubDate>Sat, 12 Sep 2020 19:01:49 +0900</pubDate>
       
       <guid>https://choosunsick.github.io/categories/r-%EC%83%A4%EC%9D%B4%EB%8B%88/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>R</title>
-      <link>https://choosunsick.github.io/categories/r/</link>
-      <pubDate>Wed, 12 Aug 2020 18:26:14 +0900</pubDate>
-      
-      <guid>https://choosunsick.github.io/categories/r/</guid>
       <description></description>
     </item>
     
