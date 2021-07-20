@@ -6,7 +6,16 @@
     <description>Recent content in 이산수학 on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Sat, 17 Jul 2021 16:15:35 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/%EC%9D%B4%EC%82%B0%EC%88%98%ED%95%99/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 Jul 2021 17:46:07 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/%EC%9D%B4%EC%82%B0%EC%88%98%ED%95%99/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>베이지안 스팸 필터</title>
+      <link>https://choosunsick.github.io/post/baysian_spam/</link>
+      <pubDate>Tue, 20 Jul 2021 17:46:07 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/baysian_spam/</guid>
+      <description>3월부터 공부한 이산수학 개념들을 정리합니다. 교재는 Rosen의 이산수학 8판 입니다. 통계학과 이산 수학에서 자주 등장하는 조건부 확률과 베이즈 정리를 이용</description>
+    </item>
+    
     <item>
       <title>몬테카를로 시뮬레이션</title>
       <link>https://choosunsick.github.io/post/montecalo/</link>
