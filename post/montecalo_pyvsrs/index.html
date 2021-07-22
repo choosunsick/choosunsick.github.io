@@ -49,7 +49,7 @@
 <meta itemprop="name" content="몬테카를로 시뮬레이션을 통한 파이값 추정 작동시간 비교하기">
 <meta itemprop="description" content="파이값을 추정하는 몬테카를로 시뮬레이션을 파이썬과 Rust로 구현하고 작동 시간을 비교합니다. 몬테카를로 시뮬레이션에 대한 설명은 링크를 통해 확인하실 수 있"><meta itemprop="datePublished" content="2021-07-22T18:41:12+09:00" />
 <meta itemprop="dateModified" content="2021-07-22T18:41:12+09:00" />
-<meta itemprop="wordCount" content="1345">
+<meta itemprop="wordCount" content="2024">
 <meta itemprop="keywords" content="이산수학,Rust,Python," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="몬테카를로 시뮬레이션을 통한 파이값 추정 작동시간 비교하기"/>
 <meta name="twitter:description" content="파이값을 추정하는 몬테카를로 시뮬레이션을 파이썬과 Rust로 구현하고 작동 시간을 비교합니다. 몬테카를로 시뮬레이션에 대한 설명은 링크를 통해 확인하실 수 있"/>
@@ -313,6 +313,17 @@ Name (time in s)        Min     Max    Mean  StdDev  Median     IQR  Outliers   
 </span><span class="lnt">42
 </span><span class="lnt">43
 </span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">time</span>::<span class="n">Instant</span><span class="p">;</span><span class="w">
@@ -320,11 +331,14 @@ Name (time in s)        Min     Max    Mean  StdDev  Median     IQR  Outliers   
 </span><span class="w">
 </span><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Instant</span>::<span class="n">now</span><span class="p">();</span><span class="w">
-</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="n">simulation</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span><span class="w">
+</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;100회 시뮬레이션 추정값: {:?}&#34;</span><span class="p">,</span><span class="n">simulation</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span><span class="w">
 </span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">after</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Instant</span>::<span class="n">now</span><span class="p">();</span><span class="w">
 </span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;100회 시뮬레이션 시간: {:?}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">after</span><span class="p">.</span><span class="n">checked_duration_since</span><span class="p">(</span><span class="n">now</span><span class="p">));</span><span class="w">
-</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="n">simulation</span><span class="p">(</span><span class="mi">1000</span><span class="p">));</span><span class="w">
-</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;{:?}&#34;</span><span class="p">,</span><span class="n">simulation</span><span class="p">(</span><span class="mi">10000</span><span class="p">));</span><span class="w">
+</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;1000회 시뮬레이션 추정값: {:?}&#34;</span><span class="p">,</span><span class="n">simulation</span><span class="p">(</span><span class="mi">1000</span><span class="p">));</span><span class="w">
+</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;10000회 시뮬레이션 추정값: {:?}&#34;</span><span class="p">,</span><span class="n">simulation</span><span class="p">(</span><span class="mi">10000</span><span class="p">));</span><span class="w">
+</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;점 100만개 100회 시뮬레이션 추정값: {:?}&#34;</span><span class="p">,</span><span class="n">simulation2</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span><span class="w">
+</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;점 100만개 1000회 시뮬레이션 추정값: {:?}&#34;</span><span class="p">,</span><span class="n">simulation2</span><span class="p">(</span><span class="mi">1000</span><span class="p">));</span><span class="w">
+</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;점 100만개 10000회 시뮬레이션 추정값: {:?}&#34;</span><span class="p">,</span><span class="n">simulation2</span><span class="p">(</span><span class="mi">10000</span><span class="p">));</span><span class="w">
 </span><span class="w"></span><span class="p">}</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="k">fn</span> <span class="nf">pi</span><span class="p">(</span><span class="n">n</span>:<span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">f32</span><span class="p">{</span><span class="w">
@@ -354,6 +368,14 @@ Name (time in s)        Min     Max    Mean  StdDev  Median     IQR  Outliers   
 </span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">vec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Vec</span>::<span class="n">new</span><span class="p">();</span><span class="w">
 </span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="p">..</span><span class="n">n</span><span class="p">{</span><span class="w">
 </span><span class="w">        </span><span class="n">vec</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">pi</span><span class="p">(</span><span class="mi">100000</span><span class="p">));</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="o">&amp;</span><span class="n">vec</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">fn</span> <span class="nf">simulation2</span><span class="p">(</span><span class="n">n</span>:<span class="kt">i32</span><span class="p">)</span>-&gt;<span class="kt">f32</span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">vec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Vec</span>::<span class="n">new</span><span class="p">();</span><span class="w">
+</span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="p">..</span><span class="n">n</span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="n">vec</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">pi</span><span class="p">(</span><span class="mi">1000000</span><span class="p">));</span><span class="w">
 </span><span class="w">    </span><span class="p">}</span><span class="w">
 </span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="o">&amp;</span><span class="n">vec</span><span class="p">)</span><span class="w">
 </span><span class="w"></span><span class="p">}</span><span class="w">
@@ -391,16 +413,23 @@ Name (time in s)        Min     Max    Mean  StdDev  Median     IQR  Outliers   
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">3.1418064
-100회 시뮬레이션 시간: Some<span class="o">(</span>171.268668ms<span class="o">)</span>
-3.1416152
-3.1415677
+<pre class="chroma"><code class="language-bash" data-lang="bash">100회 시뮬레이션 추정값: 3.141172
+100회 시뮬레이션 시간: Some<span class="o">(</span>161.112731ms<span class="o">)</span>
+1000회 시뮬레이션 추정값: 3.1418517
+10000회 시뮬레이션 추정값: 3.1416712
+점 100만개 100회 시뮬레이션 추정값: 3.1415176
+점 100만개 1000회 시뮬레이션 추정값: 3.1416123
+점 100만개 10000회 시뮬레이션 추정값: 3.1415687
 </code></pre></td></tr></table>
 </div>
-</div><p>파이썬의 경우 평균 9.3초가 걸렸으며, 밀리초로 환산하면 9300밀리초가 됩니다. rust의 경우 약 171 밀리초가 걸렸습니다. 두 코드의 작동 시간 차이는 약 50배로 어마어마한 차이를 보입니다. 그러나 추정된 값의 차이는 큰 차이가 없는 것으로 보입니다. 두 코드의 파이 추정값은 3.141까지 맞춘것으로 동일하기 때문입니다. 참고로 찍는 점의 개수를 10만개 보다 더 많이 할 경우 파이값의 추정치가 더 정확해지게 됩니다.</p>
-<p>그렇다면 시뮬레이션 회수를 늘리면 파이값 추정치는 어떻게 될까요? 러스트의 경우 1000번 시뮬레이션의 경우 3.1416의 값으로 3.1415값에 가까워졌습니다. 10000번 시뮬레이션 결과를 보면 파이 추정치 값이 실제 파이값의 3.1415까지 맞추는 것을 확인할 수 있습니다. 파이썬의 경우도 마찬가지로 1000번 시뮬레이션한 결과 3.1416의 값으로 3.1415 값에 더 가까워졌습니다. 참고로 파이썬의 경우 10000번 시뮬레이션 할 경우 시간이 상당히 오래 소요됩니다. 수행 결과 3.141648096로 추정값 자체는 3.1415로 점차 작아지는 모습을 확인할 수 있습니다. 이에따라 파이 값의 추정치는 시뮬레이션 회수와 점의 개수에 모두 영향 받는다는 점을 알 수 있습니다.</p>
+</div><p>파이썬의 경우 평균 9.3초가 걸렸으며, 밀리초로 환산하면 9300밀리초가 됩니다. rust의 경우 약 161 밀리초가 걸렸습니다. 두 코드의 작동 시간 차이는 약 50배 이상으로 어마어마한 차이를 보입니다. 그러나 추정된 값의 차이는 큰 차이가 없는 것으로 보입니다. 두 코드의 파이 추정값은 3.141까지 맞춘것으로 동일하기 때문입니다. 참고로 찍는 점의 개수를 10만개 보다 더 많이 할 경우 파이값의 추정치가 더 정확해지게 됩니다.</p>
+<p>그렇다면 시뮬레이션 회수를 늘리면 파이값 추정치는 어떻게 될까요? 러스트의 경우 1000번 시뮬레이션의 경우 3.1418의 값이 나왔습니다. 10000번 시뮬레이션 결과를 보면 파이 추정치 값 3.1416으로 실제 파이값의 3.1415에 근접한 것을 확인할 수 있습니다. 파이썬의 경우도 마찬가지로 1000번 시뮬레이션한 결과 3.1416의 값으로 3.1415 값에 더 가까워졌습니다. 참고로 파이썬의 경우 10000번 시뮬레이션 할 경우 시간이 상당히 오래 소요됩니다. 수행 결과 3.141648096로 추정값 자체는 3.1415로 점차 작아지는 모습을 확인할 수 있습니다.</p>
+<p>그러나 한번 가지고는 시뮬레이션 회수의 영향을 알 수 없기 때문에 점 개수가 1000000 일 경우에도 시뮬레이션 회수에 따라 실제 파이값과 같아지는지 rust로 확인해보겠습니다. 파이썬의 경우 점 1000000개 부터 시간이 너무 오래 걸리기 때문에 rust로만 실험을 진행하겠습니다. 점 1000000개 일때 100회 시뮬레이션 결과는 3.1415176 로 3.1415까지 실제 값과 동일합니다. 그러나 1000회 시뮬레이션 결과에서는 3.1416123으로 오히려 실제 값과 멀어진 것을 확인할 수 있습니다. 10000회 결과 3.1415687으로 시뮬레이션 회수가 늘어난다고 더 실제 값에 가까운 추정이 이루어지는 것은 아님을 알 수 있습니다.</p>
 
     </div>
 
