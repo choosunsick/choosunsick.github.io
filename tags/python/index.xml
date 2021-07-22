@@ -6,7 +6,16 @@
     <description>Recent content in Python on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Thu, 15 Jul 2021 15:30:59 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 22 Jul 2021 18:41:12 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>몬테카를로 시뮬레이션을 통한 파이값 추정 작동시간 비교하기</title>
+      <link>https://choosunsick.github.io/post/montecalo_pyvsrs/</link>
+      <pubDate>Thu, 22 Jul 2021 18:41:12 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/montecalo_pyvsrs/</guid>
+      <description>파이값을 추정하는 몬테카를로 시뮬레이션을 파이썬과 Rust로 구현하고 작동 시간을 비교합니다. 몬테카를로 시뮬레이션에 대한 설명은 링크를 통해 확인하실 수 있</description>
+    </item>
+    
     <item>
       <title>순열과 조합</title>
       <link>https://choosunsick.github.io/post/permuandcombi/</link>
