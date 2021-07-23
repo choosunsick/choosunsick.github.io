@@ -49,7 +49,7 @@
 <meta itemprop="name" content="몬테카를로 시뮬레이션을 통한 파이값 추정 작동시간 비교하기">
 <meta itemprop="description" content="파이값을 추정하는 몬테카를로 시뮬레이션을 파이썬과 Rust로 구현하고 작동 시간을 비교합니다. 몬테카를로 시뮬레이션에 대한 설명은 링크를 통해 확인하실 수 있"><meta itemprop="datePublished" content="2021-07-22T18:41:12+09:00" />
 <meta itemprop="dateModified" content="2021-07-22T18:41:12+09:00" />
-<meta itemprop="wordCount" content="2024">
+<meta itemprop="wordCount" content="2033">
 <meta itemprop="keywords" content="이산수학,Rust,Python," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="몬테카를로 시뮬레이션을 통한 파이값 추정 작동시간 비교하기"/>
 <meta name="twitter:description" content="파이값을 추정하는 몬테카를로 시뮬레이션을 파이썬과 Rust로 구현하고 작동 시간을 비교합니다. 몬테카를로 시뮬레이션에 대한 설명은 링크를 통해 확인하실 수 있"/>
@@ -158,9 +158,6 @@ if (!doNotTrack) {
     <li><a href="#파이썬-구현">파이썬 구현</a></li>
     <li><a href="#rust-구현">rust 구현</a></li>
     <li><a href="#작동-시간-비교">작동 시간 비교</a></li>
-    <li><a href="#name-time-in-s--------min-----max----mean--stddev--median-----iqr--outliers-----ops--rounds--iterations">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;- benchmark: 1 tests &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
-Name (time in s)        Min     Max    Mean  StdDev  Median     IQR  Outliers     OPS  Rounds  Iterations</a></li>
-    <li><a href="#test-----------------90515--94819--93240--01632--93614--01651-------10--01072-------5-----------1">test                 9.0515  9.4819  9.3240  0.1632  9.3614  0.1651       1;0  0.1072       5           1</a></li>
   </ul>
 </nav>
   </div>
@@ -403,10 +400,27 @@ Name (time in s)        Min     Max    Mean  StdDev  Median     IQR  Outliers   
 <span class="mf">3.141648096</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="name-time-in-s--------min-----max----mean--stddev--median-----iqr--outliers-----ops--rounds--iterations">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;- benchmark: 1 tests &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
-Name (time in s)        Min     Max    Mean  StdDev  Median     IQR  Outliers     OPS  Rounds  Iterations</h2>
-<h2 id="test-----------------90515--94819--93240--01632--93614--01651-------10--01072-------5-----------1">test                 9.0515  9.4819  9.3240  0.1632  9.3614  0.1651       1;0  0.1072       5           1</h2>
-<p>rust 코드 실행 결과 입니다.</p>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">
+------------------------------------------- benchmark: <span class="m">1</span> tests ------------------------------------------
+Name <span class="o">(</span><span class="nb">time</span> in s<span class="o">)</span>        Min     Max    Mean  StdDev  Median     IQR  Outliers     OPS  Rounds  Iterations
+---------------------------------------------------------------------------------------------------------
+<span class="nb">test</span>                 9.0515  9.4819  9.3240  0.1632  9.3614  0.1651       1<span class="p">;</span><span class="m">0</span>  0.1072       <span class="m">5</span>           <span class="m">1</span>
+---------------------------------------------------------------------------------------------------------
+
+</code></pre></td></tr></table>
+</div>
+</div><p>rust 코드 실행 결과 입니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
