@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>트레이트 on Sunsick&#39;s blog</title>
+    <link>https://choosunsick.github.io/tags/%ED%8A%B8%EB%A0%88%EC%9D%B4%ED%8A%B8/</link>
+    <description>Recent content in 트레이트 on Sunsick&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko</language>
+    <lastBuildDate>Fri, 30 Jul 2021 17:51:01 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/%ED%8A%B8%EB%A0%88%EC%9D%B4%ED%8A%B8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rust 트레이트(Trait)</title>
+      <link>https://choosunsick.github.io/post/rust_trait/</link>
+      <pubDate>Fri, 30 Jul 2021 17:51:01 +0900</pubDate>
+      
+      <guid>https://choosunsick.github.io/post/rust_trait/</guid>
+      <description>개념 소개 Rust에는 Trait이라는 기능이 있습니다. 이 기능은 러스트의 컴파일러에게 특정 타입이 어떤 기능을 수행할 수 있고 그 기능을 다른 타입들과 공유할 수</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,16 +6,7 @@
     <description>Recent content in Python on Sunsick&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko</language>
-    <lastBuildDate>Fri, 30 Jul 2021 17:51:01 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Rust 트레이트(Trait)</title>
-      <link>https://choosunsick.github.io/post/rust_trait/</link>
-      <pubDate>Fri, 30 Jul 2021 17:51:01 +0900</pubDate>
-      
-      <guid>https://choosunsick.github.io/post/rust_trait/</guid>
-      <description>개념 소개 Rust에는 Trait이라는 기능이 있습니다. 이 기능은 러스트의 컴파일러에게 특정 타입이 어떤 기능을 수행할 수 있고 그 기능을 다른 타입들과 공유할 수</description>
-    </item>
-    
+    <lastBuildDate>Wed, 28 Jul 2021 21:16:26 +0900</lastBuildDate><atom:link href="https://choosunsick.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>몬테카를로 시뮬레이션 - 시뮬레이션 회수에 따른 실험</title>
       <link>https://choosunsick.github.io/post/montecalo_test2/</link>
